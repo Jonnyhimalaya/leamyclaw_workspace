@@ -1,0 +1,94 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "⚠️ URGENT: Update Meta/Instagram ad URL",
+      "description": "Meta/Instagram ads still pointing to /revision-for-leaving-cert-2026/ instead of optimised /revision-for-leaving-cert-2026-parents-b/ page. Update immediately to fix conversion leak.",
+      "column": "backlog",
+      "priority": "high",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Fix /nogo/ page dead end",
+      "description": "Paywall redirect page has no CTA or link back to course. 275 sessions/month hit this page with 17.5% bounce. Add a clear \"Get Access\" button linking to the relevant course.",
+      "column": "backlog",
+      "priority": "high",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "3",
+      "title": "Fix checkout conversion gap",
+      "description": "Course pages get 9,800+ sessions but checkout only gets 1,635 (~17%). Add CTAs, urgency elements, and reduce friction on course pages.",
+      "column": "backlog",
+      "priority": "high",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "4",
+      "title": "Make phone number a clickable tel: link",
+      "description": "Phone number on website should be a tel: link so mobile users can tap to call. Critical for parent conversion on mobile.",
+      "column": "backlog",
+      "priority": "medium",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "5",
+      "title": "Add CTA buttons above fold on landing pages",
+      "description": "All 3 revision landing pages need strong CTAs visible without scrolling. Currently visitors have to scroll to find the form.",
+      "column": "in-progress",
+      "priority": "high",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "6",
+      "title": "Fix order confirmation message",
+      "description": "Replace generic \"Thanks for purchasing!\" with personalised welcome: \"Welcome to Leamy Maths! Here's what to do next...\" with clear next steps and upsell prompt.",
+      "column": "backlog",
+      "priority": "medium",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "7",
+      "title": "SEO audit — optimise for Limerick maths grinds",
+      "description": "Full SEO audit targeting \"maths grinds Limerick\", \"leaving cert maths grinds\", etc. Also fix old /2020 dates in course names making site look abandoned.",
+      "column": "backlog",
+      "priority": "medium",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "8",
+      "title": "Email marketing setup",
+      "description": "Set up email nurture sequence for leads who don't buy. Lead magnet (free sample lesson or PDF cheat sheet) + automated welcome sequence.",
+      "column": "backlog",
+      "priority": "medium",
+      "createdAt": "2026-03-24T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "9",
+      "title": "Verify Google Ads Revision_Parents review cleared",
+      "description": "Ad was \"Pending\" since Mar 20 after URL change to -parents-b/ page. Check status in Google Ads console.",
+      "column": "in-progress",
+      "priority": "high",
+      "createdAt": "2026-03-20T00:00:00Z",
+      "updatedAt": "2026-03-24T00:00:00Z"
+    },
+    {
+      "id": "10",
+      "title": "Negative keywords cleanup — completed",
+      "description": "Created shared negative keyword list with 45 negatives. Applied to Local_B_Limerick, Revision_Parents_Limerick, Revision_Students_Limerick.",
+      "column": "done",
+      "priority": "high",
+      "createdAt": "2026-03-20T00:00:00Z",
+      "updatedAt": "2026-03-20T00:00:00Z"
+    }
+  ]
+}
