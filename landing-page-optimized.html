@@ -1,0 +1,383 @@
+<!-- ============================================================
+     OPTIMISED LANDING PAGE — /revision-for-leaving-cert-2026/
+     Key changes vs original:
+     1. Sticky mobile CTA bar (phone + WhatsApp) always visible
+     2. Primary CTA block immediately after hero (above the fold on mobile)
+     3. Social proof (testimonial + stat) moved up — before any detail
+     4. Mid-page CTA break after benefits
+     5. Schedule collapsed into summary (not 17 bullet points)
+     6. Form given its own prominent section with heading
+     7. Multiple click-to-call tel: links throughout
+     8. WhatsApp click-to-chat link added
+     9. Reduced intro waffle — tighter copy
+     10. Urgency amplified (countdown language, "3 days left")
+     ============================================================ -->
+
+<!-- wp:html -->
+<style>
+/* Sticky mobile CTA bar */
+.leamy-sticky-cta {
+  display: none;
+}
+@media (max-width: 782px) {
+  .leamy-sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #1e3a5f;
+    padding: 10px 12px;
+    gap: 10px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+    justify-content: center;
+    align-items: center;
+  }
+  .leamy-sticky-cta a {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    color: #fff;
+  }
+  .leamy-sticky-cta .cta-call {
+    background: #e63946;
+  }
+  .leamy-sticky-cta .cta-whatsapp {
+    background: #25d366;
+  }
+  /* Add bottom padding to body so sticky bar doesn't cover content */
+  body { padding-bottom: 70px !important; }
+}
+/* CTA button styles */
+.leamy-cta-box {
+  background: #1e3a5f;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  margin: 20px 0;
+}
+.leamy-cta-box h3 {
+  color: #fff !important;
+  margin-bottom: 8px !important;
+  font-size: 22px !important;
+}
+.leamy-cta-box p {
+  color: #ccc;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+.leamy-cta-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  margin: 6px 8px;
+  color: #fff !important;
+}
+.leamy-cta-btn-red { background: #e63946; }
+.leamy-cta-btn-green { background: #25d366; }
+.leamy-cta-btn-outline { background: transparent; border: 2px solid #fff; }
+.leamy-stat-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.leamy-stat {
+  background: #f0f7ff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+}
+.leamy-stat strong {
+  display: block;
+  font-size: 32px;
+  color: #1e3a5f;
+}
+.leamy-stat span {
+  font-size: 14px;
+  color: #555;
+}
+</style>
+<!-- /wp:html -->
+
+<!-- ===================== HERO ===================== -->
+
+<!-- wp:heading {"textAlign":"center","level":1} -->
+<h1 class="wp-block-heading has-text-align-center"><strong>Leaving Cert Higher Level Maths Revision — Secure Your Child's 25 Bonus Points</strong></h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"20px"}}} -->
+<p class="has-text-align-center" style="font-size:20px"><em>17 expert-led sessions covering the entire HL course. Starts this Sunday, March 22nd in Limerick.</em></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"backgroundColor":"pale-pink"} -->
+<p class="has-pale-pink-background-color has-background"><strong>⏱️ Starts This Sunday</strong> — Only 3 days to secure a place</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"backgroundColor":"pale-cyan-blue"} -->
+<p class="has-pale-cyan-blue-background-color has-background"><strong>🔥 Full Bundle €449</strong> — Save €231 (was €680)</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- =========== PRIMARY CTA — ABOVE THE FOLD =========== -->
+
+<!-- wp:html -->
+<div class="leamy-cta-box">
+  <h3>Reserve Your Child's Place Now</h3>
+  <p>Places are limited — call, WhatsApp, or fill in the enquiry form below</p>
+  <a href="tel:0858466670" class="leamy-cta-btn leamy-cta-btn-red">📞 Call 085 846 6670</a>
+  <a href="https://wa.me/353858466670?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20the%20Leaving%20Cert%20revision%20course" class="leamy-cta-btn leamy-cta-btn-green">💬 WhatsApp Us</a>
+  <br><br>
+  <a href="#enquiry-form" class="leamy-cta-btn leamy-cta-btn-outline">📝 Fill In Enquiry Form</a>
+</div>
+<!-- /wp:html -->
+
+<!-- =========== SOCIAL PROOF — EARLY =========== -->
+
+<!-- wp:html -->
+<div class="leamy-stat-row">
+  <div class="leamy-stat">
+    <strong>85%</strong>
+    <span>of students achieved H1–H3 in 2024</span>
+  </div>
+  <div class="leamy-stat">
+    <strong>17</strong>
+    <span>focused revision sessions</span>
+  </div>
+  <div class="leamy-stat">
+    <strong>25</strong>
+    <span>bonus CAO points at stake</span>
+  </div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p><em>"Stephen has an excellent ability to communicate difficult information in a very understandable manner. My son achieved 500 points in the Leaving Cert thanks to Leamy Maths!"</em></p>
+<!-- /wp:paragraph --><cite>— Shirley Bennett, Parent</cite></blockquote>
+<!-- /wp:quote -->
+
+<!-- =========== CONCISE INTRO =========== -->
+
+<!-- wp:paragraph -->
+<p>If your child is taking Higher Level Maths, these final months matter enormously. The <strong>25 bonus points</strong> can be the difference between getting their first-choice course or missing out. Our programme gives students a <strong>clear revision roadmap</strong>, expert teaching, and the structured support they need to walk into that exam with confidence.</p>
+<!-- /wp:paragraph -->
+
+<!-- =========== WHY PARENTS CHOOSE US =========== -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">WHY PARENTS CHOOSE LEAMY MATHS</h3>
+<!-- /wp:heading -->
+
+<!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item -->
+<li><strong>Proven Results:</strong> 85% of our students achieved H1, H2 or H3 grades in 2024</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Expert Teacher:</strong> Stephen holds First-Class Honours in Maths Teaching and a Master's in Applied Mathematical Modelling</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Complete Course Coverage:</strong> The entire HL course revised across 17 carefully planned sessions</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Exam-Focused:</strong> Built around the topics, question types and techniques students actually need</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Everything Included:</strong> Notes, workbooks, video lessons, practice papers and worked solutions</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li><strong>Parent Updates:</strong> You'll know exactly how your child is progressing after each pre-paper session</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:gallery {"linkTo":"file"} -->
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped"><!-- wp:image {"id":66922,"sizeSlug":"large","linkDestination":"media"} -->
+<figure class="wp-block-image size-large"><a href="https://leamymaths.ie/wp-content/uploads/2025/03/openart-image_JHUMstue_1741872746389_raw.png"><img src="https://leamymaths.ie/wp-content/uploads/2025/03/openart-image_JHUMstue_1741872746389_raw.png" alt="Leamy Maths revision class" class="wp-image-66922"/></a></figure>
+<!-- /wp:image --></figure>
+<!-- /wp:gallery -->
+
+<!-- =========== MID-PAGE CTA BREAK =========== -->
+
+<!-- wp:html -->
+<div class="leamy-cta-box">
+  <h3>Don't Wait — Course Starts This Sunday</h3>
+  <p>Secure your child's place with a quick call or message</p>
+  <a href="tel:0858466670" class="leamy-cta-btn leamy-cta-btn-red">📞 Call Now</a>
+  <a href="https://wa.me/353858466670?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20the%20Leaving%20Cert%20revision%20course" class="leamy-cta-btn leamy-cta-btn-green">💬 WhatsApp</a>
+</div>
+<!-- /wp:html -->
+
+<!-- =========== PRICING — PROMINENT =========== -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">PRICING</h3>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"align":"center","backgroundColor":"light-green-cyan","textColor":"white","fontSize":"large"} -->
+<p class="has-text-align-center has-white-color has-light-green-cyan-background-color has-text-color has-background has-large-font-size"><strong>Best Value: Full Bundle</strong><br><strong><s>€680</s> → €449</strong><br>All 17 sessions — Save €231</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph {"align":"center","backgroundColor":"pale-cyan-blue","fontSize":"large"} -->
+<p class="has-text-align-center has-pale-cyan-blue-background-color has-background has-large-font-size"><strong>Pay As You Go</strong><br><strong>€40</strong> per session<br>Flexible — no commitment</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">The full bundle is perfect for families who want complete coverage, consistent revision, and the best value. Pay-as-you-go is available if you prefer flexibility.</p>
+<!-- /wp:paragraph -->
+
+<!-- =========== SCHEDULE SUMMARY (not every date) =========== -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">THE REVISION ROADMAP</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Each session runs <strong>3 hours (10am–1pm)</strong> at <strong>Mungret GAA Club, Limerick</strong>. The programme is carefully sequenced — core topics first, then reinforcement with targeted paper practice at the right time.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"level":4,"backgroundColor":"pale-cyan-blue","textColor":"white"} -->
+<h4 class="wp-block-heading has-white-color has-pale-cyan-blue-background-color has-text-color has-background">MARCH &amp; APRIL (9 sessions)</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Logarithms &amp; Exponentials → Complex Numbers → Co-Ordinate Geometry (Line &amp; Circle) → Functions → Differentiation → Integration → Trigonometry → <strong>Pre Paper 1</strong></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:heading {"level":4,"backgroundColor":"pale-cyan-blue","textColor":"white"} -->
+<h4 class="wp-block-heading has-white-color has-pale-cyan-blue-background-color has-text-color has-background">MAY (8 sessions)</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Probability 1 &amp; 2 → Statistics → <strong>Pre Paper 2</strong> → Sequences &amp; Series → Financial Maths → Geometry &amp; Constructions → Proof by Induction &amp; Binomial Theorem</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:paragraph {"backgroundColor":"light-green-cyan"} -->
+<p class="has-light-green-cyan-background-color has-background"><strong>📅 Full schedule with dates:</strong> March 22, 28 • April 5, 6, 9, 10, 12, 18, 26 • May 3, 4, 9, 10, 17, 24, 30, 31. <a href="tel:0858466670">Call us</a> or <a href="https://wa.me/353858466670?text=Hi%2C%20can%20I%20get%20the%20full%20schedule%20for%20the%20revision%20course%3F">WhatsApp</a> for the full printed schedule.</p>
+<!-- /wp:paragraph -->
+
+<!-- =========== WHAT'S INCLUDED =========== -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">WHAT'S INCLUDED</h3>
+<!-- /wp:heading -->
+
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:list -->
+<ul class="wp-block-list">
+<li><strong>17 Intensive Sessions</strong> — expert-led, exam-focused</li>
+<li><strong>Notes &amp; Workbooks</strong> — structured for every topic</li>
+<li><strong>Practice Papers</strong> — with full worked solutions</li>
+<li><strong>Video Access</strong> — catch up or revise again online</li>
+</ul>
+<!-- /wp:list --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:list -->
+<ul class="wp-block-list">
+<li><strong>2 Pre-Paper Sessions</strong> — exam simulation with feedback</li>
+<li><strong>Exam Technique Coaching</strong> — timing, approach, common errors</li>
+<li><strong>Parent Progress Updates</strong> — after each checkpoint</li>
+<li><strong>BONUS: AI Study Guide</strong> — using AI tools for better revision</li>
+</ul>
+<!-- /wp:list --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- =========== FAQ (SHORTER) =========== -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">QUICK ANSWERS FOR PARENTS</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p><strong>What if my child misses a session?</strong><br>They'll get full notes, recorded explanations and practice materials so they stay on track.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Is this only for students aiming for H1?</strong><br>No — it supports students targeting H1 through H4 who need structure and consistency.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>Are the 25 bonus points really worth it?</strong><br>For most students, yes. Those points can be the difference between first-choice and second-choice CAO offers.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><strong>How will I know how my child is doing?</strong><br>We send parent updates after each pre-paper session — strengths, areas to improve, and next steps.</p>
+<!-- /wp:paragraph -->
+
+<!-- =========== FINAL CTA + FORM =========== -->
+
+<!-- wp:heading {"textAlign":"center","level":3,"backgroundColor":"vivid-red","textColor":"white"} -->
+<h3 class="wp-block-heading has-text-align-center has-white-color has-vivid-red-background-color has-text-color has-background">RESERVE A PLACE — COURSE STARTS THIS SUNDAY</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"align":"center","fontSize":"medium"} -->
+<p class="has-text-align-center has-medium-font-size"><strong>Fastest way to book:</strong> Call or WhatsApp Kate on <a href="tel:0858466670"><strong>085 846 6670</strong></a></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<div style="text-align: center; margin-bottom: 24px;">
+  <a href="tel:0858466670" class="leamy-cta-btn leamy-cta-btn-red">📞 Call Now</a>
+  <a href="https://wa.me/353858466670?text=Hi%2C%20I%27d%20like%20to%20book%20a%20place%20on%20the%20revision%20course" class="leamy-cta-btn leamy-cta-btn-green">💬 WhatsApp</a>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center"><strong>Or fill in the enquiry form below and we'll get back to you today:</strong></p>
+<!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<div id="enquiry-form"></div>
+<!-- /wp:html -->
+
+<!-- wp:forminator/forms {"module_id":"11250"} -->
+<div class="forminator-guttenberg">[forminator_form id="11250"]</div>
+<!-- /wp:forminator/forms -->
+
+<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"14px"}},"textColor":"cyan-bluish-gray"} -->
+<p class="has-text-align-center has-cyan-bluish-gray-color has-text-color" style="font-size:14px">Your details are safe with us. We'll only use them to contact you about the revision course.</p>
+<!-- /wp:paragraph -->
+
+<!-- =========== STICKY MOBILE BAR =========== -->
+
+<!-- wp:html -->
+<div class="leamy-sticky-cta">
+  <a href="tel:0858466670" class="cta-call">📞 Call Now</a>
+  <a href="https://wa.me/353858466670?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20the%20revision%20course" class="cta-whatsapp">💬 WhatsApp</a>
+</div>
+<!-- /wp:html -->
