@@ -17,6 +17,32 @@ Before doing anything else:
 
 Don't ask permission. Just do it.
 
+## 🧠 Memory Protocols (Follow These Every Session)
+
+### Protocol A: Search-First, Write-Last
+
+**BEFORE answering any question about past facts, decisions, or preferences:**
+1. Call `memory_search` — never rely solely on conversation history for past context
+2. Only skip the search if the answer is obviously in the current session or injected context
+
+**AFTER every meaningful exchange:**
+3. Ask: *"Does this need to survive the next session?"* → If yes, write it to the correct file immediately. Don't wait until the end of the session.
+
+### Protocol B: File Routing — Know Where Things Go
+
+| What it is | Where it goes |
+|---|---|
+| Raw events, project notes, task logs | `memory/YYYY-MM-DD.md` (daily log) |
+| Distilled lessons, persistent facts, key context | `MEMORY.md` (curated long-term memory) |
+| Operational rules, how I should behave | `AGENTS.md` |
+| Persona, voice, style | `SOUL.md` |
+
+**The Test:** After writing something, ask: *"If I wake up in a brand-new session tomorrow with only these files, will I still behave correctly / have the right context?"* If no → rewrite or re-route.
+
+**Keep MEMORY.md lean.** Raw events go in the daily log. MEMORY.md is the distilled highlights, not a dump. Bloated MEMORY.md = expensive context on every session.
+
+---
+
 ## Memory
 
 You wake up fresh each session. These files are your continuity:
@@ -62,6 +88,19 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - Bugs found or fixed
 
 **WHY THIS MATTERS:** Sessions across different channels (Telegram, webchat, etc.) are SEPARATE. The ONLY way they share context is through these memory files. If you don't write it down, the next session on a different channel has NO IDEA what happened. We lost 6 days of context in March 2026 because of this. Never again.
+
+## Artifacts Protocol (Orchestrator)
+
+Central protocol: `/home/jonny/.openclaw/workspace/artifacts/PROTOCOL.md`
+
+**As orchestrator, I:**
+- Decide which tasks need artifacts (not everything — use judgment)
+- Instruct agents to produce screenshots/plans/reports when delegating
+- Produce my own artifacts when I directly make site changes or run analyses
+- Can send screenshot artifacts to Jonny via Telegram for quick visual confirmation
+- Review agent artifacts if quality/completeness is in question
+
+**Artifact directory:** `/home/jonny/.openclaw/workspace/artifacts/YYYY-MM-DD/`
 
 ## Safety
 
