@@ -320,6 +320,156 @@ Script template: adapt from `scripts/server-health.sh` (Leamy) or Kilmurry versi
 
 ---
 
+# PHASE 3.5 — Operational Intelligence Patterns (Day 2-3)
+
+**These patterns are standard for every deployment. They make the agent smarter, cheaper, and more trustworthy over time. Inspired by analysis of best-in-class agentic architectures.**
+
+## 3.5.1 Autonomy Levels
+
+Every agent should adjust its proactivity based on whether the human is actively engaged or away. Track in `memory/heartbeat-state.json`:
+
+```json
+{
+  "autonomy": {
+    "lastHumanMessage": null,
+    "level": "responsive"
+  }
+}
+```
+
+| Level | Condition | Behaviour |
+|-------|-----------|-----------|
+| **Responsive** | <30 min since last message | Answer questions, execute tasks. Don't initiate. |
+| **Ambient** | 30 min – 2 hours | Light proactive work: memory maintenance, git commits, doc cleanup. |
+| **Proactive** | 2 – 8 hours | Run analyses, background research, send summary if significant. |
+| **Dormant** | 8+ hours or 23:00–08:00 | Only critical alerts. Otherwise sleep (HEARTBEAT_OK). |
+
+Add to client's AGENTS.md and HEARTBEAT.md. The dormant level prevents token waste overnight.
+
+**Checklist:**
+- [ ] heartbeat-state.json created with autonomy tracking
+- [ ] Autonomy level rules added to AGENTS.md
+- [ ] HEARTBEAT.md Step 0 checks autonomy level before doing anything
+
+## 3.5.2 Structured Logging (NDD Format)
+
+All meaningful actions logged as **Noticed / Decision / Did**:
+
+```markdown
+### [Task Title] — HH:MM UTC
+- **Noticed:** What triggered this (user request, anomaly, scheduled check)
+- **Decision:** What I chose to do and why
+- **Did:** What actually happened (with IDs, paths, outcomes)
+```
+
+This format is:
+- **Auditable** — client can review what the agent did and why
+- **Scannable** — future sessions understand context instantly
+- **Compliance-friendly** — structured trail for financial/legal clients
+
+**Checklist:**
+- [ ] NDD format documented in client's AGENTS.md under memory logging protocol
+- [ ] Append-only principle stated: never edit existing log entries, only add corrections below
+
+## 3.5.3 Advisor Model (Meta-Oversight)
+
+A cheap model reviews the main agent's work on a schedule. Catches mistakes before they compound.
+
+```bash
+openclaw cron add \
+  --name "Advisor Check" \
+  --cron "0 */6 * * *" \
+  --tz "<CLIENT_TZ>" \
+  --agent main \
+  --model "google/gemini-3.1-pro-preview" \
+  --session isolated \
+  --timeout-seconds 60 \
+  --message "You are the ADVISOR. Read today's memory file. Check for: mistakes, unverified tasks, security concerns, unfulfilled promises. If issues found, append an Advisor Notes section. If clean, do nothing."
+```
+
+**Key design choices:**
+- Uses a **cheap model** (Gemini) — this is a quality gate, not heavy reasoning
+- **Only writes when problems found** — no "all clear" noise
+- **Read-only except for advisory notes** — can't take actions, only flag
+- Runs every 6 hours — frequent enough to catch issues same-day
+
+**Checklist:**
+- [ ] Advisor cron job created
+- [ ] Using cheap cross-provider model (Gemini or GPT-4o-mini)
+- [ ] Verified: only writes notes, doesn't take actions
+
+## 3.5.4 autoDream (Nightly Memory Consolidation)
+
+Every deployment gets a nightly cron that consolidates daily logs into long-term memory:
+
+```bash
+openclaw cron add \
+  --name "Dream Cycle" \
+  --cron "0 2 * * *" \
+  --tz "<CLIENT_TZ>" \
+  --agent main \
+  --model "anthropic/claude-sonnet-4-6" \
+  --session isolated \
+  --timeout-seconds 300 \
+  --message "DREAM CYCLE: Phase 1 — read today's daily log + MEMORY.md, distil key decisions/lessons/facts into MEMORY.md. Phase 2 — archive daily logs older than 7 days to memory/archive/. Phase 3 — if MEMORY.md exceeds target size, trim stale info. If nothing to do, stop silently."
+```
+
+**What it does:**
+1. Reads today's raw daily log
+2. Extracts anything worth remembering long-term (decisions, lessons, milestones)
+3. Appends distilled content to MEMORY.md
+4. Archives old daily logs (>7 days) to `memory/archive/`
+5. Trims MEMORY.md if it's getting bloated
+
+**Why this matters:**
+- MEMORY.md stays lean (cheaper context per message)
+- Important context survives beyond daily logs
+- Old logs don't clutter the memory directory
+- Self-healing memory — agent gets smarter over time without manual curation
+
+**Checklist:**
+- [ ] Dream cycle cron created (2am local time)
+- [ ] `memory/archive/` directory exists
+- [ ] MEMORY.md size target set in the cron prompt (<3KB for pointer index, <5KB for inline)
+
+## 3.5.5 Append-Only Audit Logs
+
+For clients handling sensitive data (financials, customer PII), daily logs should be tamper-proof:
+
+```bash
+# Add to health script — lock yesterday's log at midnight
+YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)
+LOG="$HOME/.openclaw/workspace/memory/${YESTERDAY}.md"
+[ -f "$LOG" ] && chattr +a "$LOG" 2>/dev/null
+```
+
+**AGENTS.md rules:**
+- Never edit or delete existing daily log entries — append only
+- If a log entry has an error, add a correction below it
+- Every financial data access must be logged with: who requested, what was accessed, timestamp
+
+**See also:** Security Hardening Playbook → Layer 7 (Append-Only Audit Logs) for full implementation.
+
+**Checklist:**
+- [ ] Append-only principle in AGENTS.md
+- [ ] Health script locks previous day's log (if client needs audit trail)
+- [ ] Log retention policy set (90-day archive, compress older)
+
+## Standard Cron Suite (All Clients)
+
+After implementing Phase 3 + 3.5, every client should have:
+
+| Job | Schedule | Model | Purpose |
+|-----|----------|-------|---------|
+| Server Health | Every 4h | system cron | RAM, disk, Chrome cleanup, alerts |
+| Dream Cycle | 2am | Sonnet | Memory consolidation |
+| Advisor Check | Every 6h | Gemini | Quality control / meta-oversight |
+| Session Costs | Every 4-8h | Sonnet | Track API spend |
+
+Sector-specific cron jobs (e.g., rate scraping, review monitoring) are added in Phase 5.
+
+---
+
 # PHASE 4 — Core Capabilities (Day 2-3)
 
 ## 4.1 Browser Automation
