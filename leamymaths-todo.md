@@ -145,9 +145,30 @@ Full funnel spec: `/home/jonny/.openclaw/workspace/leamymaths-revision-funnel.md
 
 ---
 
+## 🎓 Revision Course — Student Tracking (Easter 2026)
+
+### €449 Bundle — Paid but NO sessions attended yet
+- [ ] **Sean Fitzgerald** — paid €449, zero sessions attended. Follow up.
+- [ ] **Niall O'Brien** — paid €449, zero sessions attended. Follow up.
+
+### Notes
+- Course started Sunday March 22nd
+- These students have paid the full bundle but haven't shown up to any sessions
+- Need to reach out to confirm they're aware of schedule / have access
+
+---
+
 ## 🔮 Longer Term
 
 - [ ] Add Google/social login to reduce checkout friction for younger users
 - [ ] Add phone number field to checkout for SMS follow-up / remarketing
 - [ ] Consider a dedicated landing page for in-person Limerick grinds (separate from online products)
 - [ ] SEO audit — optimise for "maths grinds Limerick", "leaving cert maths grinds", etc.
+
+
+## 🛠️ Infrastructure & Platform
+
+- [ ] **Upgrade QMD to hybrid search** — Config already wired (vector + BM25 + temporal decay + MMR diversity). Just needs: top up OpenAI credits OR add free Gemini embedding API key, then change `searchMode: "search"` → `"query"` in openclaw.json. Priority increases as vault/memory files grow.
+- [ ] **Top up OpenAI credits** — GPT-5.4 + GPT-4o failing, affects Pixel (content) agent + hybrid search embeddings
+- [ ] **Top up xAI credits** — Scout agent + x_search both down
+- [ ] **Install noVNC for Meta login** — `sudo apt install -y x11vnc novnc` (needs sudo access)

@@ -102,12 +102,67 @@ Central protocol: `/home/jonny/.openclaw/workspace/artifacts/PROTOCOL.md`
 
 **Artifact directory:** `/home/jonny/.openclaw/workspace/artifacts/YYYY-MM-DD/`
 
+## 🏗️ Client Infrastructure Documentation Protocol
+
+**Rule: Any time I make changes to a client's OpenClaw setup, I MUST update their documentation before considering the task done.**
+
+This applies to ALL consultancy clients (Kilmurry Lodge, and any future clients).
+
+### What triggers an update:
+- Installing/changing systemd services, cron jobs, health scripts
+- Changing models, channels, agent configuration
+- Adding/removing skills or cron jobs
+- Fixing infrastructure issues (PM2, Chrome, RAM, etc.)
+- Deploying new tools, dashboards, or monitoring
+- Any SSH work that changes the server state
+
+### What to update:
+1. **Architecture schematic** — `consultancy/clients/<client>/architecture-schematic.md`
+   - Update the relevant section (infrastructure, cron, security, recommendations, etc.)
+   - Mark resolved recommendations with ~~strikethrough~~ + ✅
+   - Bump the "Last Updated" date
+2. **Workspace-consultancy copy** — `workspace-consultancy/consultancy/clients/<client>/` must stay in sync
+3. **Mission Control** — rebuild (`npm run build` + `pm2 restart`) so the client page reflects current state
+4. **MEMORY.md / vault pointers** — if the change is significant enough to affect the client summary
+
+### The test:
+*"If Jonny opens Mission Control right now, does the client page show the actual current state?"* If no → update it.
+
+## Model Failover Transparency
+
+If I detect I'm running on a fallback model (not Opus), I MUST tell Jonny in my first response:
+> "⚠️ Opus is down — this response is powered by [model name]. Switching back when it's available."
+
+Check model via `session_status` if response feels different or after known API issues. Don't bury it — put it at the top of the message.
+
+**Known issue (as of 2026-03-31):** OpenClaw bug — HTTP 529 (Anthropic overloaded) doesn't trigger the fallback chain. Fallbacks are configured (Sonnet → GPT-5.4 → GPT-4o) but won't activate on 529. Monitoring for fix.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
 - Don't run destructive commands without asking.
 - `trash` > `rm` (recoverable beats gone forever)
 - When in doubt, ask.
+
+## Debugging Protocol — When Stuck
+
+When I can't identify the root cause of an issue within 2-3 attempts:
+
+1. **Search GitHub issues first.** OpenClaw is new — most bugs are already reported. Search `github.com/openclaw/openclaw/issues` with the exact error message or symptom.
+2. **Search Twitter/X.** The OpenClaw community is active on Twitter. Search for the error, symptom, or tool name + "openclaw". Real-time fixes often appear here before docs are updated.
+3. **Search Reddit** (`r/openclaw`) and the **OpenClaw Discord** community for workarounds.
+4. **Check the release notes** on GitHub for recent fixes or known regressions.
+5. **Stop theorising after 3 failed attempts.** If I've tried 3 things and none worked, I'm probably wrong about the cause. Search externally before trying a 4th thing.
+
+**Why this matters:** OpenClaw moves fast. My training data is stale. The community knows things I don't. A 30-second search beats 20 minutes of guessing.
+
+## Standing Rules — Infrastructure Changes
+
+1. **Always verify CLI commands before writing them into service files or scripts.** Before writing any ExecStart, cron entry, or automation script that calls a CLI tool, always run `<command> --help` first to confirm the exact subcommand and flags exist in the installed version. Do not assume flags exist based on conventions from other tools.
+2. **Check logs immediately when a service fails.** The first diagnostic step for any systemd failure should be `journalctl -u <service-name> --no-pager -n 30`. Error messages usually make the root cause immediately obvious.
+3. **Systemd services do not inherit shell environment variables.** Any secret or configuration stored as an environment variable in an interactive shell (including tmux sessions) will NOT be available to a systemd service. When migrating from tmux to systemd, audit all env var dependencies and ensure they are provided via `EnvironmentFile=` or `Environment=` directives in the service file.
+4. **Prefer hardcoded config values or EnvironmentFile over bare env vars.** Secrets stored only as exported shell variables are fragile — they're lost when the session ends. Either hardcode them in the config file (like the Telegram token) or use a dedicated `.env` file that both the shell and systemd can reference. The `.env` file approach is preferred for secrets because it keeps them out of the systemd unit file (which is world-readable) and in a user-owned file with restrictive permissions.
+5. **Test the migration before killing the old process.** Ideally, verify the new service starts correctly *before* tearing down the old one. For a gateway where only one instance can bind the port, this means at minimum validating the ExecStart command runs successfully in a manual test (`openclaw gateway run` in a terminal) before committing to the switchover.
 
 ## External vs Internal
 

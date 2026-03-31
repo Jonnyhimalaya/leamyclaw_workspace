@@ -1,0 +1,124 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Top up OpenAI account ($5)",
+      "description": "Memory search is broken — embedding quota exhausted. Add $5 credit at platform.openai.com/settings/organization/billing. This restores semantic memory search across all sessions.",
+      "priority": "high",
+      "category": "api-keys",
+      "status": "todo",
+      "createdAt": "2026-03-24",
+      "source": "Session 2026-03-24"
+    },
+    {
+      "id": "2",
+      "title": "Update Meta/Instagram ad landing page URL",
+      "description": "Instagram campaign (€50/day) is sending ALL traffic to the OLD page /revision-for-leaving-cert-2026/ instead of the optimised /revision-for-leaving-cert-2026-parents-b/. Log into Meta Business Suite and update the ad URL. This is costing real money every day.",
+      "priority": "urgent",
+      "category": "marketing",
+      "status": "todo",
+      "createdAt": "2026-03-24",
+      "source": "Analytics review 2026-03-24"
+    },
+    {
+      "id": "3",
+      "title": "Get Anthropic Usage/Billing API access",
+      "description": "So Mission Control can show REAL costs from the Anthropic bill, not just OpenClaw estimates. Check console.anthropic.com for an admin/billing API key or usage API endpoint.",
+      "priority": "medium",
+      "category": "api-keys",
+      "status": "todo",
+      "createdAt": "2026-03-24",
+      "source": "Mission Control cost tracking discussion"
+    },
+    {
+      "id": "4",
+      "title": "Get OpenAI Usage API access",
+      "description": "Same as Anthropic — lets Mission Control show real OpenAI spend. Check platform.openai.com/usage for API access.",
+      "priority": "medium",
+      "category": "api-keys",
+      "status": "todo",
+      "createdAt": "2026-03-24",
+      "source": "Mission Control cost tracking discussion"
+    },
+    {
+      "id": "5",
+      "title": "Add 2nd Anthropic account as fallback",
+      "description": "Run: openclaw auth add anthropic:backup --provider anthropic --mode api_key — then paste the API key from your 2nd Claude account. I'll configure it as a fallback model.",
+      "priority": "medium",
+      "category": "api-keys",
+      "status": "todo",
+      "createdAt": "2026-03-24",
+      "source": "Discussion about redundancy"
+    },
+    {
+      "id": "6",
+      "title": "Make phone number clickable (tel: link) on revision pages",
+      "description": "085 846 6670 appears as plain text on all revision landing pages. Needs to be a clickable tel: link so mobile users can tap to call. Edit in WordPress: wrap with <a href='tel:+353858466670'>. Pages: /revision-for-leaving-cert-2026/, /-parents-b/, /expert-revision-course/",
+      "priority": "medium",
+      "category": "website",
+      "status": "todo",
+      "createdAt": "2026-03-18",
+      "source": "Conversion tracking audit"
+    },
+    {
+      "id": "7",
+      "title": "Fix /nogo/ page — add CTA button",
+      "description": "The /nogo/ paywall page gets 275 sessions/month and is a dead end — says 'please purchase' but has no link to the course. Add a CTA button linking to the relevant course, or redirect to the course page with a 'Get access' prompt.",
+      "priority": "high",
+      "category": "website",
+      "status": "todo",
+      "createdAt": "2026-03-04",
+      "source": "GA4 analytics audit"
+    },
+    {
+      "id": "8",
+      "title": "Upgrade Meta Business Suite permissions",
+      "description": "leamyclaw@gmail.com has Partial access. Needs Full access or Content toggle enabled so I can create and post Instagram content directly instead of sending it to you to paste manually.",
+      "priority": "medium",
+      "category": "permissions",
+      "status": "todo",
+      "createdAt": "2026-03-18",
+      "source": "Instagram campaign setup"
+    },
+    {
+      "id": "9",
+      "title": "Film 30-second revision course video for Instagram",
+      "description": "Short face-to-camera video advertising the revision courses. Would massively boost Instagram engagement vs static images. Can be shot on phone — just you talking about the courses for 30 seconds.",
+      "priority": "low",
+      "category": "content",
+      "status": "todo",
+      "createdAt": "2026-03-18",
+      "source": "Instagram campaign strategy"
+    },
+    {
+      "id": "10",
+      "title": "Remove outdated dates from course names",
+      "description": "Course names like 'Financial Maths May 17th 2020' make the site look abandoned. Either remove dates or update to 2026. Also 'Re-opening for September 2023' on classroom grinds page.",
+      "priority": "low",
+      "category": "website",
+      "status": "todo",
+      "createdAt": "2026-03-04",
+      "source": "Initial site audit"
+    },
+    {
+      "id": "11",
+      "title": "Fix duplicate cart item bug",
+      "description": "Adding the free product to cart results in quantity ×2 at checkout. Likely a WooCommerce cart session issue. May need developer investigation.",
+      "priority": "low",
+      "category": "website",
+      "status": "todo",
+      "createdAt": "2026-03-04",
+      "source": "Checkout flow testing"
+    },
+    {
+      "id": "12",
+      "title": "Get access to GTM containers",
+      "description": "Two GTM containers (GTM-KQRRRZRD + GTM-MZQ9J4J) on the site are not accessible under leamyclaw@gmail.com. Need access to manage conversion tracking tags properly.",
+      "priority": "low",
+      "category": "permissions",
+      "status": "todo",
+      "createdAt": "2026-03-18",
+      "source": "Conversion tracking audit"
+    }
+  ]
+}
