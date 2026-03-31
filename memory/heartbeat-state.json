@@ -1,0 +1,14 @@
+{
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "security": null,
+    "memoryMaintenance": null
+  },
+  "autonomy": {
+    "lastHumanMessage": null,
+    "level": "responsive",
+    "notes": "Levels: responsive (<30min since last msg), ambient (30min-2h), proactive (2h-8h), dormant (8h+ or night)"
+  }
+}

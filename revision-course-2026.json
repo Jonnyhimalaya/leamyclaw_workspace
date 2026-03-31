@@ -42,7 +42,7 @@
     {"name": "Elaine Davern-Wiseman", "wpUserId": 3193, "paymentType": "per-session", "amountPaid": 40, "sessions": [1, 2], "altName": "Isabel Wiseman"},
     {"name": "Eadaoin Ryan", "wpUserId": 2833, "paymentType": null, "amountPaid": 0, "sessions": [1]},
     {"name": "Emma O Brien", "wpUserId": null, "paymentType": null, "amountPaid": 0, "sessions": [1]},
-    {"name": "Jack O Sullivan", "wpUserId": null, "paymentType": null, "amountPaid": 0, "sessions": [1]},
+    {"name": "Jack O Sullivan", "wpUserId": null, "paymentType": "per-session", "amountPaid": 0, "sessions": [1, 4, 6, 7, 15, 16, 17], "email": "jackosully2021@icloud.com", "phone": "0852598068", "note": "Booked 6 revision classes via contact form Mar 28"},
     {"name": "Sorcha Ward", "wpUserId": 2595, "paymentType": "per-session", "amountPaid": 40, "sessions": [1, 2]},
     {"name": "Shannon Nyambi", "wpUserId": null, "paymentType": null, "amountPaid": 0, "sessions": [1]},
     {"name": "Emma Doran", "wpUserId": null, "paymentType": null, "amountPaid": 0, "sessions": [1]},

@@ -1,5 +1,13 @@
 # HEARTBEAT.md
 
+## Step 0: Autonomy Check (FIRST)
+- Read `memory/heartbeat-state.json` → check `autonomy.lastHumanMessage`
+- Calculate time since last human message
+- Set autonomy level: responsive (<30m) | ambient (30m-2h) | proactive (2-8h) | dormant (8h+ or 23:00-08:00)
+- If **dormant**: skip ALL checks below. Return `HEARTBEAT_OK` immediately unless server health fails.
+- If **responsive**: only do Memory File Check + Server Health. Don't initiate background work.
+- If **ambient** or **proactive**: do all applicable checks below.
+
 ## Memory File Check
 - Check if `memory/YYYY-MM-DD.md` exists for today. If not, create it with a timestamp header.
 - If it exists but hasn't been updated in this session, add a note that a heartbeat ran.

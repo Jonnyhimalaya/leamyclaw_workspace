@@ -87,6 +87,24 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - Tasks assigned or completed
 - Bugs found or fixed
 
+### Structured Logging Format (NDD)
+
+Use the **Noticed / Decision / Did** format for all meaningful entries:
+
+```
+### [Task Title] — HH:MM UTC
+- **Noticed:** What triggered this (user request, anomaly, scheduled check)
+- **Decision:** What I chose to do and why
+- **Did:** What actually happened (with post IDs, file paths, outcomes)
+```
+
+**Why:** Auditable, scannable, consistent. Future sessions can quickly understand context without reading paragraphs. Also valuable for client audit trails.
+
+### Append-Only Principle
+- NEVER edit or delete existing entries in daily memory files — append only
+- If you make a mistake in a log entry, add a correction below it — don't modify the original
+- This creates a tamper-proof audit trail that the Advisor and Dream Cycle can trust
+
 **WHY THIS MATTERS:** Sessions across different channels (Telegram, webchat, etc.) are SEPARATE. The ONLY way they share context is through these memory files. If you don't write it down, the next session on a different channel has NO IDEA what happened. We lost 6 days of context in March 2026 because of this. Never again.
 
 ## Artifacts Protocol (Orchestrator)
@@ -137,6 +155,31 @@ Check model via `session_status` if response feels different or after known API 
 
 **Known issue (as of 2026-03-31):** OpenClaw bug — HTTP 529 (Anthropic overloaded) doesn't trigger the fallback chain. Fallbacks are configured (Sonnet → GPT-5.4 → GPT-4o) but won't activate on 529. Monitoring for fix.
 
+## Git Backup Protocol
+
+After making significant config or workspace changes, commit and push:
+
+```bash
+# Config repo (~/.openclaw)
+cd ~/.openclaw && git add -A && git commit -m "description" && git push
+
+# Workspace repo (~/.openclaw/workspace)
+cd ~/.openclaw/workspace && git add -A && git commit -m "description" && git push
+```
+
+**What triggers a commit:**
+- Any change to `openclaw.json` (model changes, fallback chain, agent config)
+- New or modified skills
+- Cron job changes
+- Significant workspace updates (new vault entries, playbooks, research)
+- End of a productive session with multiple changes
+
+**Remotes:**
+- Config: `github.com/Jonnyhimalaya/leamyclaw` (private)
+- Workspace: `github.com/Jonnyhimalaya/leamyclaw_workspace` (private)
+
+**Never commit:** credentials, auth-profiles.json, .env, API keys, GA4 service account
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
@@ -163,6 +206,23 @@ When I can't identify the root cause of an issue within 2-3 attempts:
 3. **Systemd services do not inherit shell environment variables.** Any secret or configuration stored as an environment variable in an interactive shell (including tmux sessions) will NOT be available to a systemd service. When migrating from tmux to systemd, audit all env var dependencies and ensure they are provided via `EnvironmentFile=` or `Environment=` directives in the service file.
 4. **Prefer hardcoded config values or EnvironmentFile over bare env vars.** Secrets stored only as exported shell variables are fragile — they're lost when the session ends. Either hardcode them in the config file (like the Telegram token) or use a dedicated `.env` file that both the shell and systemd can reference. The `.env` file approach is preferred for secrets because it keeps them out of the systemd unit file (which is world-readable) and in a user-owned file with restrictive permissions.
 5. **Test the migration before killing the old process.** Ideally, verify the new service starts correctly *before* tearing down the old one. For a gateway where only one instance can bind the port, this means at minimum validating the ExecStart command runs successfully in a manual test (`openclaw gateway run` in a terminal) before committing to the switchover.
+
+## 🎯 Autonomy Levels (KAIROS-inspired)
+
+Track `memory/heartbeat-state.json` → `autonomy.lastHumanMessage`. Update it every time Jonny messages.
+
+| Level | Condition | Behaviour |
+|-------|-----------|-----------|
+| **Responsive** | <30 min since last message | Answer questions, execute tasks. Don't initiate. |
+| **Ambient** | 30 min – 2 hours | Light proactive work: memory maintenance, git commits, doc cleanup. Mention if something needs attention. |
+| **Proactive** | 2 – 8 hours | Run analyses, check emails/calendar, update docs, do background research. Send a summary if findings are significant. |
+| **Dormant** | 8+ hours or 23:00–08:00 | Only act on critical alerts (server down, security issue). Otherwise `HEARTBEAT_OK`. |
+
+**Rules:**
+- During heartbeats, check the autonomy level FIRST. Let it guide what you do.
+- Never burn tokens when dormant. Sleep.
+- In proactive mode, batch work into one heartbeat — don't scatter across multiple.
+- Always update `autonomy.lastHumanMessage` when Jonny sends a message.
 
 ## External vs Internal
 
