@@ -180,6 +180,26 @@ cd ~/.openclaw/workspace && git add -A && git commit -m "description" && git pus
 
 **Never commit:** credentials, auth-profiles.json, .env, API keys, GA4 service account
 
+### Client Server Backups — MANDATORY
+
+**Every time I make changes to a client's OpenClaw server, I MUST commit and push before considering the task done.**
+
+```bash
+# Client workspace + config backup (single repo pattern)
+ssh into client server, then:
+cd ~/.openclaw/workspace
+cp ~/.openclaw/openclaw.json config-backup/
+cp -r ~/.openclaw/cron/ config-backup/cron/
+git add -A && git commit -m "description of changes" && git push
+```
+
+**Client repos (all under Jonny's GitHub, all private):**
+| Client | Repo | What's backed up |
+|--------|------|-----------------|
+| Kilmurry Lodge | `github.com/Jonnyhimalaya/Kilmurry` | Workspace + config-backup/ |
+
+**The rule:** If it's not in git, it didn't happen. Config changes, cron edits, skill updates, workspace changes — all must be committed. This gives Jonny full version history and rollback ability for every client.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.

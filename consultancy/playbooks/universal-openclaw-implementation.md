@@ -312,11 +312,25 @@ Script template: adapt from `scripts/server-health.sh` (Leamy) or Kilmurry versi
 - [ ] Alert thresholds: >100 messages warning, >200 critical
 - [ ] Heartbeat interval: 30 minutes (default)
 
-## 3.4 Backup
-- [ ] Workspace backup script (tar the workspace directory)
-- [ ] Schedule: daily or weekly depending on activity level
-- [ ] Retention: keep last 7 backups minimum
-- [ ] Test restore procedure at least once
+## 3.4 Git Backup (MANDATORY — every client)
+
+Every client workspace gets backed up to a private GitHub repo under Jonny's account. One repo per client, single-repo pattern with `config-backup/` folder.
+
+**Setup:**
+- [ ] Create private repo: `github.com/Jonnyhimalaya/<ClientName>`
+- [ ] Init git in `~/.openclaw/workspace/`, add `.gitignore` (exclude credentials, .env, session data)
+- [ ] Create `config-backup/` folder, copy `openclaw.json` + `cron/` + `skills/` into it
+- [ ] Initial commit + push
+- [ ] Test: verify repo visible on GitHub with all files
+
+**Ongoing rule:** Every time we make changes to a client's server, we MUST:
+1. Copy latest `openclaw.json` to `config-backup/`
+2. `git add -A && git commit -m "description" && git push`
+3. Not consider the task done until the push succeeds
+
+**Why:** Full version history + rollback ability. If we break something, `git revert` fixes it. If the server dies, `git clone` rebuilds the workspace.
+
+**Never commit:** API keys, .env, auth-profiles.json, bot tokens
 
 ---
 
