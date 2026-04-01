@@ -52,6 +52,12 @@
 - Verified: zero orphan processes, gateway running clean on systemd
 - Memory usage reduced after Chrome cleanup
 
+### QMD Memory Backend — Deployed ✅
+- Installed QMD (semantic memory search) for the agent
+- Configured BM25 search mode with vault paths
+- Agent can now search its own memory and vault files semantically
+- Enables faster, more accurate recall of past conversations and decisions
+
 ### Architecture Schematic — Written & Published ✅
 - Full architecture schematic document covering all server components
 - Published to Mission Control dashboard
@@ -111,11 +117,20 @@
 - Git backup protocol embedded in agent's instructions — agent will self-backup after meaningful changes
 - Full version history and rollback capability now available for Jack's entire system
 
+### Operational Intelligence Patterns — Deployed ✅
+- **Autonomy levels** — agent adjusts proactivity based on Jack's activity (responsive/ambient/proactive/dormant). Saves API costs during quiet periods.
+- **Structured logging (NDD format)** — all agent actions now logged as Noticed/Decision/Did for a clean audit trail
+- **Advisor model** — quality control cron runs every 6 hours, reviews agent's recent work for mistakes or missed tasks
+- **Dream cycle** — nightly memory consolidation at 2am: distils daily logs into long-term memory, archives old logs, trims bloat
+- **Append-only audit logs** — daily log entries can never be edited or deleted, creating a tamper-proof record
+- **HEARTBEAT.md upgraded** — sleep-when-idle protocol prevents token waste overnight
+- All changes backed up to GitHub
+
 ### Remaining Items (Scheduled)
 - [ ] Discord bot lockdown (need Jack's Discord user ID)
 - [ ] SSH hardening (key-only authentication, disable password login)
 - [ ] Jack's server password change (security hygiene)
-- [ ] Fallback model chain configuration (protect against API outages)
+- [ ] Fallback model chain configuration (needs Jack's additional API keys)
 - [ ] Agent sandboxing (restrict tool access per agent role)
 
 ---
