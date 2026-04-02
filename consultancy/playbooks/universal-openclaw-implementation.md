@@ -65,6 +65,104 @@ Every client server gets:
 - [ ] Gateway configured on loopback (127.0.0.1) with auth token
 - [ ] Primary model configured (recommend Opus or Sonnet depending on budget)
 - [ ] Fallback model configured (cross-provider: if primary is Anthropic, fallback to OpenAI or vice versa)
+- [ ] Auth profile rotation configured (see Auth Failover section below)
+- [ ] Exec approvals configured (see Exec Approvals section below)
+
+### Auth Failover — Profile Rotation + Cooldowns (v2026.4.1+)
+
+**Problem:** When a provider returns 429 (rate limit) or 529 (overloaded), OpenClaw needs to try another auth profile with the SAME provider before falling to a different model. Without this, a rate limit on one Anthropic key kills all Anthropic models in the chain.
+
+**What to configure:**
+
+1. **Multiple auth profiles per provider** — e.g., two Anthropic API keys (`primary` and `backup`)
+2. **`auth.order`** — tells OpenClaw which profile to try first per provider
+3. **`auth.cooldowns`** — how many profile rotations to attempt before model fallback
+
+```bash
+# Set profile order (try 'primary' first, then 'backup')
+openclaw config set auth.order.anthropic '["primary", "backup"]'
+
+# Set cooldowns — rotate profiles 2x before falling to next model
+openclaw config set auth.cooldowns.rateLimitedProfileRotations 2
+openclaw config set auth.cooldowns.overloadedProfileRotations 2
+openclaw config set auth.cooldowns.overloadedBackoffMs 2000
+
+# Restart gateway to apply
+openclaw gateway restart
+```
+
+**Full failover chain example:**
+```
+anthropic:primary (opus) → anthropic:backup (opus) → openrouter (opus)
+→ anthropic:primary (sonnet) → anthropic:backup (sonnet)
+→ google (gemini) → openai (gpt-5.4) → openai (gpt-4o)
+```
+
+**Why this matters:** On Apr 2, 2026 our Telegram session hit 429 rate limits. Without profile rotation, the agent was dead — couldn't fall to the backup Anthropic key. Configuring `auth.order` + `auth.cooldowns` fixed it in under 5 minutes.
+
+**Checklist:**
+- [ ] At least 2 auth profiles for the primary provider (e.g., two Anthropic keys)
+- [ ] `auth.order.<provider>` configured with profile priority
+- [ ] `rateLimitedProfileRotations: 2` set
+- [ ] `overloadedProfileRotations: 2` set
+- [ ] `overloadedBackoffMs: 2000` set
+- [ ] Model-level fallback chain configured (`agents.defaults.model.fallbacks`)
+- [ ] Tested: trigger a 429 and verify profile rotation occurs before model fallback
+
+### Exec Approvals — Host-Local Policy (v2026.4.1+)
+
+**Problem:** v2026.4.1 tightened exec approval defaults. After updating, agents lose exec access entirely — even `ls` is blocked. Every command returns `"Exec approval is required, but no interactive approval client is currently available"`. Known bug: [#58691](https://github.com/openclaw/openclaw/issues/58691).
+
+**Root cause:** The update requires an explicit `exec-approvals.json` file on the execution host. Without it, the host-local policy defaults to `deny` regardless of what `tools.exec.security` says in `openclaw.json`.
+
+**Fix — set host-local approvals:**
+
+```bash
+# For gateway host (most common for VPS deployments)
+openclaw approvals set --stdin <<'EOF'
+{
+  "version": 1,
+  "defaults": {
+    "security": "full",
+    "ask": "off",
+    "askFallback": "full"
+  }
+}
+EOF
+
+# Verify
+openclaw approvals get
+```
+
+**For tighter security (recommended for client deployments):**
+```bash
+openclaw approvals set --stdin <<'EOF'
+{
+  "version": 1,
+  "defaults": {
+    "security": "allowlist",
+    "ask": "on-miss",
+    "askFallback": "deny"
+  },
+  "agents": {
+    "main": {
+      "security": "full",
+      "ask": "off"
+    }
+  }
+}
+EOF
+```
+This gives the main agent full exec, but sub-agents need explicit approval — principle of least privilege.
+
+**⚠️ CRITICAL: Do this IMMEDIATELY after every OpenClaw update.** Test exec with a simple command (`echo test`) before continuing any other setup. If exec is broken, nothing else works.
+
+**Checklist:**
+- [ ] `exec-approvals.json` created via `openclaw approvals set`
+- [ ] Main agent has appropriate exec level (full or allowlist)
+- [ ] Sub-agents have restricted exec (allowlist or deny)
+- [ ] Tested: agent can run `echo test` after update
+- [ ] Added to post-update verification checklist
 
 ### systemd Gateway Service (MANDATORY — not tmux, not screen, not nohup)
 
@@ -224,7 +322,35 @@ AFTER every meaningful exchange:
 | Distilled lessons, persistent facts | `MEMORY.md` (pointers) or `vault/` (detail) |
 | Operational rules | `AGENTS.md` |
 | Persona, voice, style | `SOUL.md` |
+
+### Protocol C: Periodic Memory Checkpoint (every ~150 messages)
+Sessions can freeze, hit API errors, or bloat past limits. If /new is forced, conversation context is lost.
+
+Rule: Every ~150 messages, flush all unsaved events to memory:
+1. Track message count (grep -c '"role"' on session file, or estimate)
+2. At 150, 300, 450 — write checkpoint to `memory/YYYY-MM-DD.md`
+3. Mark with: `### Memory Checkpoint — HH:MM UTC (msg ~N)`
+4. Track last checkpoint in `heartbeat-state.json` under `session.lastCheckpointMsgCount`
+
+**Why:** On Apr 2, 2026 a TG session hit 516 messages, froze on 429 errors, required /new, and lost the entire exec-access-loss event from memory. Periodic checkpoints prevent this.
+
+### Protocol D: Post-/new Transcript Rescan (recovery)
+When /new is forced, the old session is archived as `.reset`. On startup, scan it for lost context.
+
+Rule: On EVERY new session startup:
+1. Check: `ls -t ~/.openclaw/agents/main/sessions/*.reset.* | head -3`
+2. If newest `.reset` is from today/yesterday → extract user messages + assistant actions
+3. Compare against today's memory file
+4. Append missing events with `[RECOVERED]` tag
+5. Tell the human: "Recovered X events from previous session"
+
+**Why:** Safety net for Protocol C failures. Even if checkpoints were missed, the transcript is always recoverable from the `.reset` archive.
 ```
+
+**Protocol checklist:**
+- [ ] Protocols A-D documented in client's AGENTS.md
+- [ ] Protocol D added to session startup sequence (step 5)
+- [ ] `session.lastCheckpointMsgCount` field added to `heartbeat-state.json`
 
 ### QMD Memory Backend (recommended)
 - [ ] Install prerequisites: `apt install -y unzip` (as root)
@@ -479,6 +605,29 @@ After implementing Phase 3 + 3.5, every client should have:
 | Dream Cycle | 2am | Sonnet | Memory consolidation |
 | Advisor Check | Every 6h | Gemini | Quality control / meta-oversight |
 | Session Costs | Every 4-8h | Sonnet | Track API spend |
+| Intel Sweep | Weekly | Grok-mini / Scout | Ecosystem monitoring (optional) |
+
+### Intel Sweep (Optional — recommended for our own deployment + tech-savvy clients)
+
+A scheduled scan of X/Twitter, GitHub releases, Reddit, and community channels for:
+- OpenClaw version updates and breaking changes
+- Security advisories
+- New community patterns and use cases
+- Competitor movements
+
+```bash
+openclaw cron add \
+  --name "Intel Sweep" \
+  --cron "0 8 * * 3" \
+  --tz "<CLIENT_TZ>" \
+  --agent scout \
+  --model "xai/grok-3-mini" \
+  --session isolated \
+  --timeout-seconds 300 \
+  --message "Run ecosystem intel sweep: check OpenClaw GitHub releases for new versions, search X for openclaw issues/tips, check for security advisories. Write findings to memory/intel-sweep-latest.md. If critical findings (security, breaking changes), alert the user immediately."
+```
+
+**Why:** On Apr 2, 2026, our intel sweep caught v2026.4.1's release and 33 security vulnerabilities found by Ant AI Security Lab — before we'd have noticed manually. The sweep pays for itself the first time it catches a breaking change.
 
 Sector-specific cron jobs (e.g., rate scraping, review monitoring) are added in Phase 5.
 
@@ -493,9 +642,43 @@ If the client needs web-based tasks:
 - [ ] Persistent browser profile configured (if needed for logins)
 - [ ] Chrome auto-cleanup in health script (critical — Chrome leaks memory)
 
-## 4.2 Web Search
-- [ ] Brave Search API key configured (or alternative)
+## 4.2 Web Search — SearXNG (v2026.4.1+)
+
+**SearXNG is now the recommended search backend.** It's bundled with OpenClaw v2026.4.1+, self-hosted, and has zero rate limits. Brave Search still works but is rate-limited (we hit 429s during production use on Apr 2, 2026).
+
+**Setup (v2026.4.1+):**
+SearXNG is bundled as a plugin. Just enable it:
+```bash
+# Check it's available
+openclaw config get plugins.entries.searxng
+
+# Enable it (usually auto-enabled on fresh installs)
+openclaw config set plugins.entries.searxng.enabled true
+openclaw config set plugins.entries.searxng.config.webSearch.baseUrl "http://localhost:8888"
+
+# Disable Brave if previously configured (avoid conflicts)
+openclaw config set plugins.entries.brave.enabled false
+
+openclaw gateway restart
+```
+
+**Verify:**
+```bash
+# Direct test
+curl 'http://localhost:8888/search?q=test&format=json' | python3 -m json.tool | head -20
+
+# Via agent — web_search tool should show provider: "searxng"
+```
+
+**If SearXNG isn't available (older versions):**
+- [ ] Brave Search API key configured as fallback
 - [ ] Test search working
+
+**Checklist:**
+- [ ] SearXNG plugin enabled and running on localhost:8888
+- [ ] Brave disabled (if SearXNG active)
+- [ ] web_search tool tested — returns results with `provider: "searxng"`
+- [ ] No rate limit warnings in logs
 
 ## 4.3 Cron Jobs — Universal Set
 Every client should have at minimum:
@@ -555,7 +738,50 @@ This is where every client diverges:
 - Monthly health review (server, costs, agent performance)
 - Quarterly capability review (what to add next)
 - Incident response (if agent breaks or server issues)
-- Version upgrades (OpenClaw updates, model upgrades)
+- Version upgrades (OpenClaw updates — see Post-Update Verification below)
+
+### Post-Update Verification Checklist (MANDATORY after every OpenClaw update)
+
+**Run this every time `npm install -g openclaw@latest` is executed on any client server:**
+
+```bash
+# 1. Verify version
+openclaw --version
+
+# 2. Check gateway starts cleanly
+openclaw gateway status
+
+# 3. Test exec access (THIS BREAKS MOST OFTEN)
+openclaw approvals get     # Check host-local policy
+# If exec is broken: openclaw approvals set (see Phase 1.2 Exec Approvals)
+
+# 4. Check auth failover config survived
+openclaw config get auth.order
+openclaw config get auth.cooldowns
+
+# 5. Check SearXNG still running
+curl -s 'http://localhost:8888/search?q=test&format=json' | head -5
+
+# 6. Run doctor
+openclaw doctor --fix
+
+# 7. Test agent can execute commands
+# Send a test message and verify exec works
+
+# 8. Commit config changes
+cd ~/.openclaw/workspace
+cp ~/.openclaw/openclaw.json config-backup/
+git add -A && git commit -m "Post-update verification: $(openclaw --version)" && git push
+```
+
+**Known breaking changes by version:**
+| Version | What breaks | Fix |
+|---------|------------|-----|
+| v2026.3.31+ | Exec approvals default to deny | Set `exec-approvals.json` via `openclaw approvals set` |
+| v2026.4.1 | `auth.cooldowns` not auto-migrated | Manually configure `auth.order` + cooldowns |
+| v2026.4.1 | Brave plugin disabled, SearXNG bundled | Enable SearXNG plugin, disable Brave |
+
+**Update this table as we discover new breaking changes.**
 
 ## 7.3 Growth Path
 ```
@@ -584,6 +810,9 @@ PHASE 1 — Server Setup
 [ ] OpenClaw installed
 [ ] systemd service running
 [ ] API keys configured
+[ ] Auth profile rotation configured (auth.order + auth.cooldowns)
+[ ] Exec approvals configured (exec-approvals.json)
+[ ] Exec tested (agent can run 'echo test')
 [ ] Channel connected
 [ ] First message received
 
@@ -591,10 +820,12 @@ PHASE 2 — Identity & Memory
 [ ] SOUL.md written (<1KB, includes anti-echo-chamber)
 [ ] USER.md written
 [ ] IDENTITY.md set
-[ ] AGENTS.md configured (<3KB, includes Search-First protocol)
+[ ] AGENTS.md configured (<3KB, includes Protocols A-D)
 [ ] vault/ directory created with domain subdirectories
 [ ] Business knowledge seeded into vault/ files (NOT MEMORY.md)
 [ ] MEMORY.md written as pointer index (<3KB, links to vault/)
+[ ] Protocol C checkpoint tracking in heartbeat-state.json
+[ ] Protocol D transcript rescan in startup sequence
 [ ] QMD installed (unzip → bun → @tobilu/qmd)
 [ ] QMD configured (searchMode: "search", extraPaths: ["vault"])
 [ ] Gateway restarted, memory_search tested
@@ -608,8 +839,9 @@ PHASE 3 — Monitoring
 
 PHASE 4 — Core Capabilities
 [ ] Browser automation (if needed)
-[ ] Web search configured
-[ ] Core cron jobs running
+[ ] SearXNG enabled and tested (or Brave as fallback)
+[ ] Core cron jobs running (health, dream, advisor, costs)
+[ ] Intel sweep cron (optional)
 [ ] Mission Control (if applicable)
 
 PHASE 5 — Sector Module
@@ -672,6 +904,33 @@ Both Kilmurry and Leamy servers were migrated from tmux to systemd on the same d
 - **WooCommerce membership quirk:** post_status must be "wcm-active" not "publish." Document platform quirks per client.
 - **Session bloat causes API 529 errors.** Monitor session sizes, alert early.
 - **Target <8KB total workspace files** injected per message (SOUL <1KB, AGENTS <3KB, MEMORY <3KB, TOOLS <1KB). Anything bigger belongs in vault/.
+
+### INCIDENT: Exec Lockout After v2026.4.1 Update (2 Apr 2026)
+After updating to v2026.4.1, the agent completely lost exec access. Every command — including `ls` — returned "approval-unavailable / no-approval-route". The agent had to ask the human to run diagnostic commands manually.
+
+**Root cause:** v2026.4.1 introduced `exec-approvals.json` as a host-local policy layer. Without this file, exec defaults to `deny` regardless of `tools.exec.security: "full"` in `openclaw.json`. Known bug [#58691](https://github.com/openclaw/openclaw/issues/58691).
+
+**Fix:** `openclaw approvals set` with `security: "full"`, `ask: "off"`, `askFallback: "full"`.
+
+**Lesson:** Always test exec immediately after ANY OpenClaw update. Add to post-update verification checklist.
+
+### INCIDENT: Session Freeze + Memory Loss (2 Apr 2026)
+Telegram session grew to 516 messages. Hit Anthropic 429 rate limits repeatedly. Session froze — agent couldn't respond. Human forced /new, which wiped all conversation context. The entire exec-lockout-and-fix sequence was lost from memory because it hadn't been saved to disk yet.
+
+**Root cause:** No periodic memory checkpoints. Agent relied on end-of-session saves, but the session died before it could save.
+
+**Fix:** Protocol C (periodic checkpoints every ~150 messages) + Protocol D (post-/new transcript rescan from `.reset` archives).
+
+**Lesson:** Sessions WILL die unexpectedly. Treat memory files as the source of truth, not conversation context. Save early, save often.
+
+### INCIDENT: Auth Failover Not Configured (2 Apr 2026)
+Two Anthropic auth profiles existed but `auth.order` was never set. When the primary key hit 429 rate limits, OpenClaw couldn't rotate to the backup key. The agent was stuck.
+
+**Root cause:** `auth.order` and `auth.cooldowns` are new config options in v2026.4.1. They don't auto-populate — must be manually configured.
+
+**Fix:** Set `auth.order.anthropic: ["primary", "backup"]` + `rateLimitedProfileRotations: 2` + `overloadedProfileRotations: 2`.
+
+**Lesson:** Having multiple API keys is useless without rotation config. Always configure `auth.order` when setting up multi-profile auth.
 
 ---
 
