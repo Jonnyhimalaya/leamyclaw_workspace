@@ -1,3 +1,5 @@
 leamymaths-video/
 *.mp4*
 credentials/
+
+# Credentials - NEVER commit
