@@ -66,6 +66,38 @@
 ### 13. Study VirloMain + ScrapeCreators for Content Module
 - Matt Berman's content strategist system. Could power Kate's competitive intel.
 
+## 🟡 FROM BATCH 2 (New This Sprint Items)
+
+### 14. Jonny: Get Claude Certified Architect (FREE)
+- **Why:** Anthropic's free certification. "Highest paid AI job." Instant credibility for consultancy.
+- **Action:** Find the course at anthropic.com/education or similar, complete it
+- **Impact:** "Claude Certified Architect" on business cards/website
+
+### 15. Run Rimsha's 3-Question Framework on Kilmurry
+- **Why:** YC founder's method for compressing months of market research into 3 hours
+- **Questions:** (1) What does every successful boutique hotel understand that guests never say? (2) What 3 assumptions is the Limerick hotel market built on? (3) 5 investor-level challenges to Kilmurry's strategy.
+- **Impact:** Produces insights for Jack that feel like expensive consulting
+
+### 16. Build Critic Agent Skill for Content Pipeline
+- **Why:** Ole Lehmann's self-correcting writing system. Voice DNA + critic protocol = no manual editing.
+- **Action:** Create critic.md skill with banned AI-isms list, voice matching, 3-round review loop
+- **Impact:** All content output passes quality gate before delivery
+
+### 17. Implement Bloggersarvesh Local SEO Playbook for Kilmurry
+- **Why:** 5-step system that generated 78 leads in 30 days. Directly applicable to hotels.
+- **Steps:** Keywords → service area pages → GBP optimization → proof content → review system
+- **Impact:** Kate's SEO/AEO module gets a proven framework
+
+### 18. Evaluate Firecrawl for Web Extraction
+- **Why:** 100K GitHub stars, YC-backed. Better than web_fetch for structured extraction.
+- **Action:** Self-host via Docker, test against current web_fetch quality
+- **Impact:** Improved data quality for research + competitor monitoring
+
+### 19. Add Proactive Mandate to Kate's SOUL.md
+- **Why:** Alex Finn's overnight building prompt works. Adapted version for Kate's marketing agent.
+- **Action:** Include in Kate's setup: "Every night, prepare tomorrow's social posts, check reviews, update competitor intel."
+- **Impact:** Kate wakes up to work done, not work to do
+
 ## 📊 Consultancy Positioning Updates
 
 ### Add to Sales Materials:
@@ -73,9 +105,21 @@
 - "We implement the patterns that Kaostyl's viral thread (3.6K bookmarks) describes"
 - "Our clients get the $8K/mo content strategist result for $30/mo in API costs"
 - Reference Polydao's "architecture not chatbot" framing
+- "Your unmanaged AI agents are 91% vulnerable to prompt injection" (Runlayer stat)
+- Chrys Bader's $4,200 car negotiation story as viral demo
+- Brand photography replacement ($30K savings) as killer hook for hospitality
 
 ### Pricing Validation Points:
 - Gonto: $250-300/mo for AI EA (vs $1,500 human)
 - Matt Berman: $30/mo replaces $8K/mo strategist
 - Florian: $4.8K MRR from 300 founders at ~$16/mo
+- Smart Ape: $30K/year photography savings
+- Boring Marketer → Hermes migration = what happens without proper setup
 - Our managed service: $2-5K setup + $200-500/mo maintenance (justified by above)
+
+### New Service Lines Identified:
+1. **Brand Photography Replacement** — $30K savings pitch for hotels/restaurants
+2. **Local SEO Automation** — 5-step playbook for any local business
+3. **Research-as-a-Service** — 3-hour deep dive replacing months of discovery
+4. **Content Critic Pipeline** — self-correcting AI writing system
+5. **Enterprise Security Audit** — "your agents are 91% vulnerable" hook
