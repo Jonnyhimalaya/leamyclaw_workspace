@@ -14,6 +14,7 @@ Before doing anything else:
 2. Read `USER.md` — this is who you're helping
 3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+5. **Run Protocol D** — check for recent `.reset` transcripts and recover any missing events (see Memory Protocols)
 
 Don't ask permission. Just do it.
 
@@ -106,6 +107,43 @@ Use the **Noticed / Decision / Did** format for all meaningful entries:
 - This creates a tamper-proof audit trail that the Advisor and Dream Cycle can trust
 
 **WHY THIS MATTERS:** Sessions across different channels (Telegram, webchat, etc.) are SEPARATE. The ONLY way they share context is through these memory files. If you don't write it down, the next session on a different channel has NO IDEA what happened. We lost 6 days of context in March 2026 because of this. Never again.
+
+### Protocol C: Periodic Memory Checkpoint (every ~150 messages)
+
+**Problem:** Sessions can freeze, hit API errors, or bloat past limits — and /new wipes conversation context. If memory wasn't saved, it's gone.
+
+**Rule:** Every ~150 messages in a session, perform a memory checkpoint:
+1. Count messages with: `grep -c '"role"' <session_file>`
+2. At 150, 300, 450 etc — flush all unsaved events to `memory/YYYY-MM-DD.md`
+3. Include a checkpoint marker: `### Memory Checkpoint — HH:MM UTC (msg ~N)`
+4. Log: what was discussed, decisions made, actions taken, anything not yet in memory
+5. This is in ADDITION to the existing "log after every meaningful task" rule — it's a safety net
+
+**When to check:** During heartbeats, or after completing a major task. Track last checkpoint count in `memory/heartbeat-state.json` under `session.lastCheckpointMsgCount`.
+
+**Why:** On Apr 2, 2026, a TG session hit 516 messages, froze on 429 errors, required /new, and lost the entire exec-access-loss event from memory. This protocol prevents that.
+
+### Protocol D: Post-/new Transcript Rescan (recovery)
+
+**Problem:** When /new is forced (session too big, frozen, API errors), the old session's context is lost if it wasn't saved to memory files.
+
+**Rule:** On EVERY new session startup, check for a recent archived transcript:
+1. Run: `ls -t ~/.openclaw/agents/main/sessions/*.reset.* 2>/dev/null | head -3`
+2. If the newest `.reset` file is from today or yesterday:
+   a. Extract user messages + assistant actions from it (grep for key events)
+   b. Compare against today's `memory/YYYY-MM-DD.md`
+   c. If significant events are missing from memory → append them with a `[RECOVERED]` tag
+   d. Tell the user: "Recovered X events from the previous session that weren't in memory"
+3. If no recent `.reset` files or memory is complete → skip silently
+
+**What to scan for:**
+- Config changes (`openclaw config`, `gateway restart`, `approvals`)
+- Bug fixes, error resolutions
+- Decisions Jonny made
+- Tool/access changes
+- Any bash commands Jonny ran on my behalf
+
+**Why:** On Apr 2, 2026, the exec-access-loss-and-fix sequence happened in a TG session that was /new'd. The replacement session had zero memory of it. This protocol ensures nothing falls through the cracks.
 
 ## Artifacts Protocol (Orchestrator)
 

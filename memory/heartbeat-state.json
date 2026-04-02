@@ -8,7 +8,11 @@
     "serverHealth": "2026-04-02T08:56:00Z"
   },
   "autonomy": {
-    "lastHumanMessage": "2026-04-02T16:31:00Z",
+    "lastHumanMessage": "2026-04-02T17:45:00Z",
     "level": "responsive"
+  },
+  "session": {
+    "lastCheckpointMsgCount": 0,
+    "lastCheckpointAt": null
   }
 }
