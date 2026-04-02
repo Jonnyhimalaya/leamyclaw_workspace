@@ -1,76 +1,88 @@
 # OpenClaw Community Intel Sweep
-**Date:** 2026-04-01 05:00 UTC | **Coverage:** 2026-03-25 → 2026-04-01
+**Date:** 2026-04-02
+**Sources:** Twitter/X (via Scout), Reddit, GitHub, Blogs
 
 ---
 
-## 🔥 HIGH-SIGNAL FINDINGS
+## 🚨 Critical/Action Required
 
-### 1. v2026.3.31 Released — Major Security Hardening + Task Flows
-**What:** Latest release (Mar 31) introduces significant breaking changes: plugin installs now fail-closed on dangerous code findings, gateway auth rejects mixed shared-token configs, node commands disabled until pairing approved, node-triggered flows restricted to reduced trusted surface. New features: unified background task control plane (SQLite-backed), task flow registry, `openclaw flows list|show|cancel` CLI, QQ Bot channel, Matrix streaming/threading improvements, Android notification forwarding with package filtering.
-**Why it matters:** The security hardening (fail-closed installs, auth tightening, node command lockdown) is exactly what enterprise/consultancy clients need. Task flows are a game-changer for orchestrated multi-step work. **We should update client deployments carefully — several breaking changes could disrupt existing setups.**
-**Source:** https://github.com/openclaw/openclaw/releases
+- **Plugin API Compatibility Fix (v2026.4.1):** ClawHub package installs were failing due to a stale version constant (1.2.0). Fixed in #53157 — plugin installs now check against the active runtime version (>=2026.3.22). **Action:** If you've had plugin install failures on client servers, update to v2026.4.1.
+- **Auth-profile failover improvements (v2026.4.1):** Rate-limit failures now properly cap same-provider retries before cross-provider fallback (#58707). New knob: `auth.cooldowns.rateLimitedProfileRotations`. **Action:** This may fix our known HTTP 529 fallback issue — test after update.
+- **Raw error leaking to chats fixed (#58831):** Provider/runtime failures were leaking into external chat channels. Now returns friendly retry messages. **Action:** Update to stop client-facing error dumps.
+- **Gateway restart loop fix (#58678):** Config reloader was triggering restart loops from generated auth tokens. Now ignores startup config writes. **Action:** If experiencing unexpected gateway restarts, update.
 
-### 2. 13 Releases in March — Community Experiencing "Update Fatigue"
-**What:** ManageMyClaw documented that March saw 13 releases (~one every 2 days). v2026.3.2 had 3 simultaneous breaking changes with no migration guide. Community reports 48-hour average recovery time per update. Top Reddit sentiment: frustration with constant breakage.
-**Why it matters:** **Massive consultancy opportunity.** Managed update services, pre-tested upgrade paths, and rollback playbooks are exactly what clients will pay for. We should create an "OpenClaw Update Playbook" skill and offer managed upgrades as a service tier.
-**Source:** https://managemyclaw.com/blog/openclaw-update-survival-guide/
+## 📦 Release Updates
 
-### 3. Lenny's Newsletter: "The Complete Guide to OpenClaw" — Mainstream Adoption Signal
-**What:** Claire Vo published a definitive guide on Lenny's Newsletter (one of the biggest product management newsletters). She runs 9+ agents for business ops, sales, family logistics. Key quote from Jensen Huang at GTC 2026: "OpenClaw is probably the single most important release of software, probably ever."
-**Why it matters:** OpenClaw has crossed from developer toy to mainstream business tool. Product managers and non-technical leaders are now the audience. **Our consultancy should target this demographic — they have budget but not technical skill.** Claire's use cases (sales automation, family logistics, multi-agent orchestration) map directly to offerings we can productize.
-**Source:** https://www.lennysnewsletter.com/p/openclaw-the-complete-guide-to-building
+### v2026.4.1 (Released April 1, 2026) — Latest
+Key changes:
+- **`/tasks` command:** Chat-native background task board for current session (#54226)
+- **SearXNG web search provider:** Bundled alternative to Brave Search with configurable host (#57317) — **relevant for us since we're hitting Brave rate limits**
+- **Amazon Bedrock Guardrails** support added (#58588)
+- **macOS Voice Wake:** Trigger Talk Mode by voice (#58490)
+- **Feishu Drive comments:** Document collaboration workflows (#58497)
+- **Webchat history truncation:** Now configurable via `gateway.webchat.chatHistoryMaxChars` (#58900)
+- **Global default provider params:** `agents.defaults.params` for setting defaults across all agents (#58548)
+- **Cron tools allowlist:** `openclaw cron --tools` for per-job tool restrictions (#58504)
+- **Compaction model override:** `agents.defaults.compaction.model` now works consistently (#56710)
+- **WhatsApp reactions:** `reactionLevel` guidance for agents
+- **Telegram error suppression:** `errorPolicy` and `errorCooldownMs` to prevent repeated error floods (#51914)
+- **New models:** ZAI glm-5.1 and glm-5v-turbo added
 
-### 4. "OpenClaw for Business" — Enterprise Use Cases Documented
-**What:** The Interactive Studio published a comprehensive enterprise guide. Key case studies: dental group (30 locations, natural language financial queries), sales teams (4hrs/day → 15min review). NVIDIA's NemoClaw enterprise reference stack announced at GTC. ClawCon events in SF, NYC, Madrid, Austin with production deployment talks.
-**Why it matters:** Validates our consultancy model. Real companies are deploying in production. The dental group case (multi-location business, financial reporting via natural language) is directly replicable for our hospitality/education clients. **NemoClaw could be worth evaluating for enterprise client tier.**
-**Source:** https://insights.theinteractive.studio/openclaw-for-business-what-it-is-real-use-cases-and-how-to-implement-it
+### Ecosystem Releases
+- **OpenClaw-RL v1** (Gen-Verse): Async RL framework for training personalized agents from conversation feedback
+- **NanoClaw** (HKUDS): Ultra-lightweight OpenClaw alternative, agent runner extracted with lifecycle hooks unified (Mar 26)
+- **OpenClaw-Office** (WW-AI-Lab): WebSocket auth scope fixes for Gateway 2026.3.23 compatibility
 
-### 5. Reddit: Cost Optimization Strategies Emerging
-**What:** Active r/openclaw thread on running OpenClaw without burning money. Key strategies: (a) Telegram topics with separate sessions to avoid context pollution, (b) lightweight tools only in topic sessions + subagents for heavy work, (c) local Llama 3.1 for non-critical tasks on Mac Mini.
-**Why it matters:** Session architecture patterns we should steal. The "Telegram topics + subagent delegation" pattern is exactly what we do — validates our approach. **The local LLM fallback for non-critical tasks could reduce client costs significantly.**
-**Source:** https://www.reddit.com/r/openclaw/comments/1s1t8d0/how_are_you_actually_running_openclaw_without/
+### Version Info
+- OpenClaw uses CalVer: roughly daily releases
+- **Our server:** v2026.3.28 → should update to v2026.4.1
+- **Stars:** 228K+ GitHub stars, 600+ contributors
 
-### 6. awesome-openclaw-skills: 5,400+ Skills Catalogued
-**What:** VoltAgent published a curated/categorized list of 5,400+ skills from the OpenClaw Skills Registry. Includes agent-dashboard, agent-dispatch, agent-hq (mission control stack), and denchclaw (local CRM with DuckDB + browser automation).
-**Why it matters:** **denchclaw (local CRM)** is worth evaluating for SMB clients who don't want SaaS CRM costs. The agent-hq mission control stack could complement or replace our custom Mission Control. Worth auditing for skill gaps in our own deployments.
-**Source:** https://github.com/VoltAgent/awesome-openclaw-skills
+## 💡 Community Use Cases (from X + Reddit)
 
-### 7. $5 VPS Deployment Guides Going Viral
-**What:** Multiple guides (Medium, Cognio Labs) showing OpenClaw deployment on cheap VPS instances. Full walkthrough from install to first automations.
-**Why it matters:** Lowers the barrier for potential clients. Also creates competition — if setup looks "easy," clients may try DIY first. **Our value prop must be in orchestration, maintenance, and business logic — not just installation.**
-**Source:** https://medium.com/@rentierdigital/ | https://cognio.so/clawdbot/self-hosting
+### From X/Twitter (Scout findings):
+- **Arbitrage/trading bots:** Users running OpenClaw for real-time arbitrage on Polymarket and content generation. Revenue-generating autonomous agents.
+- **Hive marketplace integration:** OpenClaw connecting with trading/automation marketplaces for multi-agent workflows.
+- **One-click deployments:** myclaw.ai offering simplified deployment; community sharing exec-approvals.json customization tips.
+- **Security-conscious deployments:** Growing awareness of sandboxing and human-approval gates for risky actions.
 
----
+### From Web/Reddit:
+- **$5 VPS deployments:** Medium tutorial showing full OpenClaw setup on budget servers — the DIY market is exploding
+- **Small business adoption:** r/AiForSmallBusiness has a comprehensive setup guide based on Simeon Yasar's 3-hour course
+- **LobeHub pairing:** VirtualUncle recommends pairing OpenClaw (execution) with LobeHub (visual agent design) to cover OpenClaw's gaps in visual design and native knowledge bases
+- **Developer automation:** Blink.new guide on automating GitHub PR reviews, deployment monitoring, and incident alerts
+- **WeChat integration:** Official Tencent plugin via @tencent-weixin (iLink Bot API) — requires OpenClaw >=2026.3.22
 
-## 📊 X/TWITTER PULSE (Last 7 Days)
+## 📚 New Tutorials & Guides
 
-- **485k+ followers** on @openclaw — growth continues
-- Microsoft M365 integration generating significant buzz
-- ClawCon events creating FOMO and community momentum
-- NVIDIA partnership/hardening mentioned frequently — enterprise legitimacy signal
-- "awesome-openclaw" lists and community skills repos trending
-- iOS app and mobile companion getting attention
+1. **Thunderbit** — "OpenClaw Installation Steps: Ultimate 2026 Setup Guide" (1 week ago)
+2. **Medium/@rentierdigital** — "Deploy OpenClaw on a $5 VPS" — full walkthrough (1 week ago)
+3. **Valletta Software** — "OpenClaw Architecture & Setup Guide 2026" — corporate deployment focus (1 day ago)
+4. **r/AiForSmallBusiness** — "Complete OpenClaw Setup Guide 2026: Zero to Multi-Agent" (2 weeks ago)
+5. **VibeCoding.app** — "Beginner's Guide: Deploy 24/7 AI" covering Telegram, Google Workspace, cron, voice (1 week ago)
+6. **EastonDev/BetterLink** — Comparison of Docker/npm/one-click install methods with WSL2/macOS/server coverage (3 weeks ago)
+7. **VirtualUncle** — "Complete 2026 Deep Dive" — install, cost, hardware analysis (3 days ago)
+8. **OpenClawAPI.org** — NemoClaw deployment guide for secure sandboxed environments (2 weeks ago)
+9. **openclaw-ai.net** — "Complete Beginner's Guide: Zero to Productive in 30 Minutes" (3 weeks ago)
+10. **Blink.new** — "OpenClaw for Developers: GitHub, Code Review, and Deployment Automation" (1 week ago)
 
----
+## 🐛 Known Issues
 
-## 🎯 ACTIONABLE ITEMS FOR CONSULTANCY
+- **Brave Search rate limits:** Free plan hits 1 req/sec limit easily — consider SearXNG provider added in v2026.4.1 as alternative
+- **Plugin install failures:** If on versions below 2026.4.1, ClawHub installs may fail due to stale version check (fixed in #53157)
+- **Telegram/WhatsApp plugin breakage:** Some users on v2026.3.28 reported broken plugins — fix is `openclaw plugins install <plugin>` to re-resolve via ClawHub
+- **GPT-5.4 support:** Issue #38759 requested support (opened March); should be resolved in recent releases
+- **HTTP 529 fallback:** Our known issue where Anthropic overloaded errors don't trigger fallback chain — the new `auth.cooldowns.rateLimitedProfileRotations` in v2026.4.1 may address this
 
-| Priority | Action | Effort |
-|----------|--------|--------|
-| 🔴 HIGH | Create "Managed Updates" service — test releases before deploying to clients | 2-3 days |
-| 🔴 HIGH | Update all client deployments with v2026.3.31 security changes (auth, node lockdown) | 1 day/client |
-| 🟡 MED | Evaluate denchclaw (local CRM) for SMB clients | 1 day |
-| 🟡 MED | Build "OpenClaw for Non-Technical Leaders" onboarding package | 2-3 days |
-| 🟡 MED | Evaluate NemoClaw enterprise stack for larger clients | 1-2 days |
-| 🟢 LOW | Audit awesome-openclaw-skills for useful additions to our skill library | Half day |
-| 🟢 LOW | Document the "Telegram topics + subagent" cost optimization pattern | Half day |
+## 🎯 Action Items for Consultancy
 
----
-
-## 📈 MARKET SIGNALS
-
-- **Adoption curve:** OpenClaw has crossed the chasm — non-technical users (product managers, business owners) are now primary growth audience
-- **Competitive landscape:** ManageMyClaw.com is emerging as a managed services competitor
-- **Pain points:** Update fatigue, cost management, and security are top community concerns — all areas we can address
-- **Enterprise momentum:** NVIDIA/NemoClaw + Microsoft M365 integration = enterprise legitimacy established
-- **228k+ GitHub stars** — outpacing Linux in growth velocity per Interactive Studio article
+| Priority | Action | Details |
+|----------|--------|---------|
+| **HIGH** | Update our server to v2026.4.1 | Plugin fixes, error leak fix, failover improvements, SearXNG |
+| **HIGH** | Test 529 failover fix | New `auth.cooldowns.rateLimitedProfileRotations` knob may solve our longstanding issue |
+| **HIGH** | Verify Kilmurry Lodge server version | Still need SSH password from Jonny to check |
+| **MEDIUM** | Evaluate SearXNG as Brave replacement | We're hitting Brave rate limits on Free plan; SearXNG is now bundled |
+| **MEDIUM** | Test `openclaw cron --tools` | Per-job tool allowlists could improve security for client cron jobs |
+| **LOW** | Review NemoClaw for client sandboxing | Secure sandboxed agent environments — could be valuable for risk-averse clients |
+| **LOW** | Monitor OpenClaw-RL | RL-trained personalized agents could be a future consultancy offering |
+| **INFO** | Tutorial market saturation | 10+ new guides in 2 weeks — DIY is accessible; our value is managed/hardened/custom deployments |

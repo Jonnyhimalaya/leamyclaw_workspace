@@ -1,5 +1,5 @@
 # Research Repository — Master Index
-**Last updated:** 2026-03-31 00:00 UTC
+**Last updated:** 2026-04-02 15:20 UTC
 **Purpose:** Intelligence base for Jonny's OpenClaw consultancy. Fed by daily Scout sweeps + deep research runs.
 
 ---
@@ -34,6 +34,18 @@ Platform status, features, roadmap, competitive landscape.
 
 ### 5. Open Source Agentic AI Patterns (`2026-03-28-open-source-agentic-ai-usage-patterns.md`) — 17KB
 Earlier research on the broader agentic AI landscape.
+
+### 6. Agent Verification Techniques (`agent-verification-techniques.md`) — 9KB
+7 community patterns for catching hallucination and false claims. 3-phase implementation plan.
+- **Key finding:** Claude Code leak revealed 29-30% false claims rate
+- **Patterns:** Planner→Worker→Verifier, Cross-Model QC, Ground Truth registry, Citation mode
+- **Principle:** Verification cost should scale with stakes
+
+### 7. SearXNG Self-Hosted Search (`searxng-self-hosted-search.md`) — 2KB
+Replacing Brave Search with self-hosted SearXNG for zero-cost, unlimited web search.
+- **Why:** Brave Free plan rate limits actively broke our intel pipeline
+- **How:** Docker container + OpenClaw v2026.4.1 first-party plugin
+- **Consultancy value:** Standard deployment step, eliminates reliability issues for all clients
 
 ---
 
