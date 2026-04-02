@@ -36,6 +36,7 @@
 
 ## ⚠️ Known Issues
 - ~~xAI API credits exhausted~~ ✅ Topped up 2026-03-30 — Scout + x_search working
+- ~~HTTP 529 doesn't trigger fallback chain~~ ✅ Fixed 2026-04-02: v2026.4.1 `auth.cooldowns.overloadedProfileRotations` + `rateLimitedProfileRotations` configured. Profile rotation: claw → work, then model fallback chain.
 - OpenAI quota needs topping up (GPT-5.4 + GPT-4o failing)
 - Meta session expired — needs Jonny to log in manually
 

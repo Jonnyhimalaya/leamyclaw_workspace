@@ -19,6 +19,7 @@
 - Cron job: every 4 hours, Telegram alerts only if issues found
 - HEARTBEAT.md monitors session sizes (>100 warn, >200 critical)
 - Long sessions cause Anthropic 529 overloaded errors — /new to reset
+- **Auth failover (v2026.4.1):** Profile rotation configured: `auth.order.anthropic: [claw, work]`, `rateLimitedProfileRotations: 2`, `overloadedProfileRotations: 2`. Full chain: claw → work → openrouter/opus → sonnet → gemini → gpt-5.4 → gpt-4o
 
 ## Artifacts System (Mar 27, 2026)
 - Agents produce screenshots, reports, task plans
