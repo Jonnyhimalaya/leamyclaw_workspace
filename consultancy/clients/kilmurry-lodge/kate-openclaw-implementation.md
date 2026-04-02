@@ -149,9 +149,9 @@ sudo -u kateuser bash -c 'openclaw config set gateway.bind "127.0.0.1:18790"'
 # Switch to kateuser
 sudo su - kateuser
 
-# 1. Set primary model (Sonnet — cheaper for marketing tasks)
-openclaw config set agents.defaults.model.primary "anthropic/claude-sonnet-4-6"
-openclaw config set agents.defaults.model.fallbacks '["google/gemini-3.1-pro-preview", "openai/gpt-5.4"]'
+# 1. Set primary model (Opus — full capability for complex marketing + dashboard work)
+openclaw config set agents.defaults.model.primary "anthropic/claude-opus-4-6"
+openclaw config set agents.defaults.model.fallbacks '["anthropic/claude-sonnet-4-6", "google/gemini-3.1-pro-preview"]'
 
 # 2. Configure auth (Kate's API key or Jack's backup key)
 openclaw auth login --provider anthropic
