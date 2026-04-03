@@ -95,6 +95,7 @@ Adapted from Claude Code's autoDream system (via OnlyTerp).
 - **Gather**: Grep narrowly for durable knowledge. Don't read every file. Transcripts = last resort.
 - **Consolidate**: Write to memory/topics/ files. Fix contradictions at source. Convert relative dates to absolute.
 - **Prune**: Rebuild MEMORY.md as pure link index (<200 lines, <25KB). Each line: `- [Title](file.md) — hook`. Update dream-state. On failure, rollback lastDreamAt.
+- **Lint**: After consolidation, scan vault/ for contradictions between entries, stale info (>30 days no update), missing cross-references, and orphaned entries with no raw source. Fix or flag.
 
 ### Rules
 - Don't modify source code or config during dreams
