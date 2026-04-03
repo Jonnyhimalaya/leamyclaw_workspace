@@ -4,6 +4,7 @@
 ## About Jonny
 - Stephen (goes by Jonny; @jonnyhimalaya), Limerick, Ireland
 - Runs **Leamy Maths** (leamymaths.ie) — online maths education
+- Co-founder of a BTC company
 - Launching **AI consultancy** — OpenClaw setups for SMEs
 - Direct, no-fluff style. Wants me as his marketing guru.
 - Professional name on site: **Stephen** (NOT Stephan)
@@ -14,6 +15,7 @@
 - Multi-agent team → vault/technical/multi-agent-team.md
 - Infrastructure & tools → vault/technical/infrastructure.md
 - AI Consultancy → vault/consultancy/overview.md
+- Kilmurry Lodge (Kate Taylor) → consultancy/clients/kilmurry-lodge/kate-marketing-control-panel.md
 - Revision course tracking → revision-course-2026.json
 - Todo list → leamymaths-todo.md
 - Competitive analysis → leamymaths-competitive-analysis.md
@@ -39,8 +41,12 @@
 - ~~HTTP 529 doesn't trigger fallback chain~~ ✅ Fixed 2026-04-02: v2026.4.1 `auth.cooldowns.overloadedProfileRotations` + `rateLimitedProfileRotations` configured. Profile rotation: claw → work, then model fallback chain.
 - OpenAI quota needs topping up (GPT-5.4 + GPT-4o failing)
 - Meta session expired — needs Jonny to log in manually
+- **Security:** GA4 service account key was exposed in git history. Scrubbed from git, but key needs rotation in Google Cloud.
+- **Security:** Kilmurry server needs version check due to 33 OpenClaw vulnerabilities (sandbox escape); blocked on Jonny providing SSH password.
 
 ## Preferences
+- "Use initiative. Don't ask for this and that. Research, document, strategise. We will be the most innovative, most informed agentic consultant."
 - Observations → always add to leamymaths-todo.md
 - Mission Control exists at localhost:3333 — ENHANCE, don't rebuild
 - WooCommerce memberships: use the skill, verify wcm-active status
+- Memory Resilience: Always follow Protocol C (checkpoint every ~150 msgs) and D (rescan .reset transcripts on /new) to prevent data loss.

@@ -1,70 +1,46 @@
-# 🧠 Morning Action Brief — 2026-04-02
-
-> **Note:** This is an afternoon brief — the scheduled morning run at 06:15 didn't fire (likely Opus timeout). Running now at 15:17 UTC.
-
----
+# 🧠 Morning Action Brief — 2026-04-03
 
 ## 🔴 Fix Now
 
-### 1. Update Server from v2026.3.28 → v2026.4.1
-- **Intel:** v2026.4.1 released April 1st. We're 4 days behind on a release containing 4 separate fixes that directly affect us.
-- **Our exposure:**
-  - **Raw errors leaking to Telegram chats** (#58831) — Jonny's students or the Kilmurry bot could be seeing ugly provider stack traces instead of friendly messages. This is live right now.
-  - **HTTP 529 failover broken** (#58707) — Our known issue since March. The new `auth.cooldowns.rateLimitedProfileRotations` knob caps same-provider retries before cross-provider fallback. This is specifically the fix we've been waiting for.
-  - **Gateway restart loops** (#58678) — Generated auth tokens triggering config reloader. If Jonny's seen unexplained restarts, this is why.
-  - **Plugin install failures** (#53157) — Stale version constant blocking ClawHub installs.
-- **Recommended action:** `npm update -g openclaw && openclaw gateway restart`. Brief downtime (~10 seconds). Needs Jonny's go-ahead since it touches production.
-- **Effort:** Low (5 minutes). Risk: Low — CalVer minor, mostly fixes.
+### 1. Update to v2026.4.2 — We're One Version Behind with Breaking Changes
+- **Intel:** OpenClaw v2026.4.2 released (we're on v2026.4.1). It includes breaking config migrations: xAI `x_search` settings moved from `tools.web.x_search.*` to `plugins.entries.xai.config.xSearch.*`, and Firecrawl `web_fetch` from `tools.web.fetch.firecrawl.*` to `plugins.entries.firecrawl.config.webFetch.*`. A `openclaw doctor --fix` auto-migration is provided.
+- **Our exposure:** Checked our config — we only reference xAI as a model provider (`xai/grok-3-mini`), no legacy x_search or Firecrawl paths found. So the breaking changes likely won't bite us. However, staying one version behind means we miss the latest sandbox/transport hardening patches from the post-CVE-flood cleanup.
+- **Recommended action:** Run `npm update -g openclaw` to v2026.4.2, then `openclaw doctor --fix` as a safety check. Restart gateway. Takes 5 minutes.
+- **Effort:** Low (5 min)
 
-### 2. Switch from Brave Search to SearXNG — Immediately
-- **Intel:** SearXNG bundled as web_search provider in v2026.4.1 (#57317). Self-hosted, no API key, no rate limits.
-- **Our exposure:** **This is actively broken right now.** During this very briefing session, 2 of 3 web_search calls returned HTTP 429 (Brave rate limit exceeded on Free plan). Our daily intel pipeline, research tasks, and any agent doing web lookups are degraded. The Strategist, Main, and any agent using web_search are affected. We're paying for an AI consultancy that can't reliably search the web.
-- **Recommended action:** After updating to v2026.4.1:
-  1. Deploy SearXNG via Docker: `docker run -d --name searxng -p 8888:8080 searxng/searxng`
-  2. Add to openclaw.json: `"plugins": { "web_search": { "provider": "searxng", "host": "http://localhost:8888" } }`
-  3. Test with a simple search, then remove Brave API key dependency
-- **Effort:** Low (15 minutes). Eliminates a recurring daily pain point.
-- **Research:** SearXNG is a meta-search engine aggregating Google, Bing, DuckDuckGo etc. No API keys, no rate limits, fully self-hosted. The OpenClaw community has been asking for this since January — it's now first-party supported.
-
----
+### 2. Our Exec Config Is a Loaded Gun — YOLO Mode + Multi-Agent = Risk
+- **Intel:** The March 2026 CVE flood was brutal — 9+ CVEs in 4 days including sandbox boundary bypasses (CVE-2026-32988, CVE-2026-32915), auth bypass letting plugin subagents get root-equivalent access (CVE-2026-32916), and a WebSocket RCE (CVE-2026-25253, CVSS 8.8). Snyk published a full sandbox escape analysis. Community consensus: update to ≥4.2, audit exec permissions, consider SandyClaw/NemoClaw isolation.
+- **Our exposure:** **High.** We're running `security: "full"` with `ask: "off"` — every agent can execute arbitrary shell commands without human approval. We run 5 agents (Orchestrator, Wrench, Prism, Radar, Pixel) with different model providers. A prompt injection through any channel (Telegram, a scraped webpage, a malicious X post fed through Scout) could cascade into unrestricted shell execution on our server. We also have SSH credentials, GA4 service account keys, and WP admin access on this box.
+- **Recommended action:**
+  1. Change exec config to `ask: "on-miss"` (auto-approve known-safe commands, require approval for novel ones) — or at minimum add an allowlist for expected operations.
+  2. Move sensitive credentials (GA4 key, SSH keys) into a separate secrets manager or at least restrict file permissions so agent user can't read them.
+  3. Consider running agents in sandboxed mode (`sandbox: "require"`) except the main orchestrator.
+  4. Audit which agents actually need exec access — Scout and Pixel probably don't.
+- **Effort:** Medium (1–2 hours for config changes, longer for full secrets isolation)
 
 ## 🟡 Improve
 
-### 3. Lock Down Cron Jobs with `--tools` Allowlists
-- **Intel:** New `openclaw cron --tools` flag in v2026.4.1 (#58504) allows per-job tool restrictions.
-- **Our exposure:** We run 10+ cron jobs (heartbeat, intel sweep, scout, strategist, etc.). Currently every cron job has access to every tool. The heartbeat job has access to `exec` and `web_search` when it only needs `read` and `session_status`. The scout job has `exec` access when it only needs `x_search` and `write`. This violates least-privilege — if a prompt injection hit a cron job, it could run arbitrary commands.
-- **Recommended action:** Audit each cron job and add `--tools` restrictions:
-  - Heartbeat: `--tools read,exec,session_status,sessions_list`
-  - Scout: `--tools x_search,read,write`
-  - Main (intel sweep): `--tools web_search,web_fetch,x_search,read,write`
-  - Strategist: `--tools web_search,web_fetch,x_search,read,write,memory_search,memory_get`
-- **Effort:** Medium (30 minutes to audit and update all cron entries).
-- **Consultancy value:** This becomes a standard hardening step in our security playbook for every client deployment.
+### 3. Kilmurry Lodge Server — Still Exposed After 33 CVEs
+- **Intel:** The privilege escalation CVE (patched in 2026.3.28) is now well-documented with community analysis. The threat surface for unpatched OpenClaw instances is growing as attackers have more information.
+- **Our exposure:** Kilmurry Lodge server (172.239.98.61) is still running an unknown version — potentially vulnerable to all of the March CVE flood. This has been blocked on Jonny providing the SSH password since it was first flagged. Every day this sits is another day a client server is exposed.
+- **Recommended action:** Escalate to Jonny today. Frame it as: "Kate's server may be vulnerable to 9+ documented CVEs including remote code execution. We need the SSH password to audit and patch it. This is a liability issue for the consultancy." If password isn't available, ask Kate's team directly or consider whether the server should be taken offline until it can be verified.
+- **Effort:** Low (the ask is low — the block is human, not technical)
 
-### 4. Kill Bloated Session 3ff45b96
-- **Intel:** Heartbeat has flagged session 3ff45b96 at 313+ messages **five times today** (08:42, 12:19, 12:49, 13:19, 13:49 UTC). Nobody has acted on it.
-- **Our exposure:** Sessions over 200 messages cause exponentially growing token costs and increase the probability of hitting 529 rate limits — which is exactly the error we've been battling. This single session is likely contributing to our Anthropic rate-limit problems. It's also a compounding cost: every new message in a 313-message session sends the full context, burning through API credits faster.
-- **Recommended action:** Jonny should `/new` on whatever chat this session belongs to. If it's a Telegram conversation, just start fresh — the agent will pick up context from MEMORY.md and vault files anyway.
-- **Effort:** Low (10 seconds).
-
----
+### 4. Claude Code Channels — Competitive Threat, But Also Validation
+- **Intel:** Anthropic launched Claude Code Channels — letting users control Claude Code sessions remotely via Telegram, Discord, iMessage, WhatsApp through MCP bridges. X community is split: some call it an "OpenClaw killer," others note it loses context on restarts, lacks compaction, supports only 3-4 channels vs OpenClaw's 20+, and has no multi-agent orchestration or persistent memory.
+- **Our exposure:** This directly validates our consultancy's core offering but could erode it. Potential clients might say "why do I need your OpenClaw setup when Anthropic gives me this for free?" We need a clear answer.
+- **Recommended action:** Write a consultancy comparison doc (`consultancy/research/claude-code-channels-vs-openclaw.md`) covering: (a) what CCC does well (zero-setup for devs, official support, secure pairing), (b) where OpenClaw wins (multi-agent orchestration, persistent memory/soul, 20+ channels, self-hosted sovereignty, custom skills, non-coding use cases like hotel/education), (c) our pitch: "CCC is for solo developers. We build AI operating systems for businesses." Use this in client conversations.
+- **Effort:** Medium (1 hour to write the doc, ongoing to refine the pitch)
 
 ## 🟢 Opportunities
 
-### 5. Consultancy Positioning: "Managed > DIY" Narrative
-- **Intel:** 10+ new OpenClaw tutorials published in the past 2 weeks. $5 VPS guides, 3-hour beginner courses, one-click deployment services (myclaw.ai). The DIY market is exploding.
-- **Our exposure:** This is actually good news. The tutorial flood means more people are aware of OpenClaw, but it also means more people will try DIY setups and hit the problems we solve: security hardening, multi-agent coordination, failover configuration, plugin management, error handling, session lifecycle management. Every one of today's "Fix Now" items is something a DIY deployer would miss.
-- **Recommended action:** Create a "Why Managed?" one-pager for the consultancy pitch deck. Structure it around today's findings:
-  - "A $5 VPS tutorial won't tell you about raw error leaks to your customers"
-  - "YouTube guides don't cover failover chains for when Anthropic goes down at 2am"
-  - "One-click installs don't lock down cron tools or handle 300-message session bloat"
-  - Frame our service as the gap between "it works" and "it works reliably in production"
-- **Effort:** Medium (1-2 hours to draft). High consultancy ROI.
-
----
+### 5. Durable Task Flows — Potential Client Upsell Feature
+- **Intel:** v2026.4.2 restores the core Task Flow substrate with managed-vs-mirrored sync modes, durable flow state/revision tracking, and child task spawning with sticky cancel intent. This enables background orchestration that persists across sessions.
+- **Our exposure:** We're not using Task Flows yet. For Kilmurry Lodge, this could power automated daily workflows (guest check-in prep, review monitoring, social media posting) that survive gateway restarts. For Leamy Maths, it could automate the revision course student tracking (e.g., auto-flag students who paid but haven't attended — currently manual per the todo list).
+- **Recommended action:** After updating to v2026.4.2, test Task Flows with a simple use case: automated daily student attendance check against WooCommerce orders. If it works reliably, package it as a consultancy offering: "Always-on background workflows that don't break when your server restarts."
+- **Effort:** Medium (2–3 hours to prototype)
 
 ## 📋 Summary
-- **5 items flagged:** 2 critical, 2 improvements, 1 opportunity
-- **Estimated total implementation effort:** ~3 hours (mostly the cron audit and consultancy doc)
-- **Priority recommendation:** Items 1 and 2 together — update to v2026.4.1 and deploy SearXNG. Takes 20 minutes total and fixes three active production issues (error leaks, failover, web search). The SearXNG fix is the most impactful per minute spent — we literally cannot do our job reliably without it.
-- **Blocked:** Kilmurry Lodge server version check still needs SSH password from Jonny.
+- 5 items flagged (2 critical, 1 improvement, 1 competitive intelligence, 1 opportunity)
+- Estimated total implementation effort: ~5 hours (excluding Kilmurry which is blocked on human input)
+- **Priority recommendation:** Items 1 and 2 first — update to v2026.4.2 and tighten exec permissions. These are 1–2 hours of work that dramatically reduce our attack surface. Then chase Jonny on Kilmurry Lodge SSH access. The competitive positioning doc (item 4) can be done later today or over the weekend.
