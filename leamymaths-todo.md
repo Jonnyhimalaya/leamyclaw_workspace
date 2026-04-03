@@ -172,3 +172,10 @@ Full funnel spec: `/home/jonny/.openclaw/workspace/leamymaths-revision-funnel.md
 - [ ] **Top up OpenAI credits** — GPT-5.4 + GPT-4o failing, affects Pixel (content) agent + hybrid search embeddings
 - [ ] **Top up xAI credits** — Scout agent + x_search both down
 - [ ] **Install noVNC for Meta login** — `sudo apt install -y x11vnc novnc` (needs sudo access)
+
+## GEO-SEO Optimization (74 → 85+/100)
+- **Blocked on:** leamyclaw+1 needs admin access OR use admin account
+- Files ready in `vault/research/geo-seo/leamymaths-fixes/`
+- 6 fixes: FAQ schema, ai.txt, summary.json, faq.json, external links, RSS feed
+- Estimated 50 min deployment, +18-29 points
+- Also need to try Kilmurry audit from their server directly (times out from ours)

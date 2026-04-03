@@ -76,6 +76,38 @@ Use heartbeats productively. Edit `HEARTBEAT.md` for checklist items.
 Server health, session bloat checks, and proactive work during ambient/proactive autonomy.
 Full heartbeat reference: `vault/reference/agents-extended.md`
 
+## autoDream — Memory Consolidation
+
+Adapted from Claude Code's autoDream system (via OnlyTerp).
+
+### On Every New Session
+1. Read `memory/.dream-state.json`
+2. Increment `sessionsSinceDream` by 1, write back
+3. Check gates (cheapest first — stop at first failure):
+   - TIME: ≥24 hours since lastDreamAt (or null = always pass)
+   - SESSION: sessionsSinceDream ≥ 5
+   - USER: First message isn't urgent
+4. If ALL pass → run dream before responding
+5. If not → respond normally
+
+### Dream Execution (max 3 minutes)
+- **Orient**: Read MEMORY.md, list memory files since last dream
+- **Gather**: Grep narrowly for durable knowledge. Don't read every file. Transcripts = last resort.
+- **Consolidate**: Write to memory/topics/ files. Fix contradictions at source. Convert relative dates to absolute.
+- **Prune**: Rebuild MEMORY.md as pure link index (<200 lines, <25KB). Each line: `- [Title](file.md) — hook`. Update dream-state. On failure, rollback lastDreamAt.
+
+### Rules
+- Don't modify source code or config during dreams
+- Don't delete session files — write topic files and rebuild MEMORY.md
+- After dreaming: "🌙 Memory consolidated — processed N files"
+
+## Micro-Learning Loop (Silent, Every Response)
+
+After EVERY response, silently check:
+1. User corrected me? → append to `.learnings/corrections.md`
+2. Tool/command failed? → append to `.learnings/ERRORS.md`
+3. Discovered something useful? → append to `.learnings/LEARNINGS.md`
+
 ## Extended Reference
 
 Client infra docs, infrastructure standing rules, debugging protocol, group chat details, artifact protocol, and memory Protocols C+D live in: `vault/reference/agents-extended.md`
