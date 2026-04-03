@@ -31,7 +31,19 @@
 
 **Effort:** 30 min · **Impact:** Enterprise-grade security, becomes a client deliverable
 
-### 1C. Add Crash Recovery (active-tasks.md)
+### 1C. Deploy openclaw-ops (Cathryn Lavery)
+**Problem:** We've hit exec approval blocks, gateway crashes, session bloat, cron silence — all manually diagnosed. Her toolkit automates all of it.
+
+**Plan:**
+- [ ] `git clone https://github.com/cathrynlavery/openclaw-ops.git ~/.openclaw/skills/openclaw-ops`
+- [ ] Run `bash scripts/heal.sh` for immediate one-shot fix pass
+- [ ] Add watchdog cron: `*/5 * * * * bash ~/.openclaw/skills/openclaw-ops/scripts/watchdog.sh >> ~/.openclaw/logs/watchdog.log 2>&1`
+- [ ] Run `bash scripts/security-scan.sh` and action findings
+- [ ] Compare against our server-health.sh — merge or replace
+
+**Effort:** 15 min · **Impact:** Self-healing ops layer. Prevents recurring breakages we've hit 3+ times.
+
+### 1D. Add Crash Recovery (active-tasks.md)
 **Problem:** When sessions crash or /new, in-progress work is lost. Kaostyl's pattern prevents this.
 
 **Plan:**

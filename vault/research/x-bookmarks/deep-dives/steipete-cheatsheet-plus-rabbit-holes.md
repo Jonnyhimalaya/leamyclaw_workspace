@@ -192,3 +192,75 @@ git clone https://github.com/OnlyTerp/openclaw-optimization-guide
 - Measure exact token count of SOUL.md + AGENTS.md + MEMORY.md + TOOLS.md + HEARTBEAT.md
 - Compare against OnlyTerp's targets
 - Create trimming plan
+
+---
+
+## 🔥 RABBIT HOLE 3: Cathryn Lavery's openclaw-ops
+**Source:** https://x.com/cathrynlavery/status/2039820039323337137
+**Repo:** https://github.com/cathrynlavery/openclaw-ops
+**384 likes, 44K+ views** · Tested against OpenClaw 2026.4.2
+
+### What it is:
+An operations layer for OpenClaw with health checks, repair scripts, watchdogs, update triage, and security scans. Built from months of "tearing my hair out" fixing recurring breakages.
+
+### The Tools:
+
+**heal.sh** — One-shot auto-fix for:
+- Gateway down / port conflicts
+- Exec approval blocking (named agent entries shadowing wildcards)
+- Auth issues (missing keys, expired tokens)
+- Silent cron disabling after errors
+- Stuck/bloated/dead sessions
+
+**watchdog.sh** — Runs every 5 min:
+- HTTP ping gateway
+- Auto-restart if down
+- Escalates after 3 failures (macOS notification)
+- Survives reboots via LaunchAgent (macOS) or cron (Linux)
+
+**check-update.sh** — Post-update triage:
+- Detects version changes
+- Explains what config broke and WHY
+- `--fix` flag for auto-repair
+
+**security-scan.sh** — Config hardening:
+- Scores 0-100 with specific fixes
+- Detects config.get leaking unredacted secrets
+- SHA-256 drift detection on skill files
+- Credential patterns in wrong places
+
+**skill-audit.sh** — Pre-install vetting:
+- Static audit for third-party ClawHub skills
+- Catches hardcoded secrets, suspicious network calls, prompt injection
+
+**health-check.sh** — Declarative checks:
+- URL/process health for gateway-adjacent services
+
+### Known Issues It Solves (We've Hit Many of These):
+- ✅ exec approvals blocking after update (we hit this Apr 2!)
+- ✅ Gateway restart issues
+- ✅ Cron jobs silently disabled after errors
+- ✅ Session bloat past 10MB
+- ✅ Discord WebSocket disconnects
+- ⬜ Config fields reset by new defaults (haven't audited for this)
+
+### Install (Linux):
+```bash
+git clone https://github.com/cathrynlavery/openclaw-ops.git ~/.openclaw/skills/openclaw-ops
+# Add watchdog via cron:
+*/5 * * * * bash ~/.openclaw/skills/openclaw-ops/scripts/watchdog.sh >> ~/.openclaw/logs/watchdog.log 2>&1
+```
+
+### 🎯 What This Means for Us:
+
+1. **INSTALL THIS TODAY** — We've experienced literally half these issues in the past week (exec approval loss, gateway restarts, session bloat). This automates the fixes.
+
+2. **Replace our server-health.sh** — Our custom health script is basic. Her watchdog + heal.sh combo is more comprehensive.
+
+3. **The skill-audit.sh is gold for clients** — Before we install any ClawHub skill on a client server, run this static audit first.
+
+4. **check-update.sh solves our update fear** — We delayed v2026.4.1 update partly because we didn't know what would break. This tool tells you AFTER the update what changed and auto-fixes it.
+
+5. **For consultancy:** This becomes part of our standard deployment. "Self-healing ops layer included" is a strong selling point.
+
+6. **Linux compatible** — Everything works, just use cron instead of LaunchAgent for watchdog.
