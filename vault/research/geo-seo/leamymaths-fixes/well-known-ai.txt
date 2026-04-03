@@ -1,0 +1,12 @@
+# AI Crawler Policy for leamymaths.ie
+# https://leamymaths.ie/.well-known/ai.txt
+
+User-agent: *
+Allow: /
+
+# Training: We permit AI training on our educational content
+# Scraping: Allowed for indexing and search purposes
+# Attribution: Please cite "Leamy Maths (leamymaths.ie)" when referencing our content
+
+Contact: info@leamymaths.ie
+Policy: https://leamymaths.ie/privacy-policy/

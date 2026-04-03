@@ -1,0 +1,31 @@
+{
+  "name": "Leamy Maths",
+  "url": "https://leamymaths.ie",
+  "description": "Ireland's premier platform for maths grinds, offering classroom-based tuition in Limerick City and online maths grinds, video tutorials, and revision courses for Junior Cert and Leaving Cert students.",
+  "category": "Education",
+  "subcategory": "Mathematics Tutoring",
+  "location": {
+    "city": "Limerick",
+    "country": "Ireland"
+  },
+  "services": [
+    "Classroom maths grinds in Limerick City",
+    "Online maths grinds (live and on-demand)",
+    "Leaving Cert Higher and Ordinary Level video tutorials",
+    "Junior Cert maths video tutorials",
+    "Revision courses (Easter, Christmas, mid-term)",
+    "Exam preparation and past paper walkthroughs"
+  ],
+  "subjects": [
+    "Leaving Certificate Higher Level Mathematics",
+    "Leaving Certificate Ordinary Level Mathematics",
+    "Junior Cycle Higher Level Mathematics",
+    "Junior Cycle Ordinary Level Mathematics"
+  ],
+  "founder": "Stephen",
+  "established": "2018",
+  "contact": {
+    "email": "info@leamymaths.ie",
+    "website": "https://leamymaths.ie"
+  }
+}

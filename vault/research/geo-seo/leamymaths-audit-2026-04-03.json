@@ -1,0 +1,393 @@
+{
+  "url": "https://leamymaths.ie",
+  "timestamp": "2026-04-03T17:57:48.898632+00:00",
+  "score": 74,
+  "band": "good",
+  "checks": {
+    "robots_txt": {
+      "score": 15,
+      "max": 18,
+      "passed": true,
+      "details": {
+        "found": true,
+        "bots_allowed": [
+          "GPTBot",
+          "OAI-SearchBot",
+          "ChatGPT-User",
+          "anthropic-ai",
+          "ClaudeBot",
+          "Claude-SearchBot",
+          "claude-web",
+          "PerplexityBot",
+          "Perplexity-User",
+          "Google-Extended",
+          "Google-CloudVertexBot",
+          "Bingbot",
+          "Applebot-Extended",
+          "cohere-ai",
+          "DuckAssistBot",
+          "Bytespider",
+          "meta-externalagent",
+          "Meta-ExternalFetcher",
+          "facebookexternalhit",
+          "Amazonbot",
+          "AI2Bot",
+          "AI2Bot-Dolma",
+          "xAI-Bot",
+          "Applebot",
+          "PetalBot",
+          "YouBot",
+          "CCBot"
+        ],
+        "bots_missing": [],
+        "bots_blocked": [],
+        "bots_partial": [],
+        "citation_bots_ok": true,
+        "citation_bots_explicit": false
+      }
+    },
+    "llms_txt": {
+      "score": 15,
+      "max": 18,
+      "passed": true,
+      "details": {
+        "found": true,
+        "has_h1": true,
+        "has_description": false,
+        "has_sections": true,
+        "has_links": true,
+        "word_count": 9557,
+        "has_full": false,
+        "sections_count": 14,
+        "links_count": 1367,
+        "has_blockquote": false,
+        "has_optional_section": false,
+        "companion_files_hint": false,
+        "validation_warnings": [
+          "llms.txt should have a > blockquote description after H1",
+          "H1 should be the first line of llms.txt"
+        ]
+      }
+    },
+    "schema_jsonld": {
+      "score": 10,
+      "max": 16,
+      "passed": true,
+      "details": {
+        "has_website": true,
+        "has_webapp": false,
+        "has_faq": false,
+        "found_types": [
+          "BreadcrumbList",
+          "Organization",
+          "WebPage",
+          "WebSite"
+        ]
+      }
+    },
+    "meta_tags": {
+      "score": 14,
+      "max": 14,
+      "passed": true,
+      "details": {
+        "has_title": true,
+        "has_description": true,
+        "has_canonical": true,
+        "has_og_title": true,
+        "has_og_description": true,
+        "has_og_image": false,
+        "title_text": "Leamy Maths | Expert Maths Grinds",
+        "description_text": "Small Groups. Expert Tuition. Classroom based. Limerick City. Access to feature rich online resources. Exam Preparation. Your Maths Community",
+        "description_length": 141,
+        "title_length": 33,
+        "canonical_url": "https://leamymaths.ie/"
+      }
+    },
+    "content": {
+      "score": 11,
+      "max": 12,
+      "passed": true,
+      "details": {
+        "has_h1": true,
+        "heading_count": 18,
+        "has_numbers": true,
+        "has_links": false,
+        "word_count": 1225,
+        "h1_text": "We run classroom grinds in Limerick City. We are also Irelands premier platform for online maths grinds, video tutorials and revision courses for Junior Cert and Leaving Cert students.",
+        "numbers_count": 13,
+        "external_links_count": 0,
+        "has_heading_hierarchy": true,
+        "has_lists_or_tables": true,
+        "has_front_loading": true
+      }
+    },
+    "signals": {
+      "score": 4,
+      "max": 6,
+      "passed": true,
+      "details": {
+        "has_lang": true,
+        "lang_value": "en-US",
+        "has_rss": false,
+        "rss_url": "",
+        "has_freshness": true,
+        "freshness_date": "2026-03-18T13:54:43+00:00"
+      }
+    },
+    "ai_discovery": {
+      "score": 0,
+      "max": 6,
+      "passed": false,
+      "details": {
+        "has_well_known_ai": false,
+        "has_summary": false,
+        "has_faq": false,
+        "has_service": false,
+        "summary_valid": false,
+        "faq_count": 0,
+        "endpoints_found": 0
+      }
+    },
+    "brand_entity": {
+      "score": 5,
+      "max": 10,
+      "passed": true,
+      "details": {
+        "brand_name_consistent": true,
+        "names_found": [
+          "We run classroom grinds in Limerick City. We are also Irelands premier platform for online maths grinds, video tutorials and revision courses for Junior Cert and Leaving Cert students.",
+          "Leamy Maths",
+          "Leamy Maths",
+          "Leamy Maths"
+        ],
+        "schema_desc_matches_meta": true,
+        "kg_pillar_count": 0,
+        "kg_pillar_urls": [],
+        "has_wikipedia": false,
+        "has_wikidata": false,
+        "has_linkedin": false,
+        "has_crunchbase": false,
+        "has_about_link": true,
+        "has_contact_info": true,
+        "has_geo_schema": false,
+        "has_hreflang": false,
+        "hreflang_count": 0,
+        "faq_depth": 0,
+        "has_recent_articles": false
+      }
+    }
+  },
+  "score_breakdown": {
+    "robots": 15,
+    "llms": 15,
+    "schema": 10,
+    "meta": 14,
+    "content": 11,
+    "signals": 4,
+    "ai_discovery": 0,
+    "brand_entity": 5
+  },
+  "recommendations": [
+    "llms.txt should have a > blockquote description after H1",
+    "H1 should be the first line of llms.txt",
+    "Add FAQPage schema with site FAQs",
+    "Cite authoritative sources with external links (increase AI credibility)",
+    "Add RSS/Atom feed and link it in <head> with <link rel=\"alternate\" type=\"application/rss+xml\"> for AI discovery",
+    "Create /.well-known/ai.txt to define AI crawler permissions",
+    "Create /ai/summary.json with site name and description for AI engines",
+    "Create /ai/faq.json with structured FAQ for AI search visibility",
+    "Create /ai/service.json to describe service capabilities for AI",
+    "Add sameAs links in Organization schema to Wikipedia, Wikidata, LinkedIn, or Crunchbase for Knowledge Graph disambiguation",
+    "Consider adding WebMCP toolname/tooldescription attributes to interactive elements for Chrome AI agent support",
+    "Keyword stuffing detected: 'cookies' at 3.0% density \u2014 diversify vocabulary",
+    "Hidden text detected (display:none/visibility:hidden with content) \u2014 AI crawlers can read it and may penalize this cloaking pattern"
+  ],
+  "webmcp": {
+    "readiness_level": "basic",
+    "agent_ready": false,
+    "has_register_tool": false,
+    "has_tool_attributes": false,
+    "tool_count": 0,
+    "has_potential_action": false,
+    "potential_actions": [],
+    "has_labeled_forms": true,
+    "labeled_forms_count": 1,
+    "has_openapi": false
+  },
+  "negative_signals": {
+    "severity": "medium",
+    "signals_found": 3,
+    "cta_density_high": false,
+    "cta_count": 1,
+    "has_popup_signals": true,
+    "is_thin_content": false,
+    "broken_links_count": 2,
+    "has_keyword_stuffing": true,
+    "has_author_signal": false,
+    "boilerplate_ratio": 0.56,
+    "has_mixed_signals": false
+  },
+  "cdn_check": {
+    "checked": true,
+    "browser_status": 200,
+    "browser_content_length": 169484,
+    "bot_results": [
+      {
+        "bot": "GPTBot",
+        "status": 200,
+        "content_length": 169484,
+        "blocked": false,
+        "challenge_detected": false
+      },
+      {
+        "bot": "ClaudeBot",
+        "status": 200,
+        "content_length": 169484,
+        "blocked": false,
+        "challenge_detected": false
+      },
+      {
+        "bot": "PerplexityBot",
+        "status": 200,
+        "content_length": 169484,
+        "blocked": false,
+        "challenge_detected": false
+      }
+    ],
+    "any_blocked": false,
+    "cdn_detected": "",
+    "cdn_headers": {
+      "server": "nginx"
+    },
+    "error": ""
+  },
+  "js_rendering": {
+    "checked": true,
+    "raw_word_count": 1202,
+    "raw_heading_count": 34,
+    "has_empty_root": false,
+    "has_noscript_content": true,
+    "framework_detected": "",
+    "js_dependent": false,
+    "details": "1202 words and 34 headings found in raw HTML. Content is accessible without JavaScript."
+  },
+  "trust_stack": {
+    "checked": true,
+    "technical": {
+      "name": "technical",
+      "label": "Technical Trust",
+      "score": 2,
+      "max_score": 5,
+      "signals_found": [
+        "HTTPS"
+      ],
+      "signals_missing": [
+        "Strict-Transport-Security header missing",
+        "Content-Security-Policy header missing",
+        "X-Frame-Options header missing"
+      ],
+      "details": {}
+    },
+    "identity": {
+      "name": "identity",
+      "label": "Identity Trust",
+      "score": 4,
+      "max_score": 5,
+      "signals_found": [
+        "Brand name consistent",
+        "About page",
+        "Contact info",
+        "Organization schema"
+      ],
+      "signals_missing": [
+        "No author attribution found"
+      ],
+      "details": {}
+    },
+    "social": {
+      "name": "social",
+      "label": "Social Trust",
+      "score": 2,
+      "max_score": 5,
+      "signals_found": [
+        "sameAs links (2)",
+        "Reviews/testimonials"
+      ],
+      "signals_missing": [
+        "No Knowledge Graph pillar links",
+        "No social media profile links"
+      ],
+      "details": {}
+    },
+    "academic": {
+      "name": "academic",
+      "label": "Academic Trust",
+      "score": 2,
+      "max_score": 5,
+      "signals_found": [
+        "Numbers cited (13)",
+        "References section"
+      ],
+      "signals_missing": [
+        "Few external source links",
+        "No links to authoritative sources (DOI, PubMed, Scholar)",
+        "No original research data patterns"
+      ],
+      "details": {
+        "authoritative_domains": [],
+        "statistics_count": 1,
+        "numbers_count": 13
+      }
+    },
+    "consistency": {
+      "name": "consistency",
+      "label": "Consistency Trust",
+      "score": 5,
+      "max_score": 5,
+      "signals_found": [
+        "Brand name consistent across title/H1/schema",
+        "No mixed signals",
+        "Schema description matches meta",
+        "dateModified present"
+      ],
+      "signals_missing": [],
+      "details": {}
+    },
+    "composite_score": 15,
+    "grade": "C",
+    "trust_level": "medium"
+  },
+  "prompt_injection": {
+    "checked": true,
+    "hidden_text_found": true,
+    "hidden_text_count": 1,
+    "hidden_text_samples": [
+      "Manage consent"
+    ],
+    "invisible_unicode_found": false,
+    "invisible_unicode_count": 0,
+    "llm_instruction_found": false,
+    "llm_instruction_count": 0,
+    "llm_instruction_samples": [],
+    "html_comment_injection_found": false,
+    "html_comment_injection_count": 0,
+    "html_comment_samples": [],
+    "monochrome_text_found": false,
+    "monochrome_text_count": 0,
+    "microfont_found": false,
+    "microfont_count": 0,
+    "data_attr_injection_found": false,
+    "data_attr_injection_count": 0,
+    "data_attr_samples": [],
+    "aria_hidden_injection_found": true,
+    "aria_hidden_injection_count": 1,
+    "aria_hidden_samples": [
+      "ClosePrivacy OverviewThis website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are c\u2026"
+    ],
+    "patterns_found": 2,
+    "severity": "suspicious",
+    "risk_level": "medium"
+  },
+  "http_status": 200,
+  "page_size": 169484
+}

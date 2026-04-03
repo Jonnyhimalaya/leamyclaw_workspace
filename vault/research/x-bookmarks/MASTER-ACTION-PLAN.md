@@ -207,3 +207,21 @@ Set up monitoring (via intel sweep cron) for:
 3. Run GEO-SEO on leamymaths.ie
 4. Add active-tasks.md crash recovery
 5. Search for Claude Certified Architect program link
+
+---
+
+## PHASE 6: CONSULTANCY WEBSITE (NEW)
+
+### 6A. Build AI Consultancy Website
+**Why:** No web presence = no credibility. Every competitor (ManageMyClaw, Florian's OpenClawLab, Runlayer) has one. We need one before pitching new clients.
+
+**Plan:**
+- [ ] Pick domain (e.g. clawconsulting.ie, agenticops.ie, or similar)
+- [ ] Build with Claude Code / Next.js (same stack as Mission Control)
+- [ ] Pages: Home, Services, Case Studies (Kilmurry), About (Jonny + Claude Certified Architect), Contact
+- [ ] GEO-optimized from day 1 (llms.txt, schema, ai.txt, FAQ schema — score 85+ out the gate)
+- [ ] Include: "Managed OpenClaw deployments for SMEs" positioning
+- [ ] Key stats from research: "$8K strategist replaced for $30", "91% injection vulnerability without hardening"
+- [ ] Run GEO-SEO audit on it before launch — target 85+/100
+
+**Effort:** 3-4 hours · **Impact:** 🔴 Essential for new client acquisition

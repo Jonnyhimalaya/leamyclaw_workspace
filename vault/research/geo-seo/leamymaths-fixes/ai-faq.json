@@ -1,0 +1,36 @@
+{
+  "faqs": [
+    {
+      "question": "What is Leamy Maths?",
+      "answer": "Leamy Maths is Ireland's premier maths tutoring platform, offering classroom-based grinds in Limerick City and online maths tuition for Junior Cert and Leaving Cert students. Founded by Stephen, it provides live classes, video tutorials, and revision courses."
+    },
+    {
+      "question": "What levels does Leamy Maths cover?",
+      "answer": "Leamy Maths covers Leaving Certificate Higher Level, Leaving Certificate Ordinary Level, Junior Cycle Higher Level, and Junior Cycle Ordinary Level mathematics."
+    },
+    {
+      "question": "Where are the classroom grinds located?",
+      "answer": "Classroom grinds are held in Limerick City. Leamy Maths also offers fully online options for students anywhere in Ireland."
+    },
+    {
+      "question": "Does Leamy Maths offer online classes?",
+      "answer": "Yes. Leamy Maths offers live online grinds, on-demand video tutorials covering the full curriculum, and online revision courses during school holidays."
+    },
+    {
+      "question": "What revision courses does Leamy Maths offer?",
+      "answer": "Leamy Maths runs revision courses at Easter, Christmas, and mid-term breaks. These intensive courses cover key exam topics and include past paper walkthroughs for both Higher and Ordinary Level."
+    },
+    {
+      "question": "How much do Leamy Maths grinds cost?",
+      "answer": "Pricing varies by course type. Visit leamymaths.ie for current pricing on classroom grinds, online subscriptions, and revision course bundles."
+    },
+    {
+      "question": "Is Leamy Maths suitable for students struggling with maths?",
+      "answer": "Absolutely. Leamy Maths caters to all ability levels, from students who need to build confidence at Ordinary Level to those aiming for H1 at Higher Level. The video tutorials allow students to learn at their own pace."
+    },
+    {
+      "question": "Who teaches at Leamy Maths?",
+      "answer": "Leamy Maths was founded by Stephen, an experienced maths teacher based in Limerick who has helped thousands of students improve their maths grades."
+    }
+  ]
+}
