@@ -16,6 +16,7 @@
 - Infrastructure & tools → vault/technical/infrastructure.md
 - AI Consultancy → vault/consultancy/overview.md
 - Kilmurry Lodge (Kate Taylor) → consultancy/clients/kilmurry-lodge/kate-marketing-control-panel.md
+- Nexus (BTC company) → consultancy/clients/nexus/discovery-notes.md
 - Revision course tracking → revision-course-2026.json
 - Todo list → leamymaths-todo.md
 - Competitive analysis → leamymaths-competitive-analysis.md

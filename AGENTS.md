@@ -56,6 +56,18 @@ Commit and push after significant changes:
 - **Config:** `cd ~/.openclaw && git add -A && git commit -m "desc" && git push`
 - **Never commit:** credentials, auth-profiles.json, .env, API keys
 
+## Client Deployments (MANDATORY)
+
+When deploying ANY new OpenClaw instance — client, internal, POC, test:
+
+1. **STOP.** Open `consultancy/playbooks/universal-openclaw-implementation.md`
+2. **Work through every phase sequentially.** No skipping, no "I'll come back to it."
+3. **Create a deployment checklist file** at `consultancy/clients/<name>/deployment-checklist.md` — copy the Implementation Checklist from the playbook, check items off as you go.
+4. **When done, run the gap analysis.** Report the score. Nothing ships at <100%.
+5. **If you discover a new optimisation during deployment**, add it to the universal playbook BEFORE finishing the deployment.
+
+**Why this exists:** On April 4, 2026, I deployed Nexus from memory instead of following the playbook. Missed ~50% of optimisations. Jonny had to catch a gap I should have caught. This rule exists so that never happens again.
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.

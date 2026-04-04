@@ -1,46 +1,66 @@
-# 🧠 Morning Action Brief — 2026-04-03
+# 🧠 Morning Action Brief — 2026-04-04
 
 ## 🔴 Fix Now
 
-### 1. Update to v2026.4.2 — We're One Version Behind with Breaking Changes
-- **Intel:** OpenClaw v2026.4.2 released (we're on v2026.4.1). It includes breaking config migrations: xAI `x_search` settings moved from `tools.web.x_search.*` to `plugins.entries.xai.config.xSearch.*`, and Firecrawl `web_fetch` from `tools.web.fetch.firecrawl.*` to `plugins.entries.firecrawl.config.webFetch.*`. A `openclaw doctor --fix` auto-migration is provided.
-- **Our exposure:** Checked our config — we only reference xAI as a model provider (`xai/grok-3-mini`), no legacy x_search or Firecrawl paths found. So the breaking changes likely won't bite us. However, staying one version behind means we miss the latest sandbox/transport hardening patches from the post-CVE-flood cleanup.
-- **Recommended action:** Run `npm update -g openclaw` to v2026.4.2, then `openclaw doctor --fix` as a safety check. Restart gateway. Takes 5 minutes.
-- **Effort:** Low (5 min)
-
-### 2. Our Exec Config Is a Loaded Gun — YOLO Mode + Multi-Agent = Risk
-- **Intel:** The March 2026 CVE flood was brutal — 9+ CVEs in 4 days including sandbox boundary bypasses (CVE-2026-32988, CVE-2026-32915), auth bypass letting plugin subagents get root-equivalent access (CVE-2026-32916), and a WebSocket RCE (CVE-2026-25253, CVSS 8.8). Snyk published a full sandbox escape analysis. Community consensus: update to ≥4.2, audit exec permissions, consider SandyClaw/NemoClaw isolation.
-- **Our exposure:** **High.** We're running `security: "full"` with `ask: "off"` — every agent can execute arbitrary shell commands without human approval. We run 5 agents (Orchestrator, Wrench, Prism, Radar, Pixel) with different model providers. A prompt injection through any channel (Telegram, a scraped webpage, a malicious X post fed through Scout) could cascade into unrestricted shell execution on our server. We also have SSH credentials, GA4 service account keys, and WP admin access on this box.
+### 1. Anthropic Kills Subscription Access for OpenClaw — ENFORCED TODAY
+- **Intel:** Anthropic announced that starting today (April 4, 3PM ET / 8PM Irish time), Claude Pro/Max subscriptions will no longer cover usage through third-party tools like OpenClaw. This is being enforced via OAuth token blocking.
+- **Our exposure:** **Critical.** Our entire agent team runs on Claude models. The Orchestrator (Opus 4.6), Sitemgr (Sonnet 4.6), Marketing (Sonnet 4.6), and this Strategist (Opus 4.6) all route through OpenClaw. If we're authenticating via subscription OAuth rather than API keys, **the whole pipeline goes dark at 8PM tonight.**
 - **Recommended action:**
-  1. Change exec config to `ask: "on-miss"` (auto-approve known-safe commands, require approval for novel ones) — or at minimum add an allowlist for expected operations.
-  2. Move sensitive credentials (GA4 key, SSH keys) into a separate secrets manager or at least restrict file permissions so agent user can't read them.
-  3. Consider running agents in sandboxed mode (`sandbox: "require"`) except the main orchestrator.
-  4. Audit which agents actually need exec access — Scout and Pixel probably don't.
-- **Effort:** Medium (1–2 hours for config changes, longer for full secrets isolation)
+  1. **Immediately verify** how our OpenClaw instance authenticates with Anthropic — check `openclaw.json` for whether we use API keys (`ANTHROPIC_API_KEY`) or subscription OAuth tokens.
+  2. If using subscription OAuth: switch to API key auth before 8PM tonight. Generate keys at [console.anthropic.com](https://console.anthropic.com).
+  3. **Claim the transition credit** — Anthropic is offering a one-time credit equal to your monthly subscription price (e.g., $200 for Max). Must redeem by April 17.
+  4. Enable "extra usage" on your Anthropic account if you want to keep subscription + third-party as a fallback.
+  5. **Budget impact:** Opus 4.6 API pricing is $5/MTok input, $25/MTok output (66% cheaper than Opus 4.0/4.1). Our multi-agent pipeline is token-heavy. Rough estimate: a busy day with 5 agents could run $5-15 in API costs vs $0 marginal on subscription. Monthly estimate: $100-300 depending on usage patterns. Monitor closely for the first week.
+- **Effort:** Low (30 mins to switch auth method) but **time-critical** — must be done before 8PM tonight.
+- **Research:** HN thread (47633396) confirms this is real and already being enforced. Community consensus: heavy agent users were consuming 6-8x what human subscribers use, making subscriptions unsustainable for Anthropic. The smart move is API keys with prompt caching (50% discount) and batch processing where possible.
+
+### 2. Kilmurry Lodge: Likely Running Critically Vulnerable OpenClaw
+- **Intel:** 9 CVEs disclosed in 4 days (March 18-21), including CVE-2026-22172 (CVSS 9.9 — any authenticated user becomes admin) and CVE-2026-32048 (sandbox escape). Ars Technica is now advising all OpenClaw users to "assume compromise" on unpatched instances. 40,000+ instances found exposed without auth.
+- **Our exposure:** MEMORY.md confirms: *"Kilmurry server needs version check due to 33 OpenClaw vulnerabilities (sandbox escape); blocked on Jonny providing SSH password."* This has been blocked for weeks. Meanwhile, the CVE count has grown and the public exploit landscape has worsened.
+- **Recommended action:**
+  1. **Get Jonny to provide the Kilmurry SSH password today.** This can't wait. Frame it to Kate as an emergency security update.
+  2. Once in: run `openclaw --version`. Anything below 2026.3.28 = emergency update needed.
+  3. Run `openclaw doctor --fix` post-update to handle the 13 breaking config changes.
+  4. Verify auth is enabled (not one of the 40K exposed instances).
+  5. **Consultancy angle:** This is exactly the kind of "managed security update" service we should be selling. Document the process for the playbook.
+- **Effort:** Medium (1-2 hours once SSH access is provided). The blocker is human, not technical.
 
 ## 🟡 Improve
 
-### 3. Kilmurry Lodge Server — Still Exposed After 33 CVEs
-- **Intel:** The privilege escalation CVE (patched in 2026.3.28) is now well-documented with community analysis. The threat surface for unpatched OpenClaw instances is growing as attackers have more information.
-- **Our exposure:** Kilmurry Lodge server (172.239.98.61) is still running an unknown version — potentially vulnerable to all of the March CVE flood. This has been blocked on Jonny providing the SSH password since it was first flagged. Every day this sits is another day a client server is exposed.
-- **Recommended action:** Escalate to Jonny today. Frame it as: "Kate's server may be vulnerable to 9+ documented CVEs including remote code execution. We need the SSH password to audit and patch it. This is a liability issue for the consultancy." If password isn't available, ask Kate's team directly or consider whether the server should be taken offline until it can be verified.
-- **Effort:** Low (the ask is low — the block is human, not technical)
-
-### 4. Claude Code Channels — Competitive Threat, But Also Validation
-- **Intel:** Anthropic launched Claude Code Channels — letting users control Claude Code sessions remotely via Telegram, Discord, iMessage, WhatsApp through MCP bridges. X community is split: some call it an "OpenClaw killer," others note it loses context on restarts, lacks compaction, supports only 3-4 channels vs OpenClaw's 20+, and has no multi-agent orchestration or persistent memory.
-- **Our exposure:** This directly validates our consultancy's core offering but could erode it. Potential clients might say "why do I need your OpenClaw setup when Anthropic gives me this for free?" We need a clear answer.
-- **Recommended action:** Write a consultancy comparison doc (`consultancy/research/claude-code-channels-vs-openclaw.md`) covering: (a) what CCC does well (zero-setup for devs, official support, secure pairing), (b) where OpenClaw wins (multi-agent orchestration, persistent memory/soul, 20+ channels, self-hosted sovereignty, custom skills, non-coding use cases like hotel/education), (c) our pitch: "CCC is for solo developers. We build AI operating systems for businesses." Use this in client conversations.
-- **Effort:** Medium (1 hour to write the doc, ongoing to refine the pitch)
+### 3. GA4 Service Account Key Still Exposed — Rotate Now
+- **Intel:** MEMORY.md records: *"GA4 service account key was exposed in git history. Scrubbed from git, but key needs rotation in Google Cloud."* This has been a known issue since it was discovered.
+- **Our exposure:** The key gives read access to Leamy Maths analytics data. While scrubbed from current git, anyone who cloned the repo before the scrub has the key. Old keys in git history are a top-5 source of real-world breaches.
+- **Recommended action:**
+  1. Go to Google Cloud Console → IAM → Service Accounts
+  2. Rotate the key for the GA4 service account
+  3. Update `credentials/ga4-service-account.json` with the new key
+  4. Test that the Marketing agent's analytics pipeline still works
+  5. Add `.gitignore` rule for `credentials/` if not already present
+- **Effort:** Low (15 minutes). No reason this should still be open.
 
 ## 🟢 Opportunities
 
-### 5. Durable Task Flows — Potential Client Upsell Feature
-- **Intel:** v2026.4.2 restores the core Task Flow substrate with managed-vs-mirrored sync modes, durable flow state/revision tracking, and child task spawning with sticky cancel intent. This enables background orchestration that persists across sessions.
-- **Our exposure:** We're not using Task Flows yet. For Kilmurry Lodge, this could power automated daily workflows (guest check-in prep, review monitoring, social media posting) that survive gateway restarts. For Leamy Maths, it could automate the revision course student tracking (e.g., auto-flag students who paid but haven't attended — currently manual per the todo list).
-- **Recommended action:** After updating to v2026.4.2, test Task Flows with a simple use case: automated daily student attendance check against WooCommerce orders. If it works reliably, package it as a consultancy offering: "Always-on background workflows that don't break when your server restarts."
-- **Effort:** Medium (2–3 hours to prototype)
+### 4. "Managed OpenClaw" Consulting Package — The Market Is Screaming For It
+- **Intel:** Multiple signals converging: (a) r/AiForSmallBusiness (28K subs) actively seeking OpenClaw guidance, (b) "50 Days with OpenClaw" blog reveals most users don't know what to do after installation, (c) community's #1 complaint is update fatigue ("every update I spend half my morning figuring out what broke"), (d) 13 breaking changes in v2026.3.28 alone with inadequate migration guides.
+- **Our exposure:** This is pure opportunity. We're already living this pain and solving it for ourselves. We have the multi-agent architecture, the security posture, the update discipline.
+- **Recommended action:**
+  1. Package three consulting tiers: **Setup** (install + configure + first agent, €500), **Managed Updates** (monthly version management + security patches, €150/mo), **Full Stack** (custom agent design + ongoing management, €500/mo).
+  2. Write a "What To Actually Do With OpenClaw" blog post targeting the exact gap velvetshark identified. Publish on leamymaths.ie/blog or a new consultancy domain. This is top-of-funnel content.
+  3. Post a helpful comment in r/AiForSmallBusiness referencing our setup experience. Don't hard-sell — demonstrate expertise.
+  4. Use the Kilmurry Lodge security update (item #2) as the first documented case study for the "Managed Updates" tier.
+- **Effort:** Medium (content: 2-3 hours for blog post, pricing page: 1 hour, Reddit engagement: 30 mins). High ROI — this positions us before the market matures.
+
+### 5. Task Flow Substrate — Upgrade Our Agent Pipeline
+- **Intel:** v2026.3.31 introduced "Task Flow substrate" — durable background orchestration with managed child tasks. This is purpose-built for multi-agent pipelines like ours.
+- **Our exposure:** Our current intel pipeline (Scout → Main → Strategist) works but is fragile — it's cron-scheduled with no error recovery, no retry logic, no visibility into failures. If Scout fails silently, the whole chain produces stale intel.
+- **Recommended action:**
+  1. Read the Task Flow docs and evaluate whether our 3-stage intel pipeline could be migrated to a single Task Flow with managed child tasks.
+  2. Benefits would include: automatic retry on failure, progress visibility, proper error propagation, and the ability to add conditional branches (e.g., skip Strategist if Scout finds nothing noteworthy).
+  3. This is a "when we have a spare afternoon" task, not urgent. But it would make the pipeline more resilient and would be a great feature to showcase in consulting demos.
+- **Effort:** Medium-High (half day to prototype, full day to migrate). Not urgent but high strategic value.
 
 ## 📋 Summary
-- 5 items flagged (2 critical, 1 improvement, 1 competitive intelligence, 1 opportunity)
-- Estimated total implementation effort: ~5 hours (excluding Kilmurry which is blocked on human input)
-- **Priority recommendation:** Items 1 and 2 first — update to v2026.4.2 and tighten exec permissions. These are 1–2 hours of work that dramatically reduce our attack surface. Then chase Jonny on Kilmurry Lodge SSH access. The competitive positioning doc (item 4) can be done later today or over the weekend.
+- 5 items flagged (2 critical, 1 improvement, 2 opportunities)
+- Estimated total implementation effort: ~6-8 hours (excluding Kilmurry SSH blocker)
+- **Priority recommendation:** Item #1 (Anthropic billing) must happen before 8PM tonight — it's the only time-critical item. Item #2 (Kilmurry security) needs Jonny to unblock SSH access today. Everything else can be tackled over the weekend.
+- **One-liner for Jonny:** Check your Anthropic auth setup RIGHT NOW — your agents may stop working at 8PM tonight. And give me that Kilmurry SSH password.
