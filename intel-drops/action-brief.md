@@ -1,66 +1,68 @@
-# 🧠 Morning Action Brief — 2026-04-04
+# 🧠 Morning Action Brief — 2026-04-05
 
 ## 🔴 Fix Now
 
-### 1. Anthropic Kills Subscription Access for OpenClaw — ENFORCED TODAY
-- **Intel:** Anthropic announced that starting today (April 4, 3PM ET / 8PM Irish time), Claude Pro/Max subscriptions will no longer cover usage through third-party tools like OpenClaw. This is being enforced via OAuth token blocking.
-- **Our exposure:** **Critical.** Our entire agent team runs on Claude models. The Orchestrator (Opus 4.6), Sitemgr (Sonnet 4.6), Marketing (Sonnet 4.6), and this Strategist (Opus 4.6) all route through OpenClaw. If we're authenticating via subscription OAuth rather than API keys, **the whole pipeline goes dark at 8PM tonight.**
-- **Recommended action:**
-  1. **Immediately verify** how our OpenClaw instance authenticates with Anthropic — check `openclaw.json` for whether we use API keys (`ANTHROPIC_API_KEY`) or subscription OAuth tokens.
-  2. If using subscription OAuth: switch to API key auth before 8PM tonight. Generate keys at [console.anthropic.com](https://console.anthropic.com).
-  3. **Claim the transition credit** — Anthropic is offering a one-time credit equal to your monthly subscription price (e.g., $200 for Max). Must redeem by April 17.
-  4. Enable "extra usage" on your Anthropic account if you want to keep subscription + third-party as a fallback.
-  5. **Budget impact:** Opus 4.6 API pricing is $5/MTok input, $25/MTok output (66% cheaper than Opus 4.0/4.1). Our multi-agent pipeline is token-heavy. Rough estimate: a busy day with 5 agents could run $5-15 in API costs vs $0 marginal on subscription. Monthly estimate: $100-300 depending on usage patterns. Monitor closely for the first week.
-- **Effort:** Low (30 mins to switch auth method) but **time-critical** — must be done before 8PM tonight.
-- **Research:** HN thread (47633396) confirms this is real and already being enforced. Community consensus: heavy agent users were consuming 6-8x what human subscribers use, making subscriptions unsustainable for Anthropic. The smart move is API keys with prompt caching (50% discount) and batch processing where possible.
+### 1. Kilmurry Lodge Server Is a Sitting Duck — CVE-2026-33579 Is Being Actively Discussed
+- **Intel:** CVE-2026-33579 (disclosed April 1) is a privilege escalation in the `/pair approve` path. A caller with pairing privileges but without admin can approve pending device requests for admin scope. 63% of exposed OpenClaw instances run without authentication. The r/sysadmin thread title is literally "If you're running OpenClaw, you probably got hacked in the last week."
+- **Our exposure:** Kilmurry server (172.239.98.61) is **still running an unpatched version** with 33 known vulnerabilities flagged by Ant AI Security Lab. We've been blocked on Jonny getting the SSH password from Kate since late March. This is no longer a "when you get around to it" — this is a "someone could own that server today" situation. The pairing vuln alone lets an attacker escalate to admin on any instance that hasn't updated to v2026.3.28+.
+- **Recommended action:** 
+  1. **Today:** Message Kate directly for the SSH password. Frame it as urgent security — not optional maintenance.
+  2. Once in: `openclaw --version` to confirm current version, then `npm install -g openclaw@latest`, run the full Post-Update Verification Checklist from the playbook.
+  3. While waiting for access: verify our own server is on v2026.4.1+ (it should be from the Apr 2 update, but confirm).
+- **Effort:** Low (30 min once we have access) — but blocked on credentials
+- **Research:** NVD confirms CVSS high. Reddit thread has active discussion of exploitation in the wild. Snyk shows the 2026.3.31 package still has an arbitrary code injection vuln — need to be on 2026.3.28+ minimum, ideally latest.
 
-### 2. Kilmurry Lodge: Likely Running Critically Vulnerable OpenClaw
-- **Intel:** 9 CVEs disclosed in 4 days (March 18-21), including CVE-2026-22172 (CVSS 9.9 — any authenticated user becomes admin) and CVE-2026-32048 (sandbox escape). Ars Technica is now advising all OpenClaw users to "assume compromise" on unpatched instances. 40,000+ instances found exposed without auth.
-- **Our exposure:** MEMORY.md confirms: *"Kilmurry server needs version check due to 33 OpenClaw vulnerabilities (sandbox escape); blocked on Jonny providing SSH password."* This has been blocked for weeks. Meanwhile, the CVE count has grown and the public exploit landscape has worsened.
-- **Recommended action:**
-  1. **Get Jonny to provide the Kilmurry SSH password today.** This can't wait. Frame it to Kate as an emergency security update.
-  2. Once in: run `openclaw --version`. Anything below 2026.3.28 = emergency update needed.
-  3. Run `openclaw doctor --fix` post-update to handle the 13 breaking config changes.
-  4. Verify auth is enabled (not one of the 40K exposed instances).
-  5. **Consultancy angle:** This is exactly the kind of "managed security update" service we should be selling. Document the process for the playbook.
-- **Effort:** Medium (1-2 hours once SSH access is provided). The blocker is human, not technical.
+### 2. GA4 Service Account Key Was Exposed in Git — Still Not Rotated
+- **Intel:** This is from our own MEMORY.md, not today's sweep — but it's been flagged since at least late March and remains unresolved.
+- **Our exposure:** The key was scrubbed from git history but the actual key hasn't been rotated in Google Cloud. If anyone cloned or forked the repo before the scrub, they have a valid service account key to our GA4 property (286245028) which covers all Leamy Maths analytics data.
+- **Recommended action:** 
+  1. Go to Google Cloud Console → IAM → Service Accounts → find the GA4 service account
+  2. Delete the old key, generate a new one
+  3. Update `credentials/ga4-service-account.json` with the new key
+  4. Test GA4 access still works
+- **Effort:** Low (15 minutes)
 
 ## 🟡 Improve
 
-### 3. GA4 Service Account Key Still Exposed — Rotate Now
-- **Intel:** MEMORY.md records: *"GA4 service account key was exposed in git history. Scrubbed from git, but key needs rotation in Google Cloud."* This has been a known issue since it was discovered.
-- **Our exposure:** The key gives read access to Leamy Maths analytics data. While scrubbed from current git, anyone who cloned the repo before the scrub has the key. Old keys in git history are a top-5 source of real-world breaches.
+### 3. Anthropic Killed Subscription Auth for Third-Party Tools — Adjust Client Pitch & Our Playbook
+- **Intel:** As of April 4 (yesterday), Anthropic no longer allows Claude Pro/Max subscriptions to cover usage in third-party tools like OpenClaw. Users must now use "extra usage bundles" (pay-as-you-go at full API rates: $3/$15 per million tokens for Sonnet, $15/$75 for Opus) or a separate API key. This is the third restriction in 3 weeks (after OAuth deprecation Mar 19, peak-hour caps Mar 28).
+- **Our exposure:** We use API keys directly, so **our infrastructure is not broken**. But this matters for:
+  - **Consultancy pitch:** We can no longer tell prospects "just use your existing Claude subscription." Every client now needs an API key or extra usage bundle, which is a harder sell and a higher perceived cost.
+  - **Client cost modelling:** Our playbook's cost section needs updating. A client running Opus on API at $15/$75 per million tokens will spend significantly more than a flat $200/month Max subscription would have covered.
+  - **Strategic signal:** Anthropic is clearly prioritising its own products (Claude Code, Cowork) over the ecosystem. More restrictions are likely. Our cross-provider fallback strategy (which we already have) becomes a stronger selling point.
 - **Recommended action:**
-  1. Go to Google Cloud Console → IAM → Service Accounts
-  2. Rotate the key for the GA4 service account
-  3. Update `credentials/ga4-service-account.json` with the new key
-  4. Test that the Marketing agent's analytics pipeline still works
-  5. Add `.gitignore` rule for `credentials/` if not already present
-- **Effort:** Low (15 minutes). No reason this should still be open.
+  1. Update `consultancy/playbooks/universal-openclaw-implementation.md` Phase 0.3 (Client Agreement) to include explicit API key setup and cost estimation.
+  2. Add a "Cost Modelling" section to the playbook with per-model API pricing and typical monthly estimates for different usage tiers.
+  3. Strengthen the cross-provider fallback messaging in our pitch — position it as insurance against exactly this kind of platform risk.
+  4. Consider adding Gemini 3.1 Pro as a cost-effective default for lighter client workloads. It's free-tier eligible and works well as an advisor/cron model.
+- **Effort:** Medium (2 hours to update playbook + pitch materials)
+
+### 4. ClawHub Plugin Supply Chain Is Compromised — Audit Our Skills
+- **Intel:** Multiple security reports confirm 12%+ of ClawHub plugins are malicious (341–1,467 confirmed bad skills, 35k+ downloads). 91% of malicious plugins bundle malware, 36% use prompt injection. CertIK audit found API key theft targeting bank/corp/gov credentials.
+- **Our exposure:** We primarily write custom skills (good), but we should audit:
+  - Any community skills we've installed or referenced from `awesome-openclaw` or ClawHub
+  - The `healthcheck` skill and any other bundled skills — are they from the official OpenClaw repo or third-party?
+  - Kilmurry's deployment — did we install any community skills there?
+- **Recommended action:**
+  1. Run `ls ~/.openclaw/skills/` and `ls ~/.npm-global/lib/node_modules/openclaw/skills/` on both servers — catalogue every installed skill and its source.
+  2. For any non-official skill: read the SKILL.md, check for suspicious exec calls, exfiltration patterns, or external URLs.
+  3. Add a "Skill Vetting Checklist" to the playbook — mandatory before installing any community skill on a client server.
+  4. Document this in `consultancy/research/` as a reusable guide.
+- **Effort:** Low-Medium (1 hour for audit + 30 min for checklist doc)
 
 ## 🟢 Opportunities
 
-### 4. "Managed OpenClaw" Consulting Package — The Market Is Screaming For It
-- **Intel:** Multiple signals converging: (a) r/AiForSmallBusiness (28K subs) actively seeking OpenClaw guidance, (b) "50 Days with OpenClaw" blog reveals most users don't know what to do after installation, (c) community's #1 complaint is update fatigue ("every update I spend half my morning figuring out what broke"), (d) 13 breaking changes in v2026.3.28 alone with inadequate migration guides.
-- **Our exposure:** This is pure opportunity. We're already living this pain and solving it for ourselves. We have the multi-agent architecture, the security posture, the update discipline.
+### 5. "Deployment Auditing Skill" Pattern — Productise It Before Someone Else Does
+- **Intel:** A highly upvoted Reddit post featured an AI skill specifically built to audit, fix, and improve OpenClaw setups (addressing common issues like agents forgetting tasks, memory drift, security misconfigs). The community is hungry for this.
+- **Our exposure:** We already have the most comprehensive implementation playbook I've seen (the universal playbook is 500+ lines of battle-tested knowledge). We have incident reports, migration guides, security hardening steps. We have more operational experience than most of the community.
 - **Recommended action:**
-  1. Package three consulting tiers: **Setup** (install + configure + first agent, €500), **Managed Updates** (monthly version management + security patches, €150/mo), **Full Stack** (custom agent design + ongoing management, €500/mo).
-  2. Write a "What To Actually Do With OpenClaw" blog post targeting the exact gap velvetshark identified. Publish on leamymaths.ie/blog or a new consultancy domain. This is top-of-funnel content.
-  3. Post a helpful comment in r/AiForSmallBusiness referencing our setup experience. Don't hard-sell — demonstrate expertise.
-  4. Use the Kilmurry Lodge security update (item #2) as the first documented case study for the "Managed Updates" tier.
-- **Effort:** Medium (content: 2-3 hours for blog post, pricing page: 1 hour, Reddit engagement: 30 mins). High ROI — this positions us before the market matures.
-
-### 5. Task Flow Substrate — Upgrade Our Agent Pipeline
-- **Intel:** v2026.3.31 introduced "Task Flow substrate" — durable background orchestration with managed child tasks. This is purpose-built for multi-agent pipelines like ours.
-- **Our exposure:** Our current intel pipeline (Scout → Main → Strategist) works but is fragile — it's cron-scheduled with no error recovery, no retry logic, no visibility into failures. If Scout fails silently, the whole chain produces stale intel.
-- **Recommended action:**
-  1. Read the Task Flow docs and evaluate whether our 3-stage intel pipeline could be migrated to a single Task Flow with managed child tasks.
-  2. Benefits would include: automatic retry on failure, progress visibility, proper error propagation, and the ability to add conditional branches (e.g., skip Strategist if Scout finds nothing noteworthy).
-  3. This is a "when we have a spare afternoon" task, not urgent. But it would make the pipeline more resilient and would be a great feature to showcase in consulting demos.
-- **Effort:** Medium-High (half day to prototype, full day to migrate). Not urgent but high strategic value.
+  1. Build an "OpenClaw Deployment Auditor" skill that runs the Post-Update Verification Checklist, checks memory architecture (is MEMORY.md < 3KB? is vault/ structured?), validates auth failover, tests exec approvals, and checks for known CVEs.
+  2. Open-source it on GitHub — immediate credibility for the consultancy.
+  3. Add a "premium audit" upsell: the free skill checks basics, but a paid consultancy engagement does the full Phase 0-7 review.
+  4. Time this for the current "Apple II moment" hype wave — the community is actively looking for quality tooling.
+- **Effort:** High (4-6 hours to build the skill, but high leverage)
 
 ## 📋 Summary
-- 5 items flagged (2 critical, 1 improvement, 2 opportunities)
-- Estimated total implementation effort: ~6-8 hours (excluding Kilmurry SSH blocker)
-- **Priority recommendation:** Item #1 (Anthropic billing) must happen before 8PM tonight — it's the only time-critical item. Item #2 (Kilmurry security) needs Jonny to unblock SSH access today. Everything else can be tackled over the weekend.
-- **One-liner for Jonny:** Check your Anthropic auth setup RIGHT NOW — your agents may stop working at 8PM tonight. And give me that Kilmurry SSH password.
+- 5 items flagged (2 critical, 2 improvements, 1 opportunity)
+- Estimated total implementation effort: ~9 hours (but Kilmurry is blocked on SSH access)
+- **Priority recommendation:** Get Kilmurry SSH access TODAY — that server is running known-exploitable vulnerabilities during a week when r/sysadmin is actively discussing OpenClaw compromises. Rotate the GA4 key while waiting. Everything else can wait until Monday.

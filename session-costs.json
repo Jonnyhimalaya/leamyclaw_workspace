@@ -178,15 +178,31 @@
     },
     {
       "date": "2026-04-04",
-      "timestamp": "2026-04-04T16:52:13.701698+00:00",
+      "timestamp": "2026-04-04T20:51:49.411485+00:00",
       "totalSessions": 1,
       "activeSessions": 0,
-      "totalTokens": 93711,
-      "totalCost": 33.139383,
+      "totalTokens": 98185,
+      "totalCost": 34.962815,
       "sessionBreakdown": {
         "agent:main:main": {
-          "tokens": 93711,
-          "cost": 33.139383,
+          "tokens": 98185,
+          "cost": 34.962815,
+          "model": "claude-opus-4-6",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-05",
+      "timestamp": "2026-04-05T08:51:51.578678+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 100488,
+      "totalCost": 43.216598,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 100488,
+          "cost": 43.216598,
           "model": "claude-opus-4-6",
           "channel": "webchat"
         }
@@ -919,12 +935,27 @@
           "timestamp": "2026-04-04T16:52:13.701698+00:00",
           "tokens": 93711,
           "cost": 33.139383
+        },
+        {
+          "timestamp": "2026-04-04T20:51:49.411485+00:00",
+          "tokens": 98185,
+          "cost": 34.962815
+        },
+        {
+          "timestamp": "2026-04-05T04:51:48.965653+00:00",
+          "tokens": 98469,
+          "cost": 40.175367
+        },
+        {
+          "timestamp": "2026-04-05T08:51:51.578678+00:00",
+          "tokens": 100488,
+          "cost": 43.216598
         }
       ],
-      "lastSeen": "2026-04-04T16:52:13.701698+00:00",
+      "lastSeen": "2026-04-05T08:51:51.578678+00:00",
       "lastStatus": "failed",
-      "currentTokens": 93711,
-      "currentCost": 33.13938325
+      "currentTokens": 100488,
+      "currentCost": 43.21659849999999
     }
   }
 }
