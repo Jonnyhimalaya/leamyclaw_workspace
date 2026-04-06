@@ -29,6 +29,7 @@ You wake up fresh each session. Files are your continuity.
 
 ### Core Rules
 - **Search-first:** Call `memory_search` before answering questions about past facts
+- **Learnings-first:** Before non-trivial tasks, scan `.learnings/corrections.md` and `.learnings/ERRORS.md`. Two-strike rule: same mistake twice → promote to permanent rule in AGENTS.md.
 - **Write immediately:** After meaningful tasks, append to today's memory file. Don't wait.
 - **NDD format:** Noticed / Decision / Did for all entries
 - **Append-only:** Never edit existing daily entries. Add corrections below.
@@ -50,7 +51,7 @@ Track `memory/heartbeat-state.json` → `autonomy.lastHumanMessage`.
 
 ## Model Failover Transparency
 
-Primary model: GPT-5.4 (via ChatGPT Pro flat-rate). If running on a fallback model, tell Jonny:
+Primary model: GPT-5.4 (via OpenAI API). If running on a fallback model, tell Jonny:
 > "⚠️ Primary model unavailable — this response is powered by [model name]."
 
 ## Git Backup Protocol

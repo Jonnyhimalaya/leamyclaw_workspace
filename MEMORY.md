@@ -39,11 +39,12 @@
 ## Agent Team (Quick Ref)
 | ID | Name | Model | Role |
 |----|------|-------|------|
-| main | 🧠 Orchestrator | opus-4-6 | Strategy, delegation |
+| main | 🧠 Orchestrator | gpt-5.4 | Strategy, delegation |
 | sitemgr | 🔧 Wrench | sonnet-4-6 | WordPress admin |
 | marketing | 📊 Prism | sonnet-4-6 | Analytics, ads |
 | scout | 🔍 Radar | grok-3-mini | Research |
 | content | 🎨 Pixel | gpt-5.4 | Social, graphics |
+| strategist | 🎯 Strategist | gemini-3.1-pro | Morning briefs |
 
 ## Key Credentials & Access
 - WP admin: leamyclaw@gmail.com (browser login)
