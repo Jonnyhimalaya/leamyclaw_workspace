@@ -5,14 +5,16 @@
 ALERT=""
 
 # --- Memory Check ---
+# Use 'available' (col $7), not 'free' (col $4). Linux uses free RAM for
+# disk cache which is reclaimable — 'available' reflects actual usable memory.
 MEM_USED_PCT=$(free | awk '/Mem:/{printf "%.0f", $3/$2*100}')
 SWAP_USED=$(free -m | awk '/Swap:/{print $3}')
-MEM_FREE_MB=$(free -m | awk '/Mem:/{print $4}')
+MEM_AVAIL_MB=$(free -m | awk '/Mem:/{print $7}')
 
-if [ "$MEM_FREE_MB" -lt 300 ]; then
-    ALERT="${ALERT}🔴 CRITICAL: Only ${MEM_FREE_MB}MB free RAM\n"
-elif [ "$MEM_FREE_MB" -lt 600 ]; then
-    ALERT="${ALERT}🟡 WARNING: ${MEM_FREE_MB}MB free RAM (getting low)\n"
+if [ "$MEM_AVAIL_MB" -lt 300 ]; then
+    ALERT="${ALERT}🔴 CRITICAL: Only ${MEM_AVAIL_MB}MB available RAM\n"
+elif [ "$MEM_AVAIL_MB" -lt 600 ]; then
+    ALERT="${ALERT}🟡 WARNING: ${MEM_AVAIL_MB}MB available RAM (getting low)\n"
 fi
 
 if [ "$SWAP_USED" -gt 100 ]; then
@@ -80,12 +82,12 @@ fi
 if [ -n "$ALERT" ]; then
     echo -e "SERVER HEALTH ISSUES:\n${ALERT}"
     echo "---"
-    echo "Memory: ${MEM_USED_PCT}% used, ${MEM_FREE_MB}MB free, ${SWAP_USED}MB swap"
+    echo "Memory: ${MEM_USED_PCT}% used, ${MEM_AVAIL_MB}MB available, ${SWAP_USED}MB swap"
     echo "Disk: ${DISK_PCT}%"
     echo "Load: ${LOAD}"
     echo "Chrome: ${CHROME_COUNT} processes (${CHROME_MB}MB)"
     exit 1
 else
-    echo "OK|mem=${MEM_USED_PCT}%,free=${MEM_FREE_MB}MB,swap=${SWAP_USED}MB,disk=${DISK_PCT}%,load=${LOAD},chrome=${CHROME_COUNT}"
+    echo "OK|mem=${MEM_USED_PCT}%,avail=${MEM_AVAIL_MB}MB,swap=${SWAP_USED}MB,disk=${DISK_PCT}%,load=${LOAD},chrome=${CHROME_COUNT}"
     exit 0
 fi

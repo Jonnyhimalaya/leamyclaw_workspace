@@ -6,9 +6,10 @@ This folder is home. Treat it that way.
 
 1. Read `SOUL.md` — who you are
 2. Read `USER.md` — who you're helping
-3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. **Main session only:** Also read `MEMORY.md`
-5. Check for recent `.reset` transcripts — recover missing events (Protocol D in `vault/reference/agents-extended.md`)
+3. Read `priority-map.md` — what matters right now
+4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+5. **Main session only:** Also read `MEMORY.md`
+6. Check for recent `.reset` transcripts — recover missing events (Protocol D in `vault/reference/agents-extended.md`)
 
 If `BOOTSTRAP.md` exists, follow it first, then delete it.
 
@@ -21,6 +22,9 @@ You wake up fresh each session. Files are your continuity.
 | Raw events, task logs | `memory/YYYY-MM-DD.md` (daily) |
 | Distilled lessons, persistent facts | `MEMORY.md` (curated) |
 | Operational rules | `AGENTS.md` |
+| Priorities | `priority-map.md` (ranked, reviewed weekly) |
+| Autonomy policies | `auto-resolver.md` (auto vs escalate) |
+| Active tasks | `tasks.md` (live) / `tasks-completed.md` (archive) |
 | Persona, voice | `SOUL.md` |
 
 ### Core Rules
@@ -46,8 +50,8 @@ Track `memory/heartbeat-state.json` → `autonomy.lastHumanMessage`.
 
 ## Model Failover Transparency
 
-If running on a fallback model (not Opus), tell Jonny immediately:
-> "⚠️ Opus is down — this response is powered by [model name]."
+Primary model: GPT-5.4 (via ChatGPT Pro flat-rate). If running on a fallback model, tell Jonny:
+> "⚠️ Primary model unavailable — this response is powered by [model name]."
 
 ## Git Backup Protocol
 
@@ -88,31 +92,30 @@ Use heartbeats productively. Edit `HEARTBEAT.md` for checklist items.
 Server health, session bloat checks, and proactive work during ambient/proactive autonomy.
 Full heartbeat reference: `vault/reference/agents-extended.md`
 
-## autoDream — Memory Consolidation
+## Memory Consolidation (Native Dreaming)
 
-Adapted from Claude Code's autoDream system (via OnlyTerp).
+Memory consolidation is handled by OpenClaw's native `memory-core` dreaming system.
+Do NOT run manual dream cycles — the platform handles it automatically.
 
-### On Every New Session
-1. Read `memory/.dream-state.json`
-2. Increment `sessionsSinceDream` by 1, write back
-3. Check gates (cheapest first — stop at first failure):
-   - TIME: ≥24 hours since lastDreamAt (or null = always pass)
-   - SESSION: sessionsSinceDream ≥ 5
-   - USER: First message isn't urgent
-4. If ALL pass → run dream before responding
-5. If not → respond normally
+### What it does
+- **Light phase**: Ingests daily memory files, dedupes, stages candidates
+- **Deep phase**: Scores and promotes durable entries to MEMORY.md
+- **REM phase**: Extracts patterns and recurring themes
+- Runs automatically on schedule (default: 3am daily)
 
-### Dream Execution (max 3 minutes)
-- **Orient**: Read MEMORY.md, list memory files since last dream
-- **Gather**: Grep narrowly for durable knowledge. Don't read every file. Transcripts = last resort.
-- **Consolidate**: Write to memory/topics/ files. Fix contradictions at source. Convert relative dates to absolute.
-- **Prune**: Rebuild MEMORY.md as pure link index (<200 lines, <25KB). Each line: `- [Title](file.md) — hook`. Update dream-state. On failure, rollback lastDreamAt.
-- **Lint**: After consolidation, scan vault/ for contradictions between entries, stale info (>30 days no update), missing cross-references, and orphaned entries with no raw source. Fix or flag.
+### Your job (agent-side)
+- Keep writing daily memory files in NDD format — dreaming reads from these
+- Keep MEMORY.md as the pointer index — dreaming appends promoted entries
+- Don't manually rebuild MEMORY.md — deep phase handles promotion
+- Review `DREAMS.md` or `/dreaming status` to see what was promoted
+- If dreaming seems off, run `openclaw memory promote-explain "topic"` to debug
 
-### Rules
-- Don't modify source code or config during dreams
-- Don't delete session files — write topic files and rebuild MEMORY.md
-- After dreaming: "🌙 Memory consolidated — processed N files"
+### What we still own
+- Daily memory files (`memory/YYYY-MM-DD.md`) — we write these, dreaming reads them
+- Topic files (`memory/topics/`) — manual curation for complex subjects
+- MEMORY.md structure — dreaming appends, we curate the index
+- Protocol C (checkpoint every ~150 msgs) — safety net, still needed
+- Protocol D (rescan .reset transcripts) — still needed for session recovery
 
 ## Micro-Learning Loop (Silent, Every Response)
 
