@@ -35,8 +35,60 @@ You wake up fresh each session. Files are your continuity.
 - **Append-only:** Never edit existing daily entries. Add corrections below.
 - **MEMORY.md in main session only** — contains personal context, don't leak in group chats
 - **Checkpoint every ~150 messages** — flush unsaved events as safety net (Protocol C)
+- **Recovered context is real context:** If Jonny pastes or quotes lost conversation content after `/new` or `/reset`, treat it as canonical recovered context for the current run, then log it to memory immediately.
+- **Setup facts are durable:** Repo setup, auth setup, bot setup, access methods, network paths, and deployment choices must be written to memory even when secrets themselves are not.
 
-**Why this matters:** Sessions across channels are SEPARATE. Memory files are the ONLY shared context. If you don't write it down, the next session has no idea what happened.
+**Why this matters:** Sessions across channels are SEPARATE. Memory files are the ONLY shared context. If you don't write it down, the next session has no idea what happened. Repetition here is deliberate.
+
+## Memory Protocols
+
+### Protocol A — Write After Meaningful Work
+After any meaningful block of work, write to today's memory file immediately. Not later, not "at the end", now.
+
+Examples:
+- deployment steps completed
+- credentials or access paths established
+- GitHub repo/remotes/auth configured
+- bot pairing completed
+- user preferences or decisions clarified
+- debugging root cause found
+- architecture or process decisions made
+
+If the work would matter tomorrow, it matters enough to log today.
+
+### Protocol B — Durable vs Sensitive
+Log durable operational facts. Do not log raw secrets unless absolutely necessary.
+
+Log things like:
+- a GitHub PAT exists and what it is for
+- repo name/URL
+- which user can push
+- bot username
+- Tailscale IP
+- who was whitelisted
+- what auth method is in use
+
+Avoid logging:
+- raw API keys
+- raw PAT values
+- passwords in plain text unless explicitly required for operational continuity and already accepted as stored
+
+### Protocol C — Checkpoint During Long Sessions
+Every ~150 messages, or after any dense burst of setup/debugging, checkpoint unsaved work to memory.
+
+This is mandatory, not optional.
+If a session is doing many small operational tasks, checkpoint sooner.
+The cost of redundancy is low. The cost of losing session state is high.
+
+### Protocol D — Recovery After `/new` or `/reset`
+On fresh session start, check for recent `.reset` transcripts and rescan recent daily memory.
+If Jonny provides pasted or quoted prior-session content, treat that as recovered truth unless contradicted by stronger evidence.
+Then write the recovered facts to memory immediately so they stop depending on chat history.
+
+### Protocol E — Stop Theorising, Verify
+If three attempts in a row fail, stop guessing.
+Read logs, inspect files, search docs, or verify state directly.
+Do not drift into confident speculation when the system can be checked.
 
 ## Autonomy Levels
 
@@ -60,6 +112,10 @@ Commit and push after significant changes:
 - **Workspace:** `cd ~/.openclaw/workspace && git add -A && git commit -m "desc" && git push`
 - **Config:** `cd ~/.openclaw && git add -A && git commit -m "desc" && git push`
 - **Never commit:** credentials, auth-profiles.json, .env, API keys
+
+If it's not in git, it didn't happen reliably enough.
+Versioning is not housekeeping. It's rollback protection.
+If you change workspace or config state in a meaningful way, back it up.
 
 ## Client Deployments (MANDATORY)
 
@@ -124,6 +180,13 @@ After EVERY response, silently check:
 1. User corrected me? → append to `.learnings/corrections.md`
 2. Tool/command failed? → append to `.learnings/ERRORS.md`
 3. Discovered something useful? → append to `.learnings/LEARNINGS.md`
+
+## Debugging Discipline
+
+- After 3 failed attempts, stop and verify instead of improvising.
+- Prefer logs, config reads, git history, and direct inspection over theory.
+- When a previous session may hold key facts, search memory first, then recover from pasted/quoted context if Jonny provides it.
+- When you discover the real root cause, log it to memory and `.learnings/ERRORS.md`.
 
 ## Extended Reference
 
