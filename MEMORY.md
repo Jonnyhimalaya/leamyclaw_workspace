@@ -9,12 +9,12 @@
 - Direct, no-fluff style. Wants me as his marketing guru.
 - Professional name on site: **Stephen** (NOT Stephan)
 
-## 🔴 Active Alerts (2026-04-06)
+## 🔴 Active Alerts (2026-04-07)
 - Anthropic now on API billing (expensive path). Cost consciousness is critical.
 - Telegram RAM alerts from cron context failing (chat ID unresolvable) → fix health scripts
-- RAM critical (259MB free, swap in use) → [server resources](memory/topics/server-resources.md)
+- RAM elevated (~37-40%, improving since Nexus npm cache cleared) → [server resources](memory/topics/server-resources.md)
 - GA4 key exposed, unrotated → [security items](memory/topics/security-open-items.md)
-- Kilmurry unpatched (CVE-2026-33579, CVSS 9.9) → [security items](memory/topics/security-open-items.md)
+- ~~Kilmurry unpatched (CVE-2026-33579)~~ **FIXED 2026-04-03** — updated to v2026.4.2 + 27 OS patches
 - ClawHub supply chain risk (12%+ malicious plugins) → [security items](memory/topics/security-open-items.md)
 
 ## Active Projects
@@ -23,10 +23,11 @@
 - Multi-agent team → vault/technical/multi-agent-team.md
 - Infrastructure & tools → vault/technical/infrastructure.md
 - AI Consultancy → vault/consultancy/overview.md
-- Kilmurry Lodge (Kate Taylor) → memory/topics/client-deployments-status.md
-- Nexus (BTC company) → memory/topics/client-deployments-status.md
+- Kilmurry Lodge (Jack) → memory/topics/client-deployments-status.md | port 18789 (clawuser)
+- Kilmurry Lodge (Kate Taylor, marketing) → memory/topics/client-deployments-status.md | port 18792 (kateuser), dashboard port 3334
+- Nexus (BTC company) → memory/topics/client-deployments-status.md | port 18790 (nexus user), dashboard port 3334
 - Revision course tracking → revision-course-2026.json
-- Todo list → leamymaths-todo.md
+- Todo list → tasks.md (active) / tasks-completed.md (archive)
 - Competitive analysis → leamymaths-competitive-analysis.md
 
 ## Topic Files (Consolidated)
@@ -55,8 +56,12 @@
 
 ## Preferences
 - "Use initiative. Don't ask for this and that. Research, document, strategise."
-- Observations → always add to leamymaths-todo.md
+- Observations → always add to tasks.md (not leamymaths-todo.md — that's been split)
 - Mission Control exists at localhost:3333 — ENHANCE, don't rebuild
 - WooCommerce memberships: use the skill, verify wcm-active status
 - Delegate repetitive browser work to sitemgr (Wrench/Sonnet) — Opus thinks, Wrench clicks (bulk membership adds on Opus cost €15)
 - Memory Resilience: Always follow Protocol C (checkpoint every ~150 msgs) and D (rescan .reset transcripts on /new)
+- **Primary model:** GPT-5.4 (decided 2026-04-06 by Jonny — Opus API billing too expensive)
+- **Native dreaming** enabled in OpenClaw (memory-core, 3am daily, replaces old autoDream)
+- **ClawChief architecture** active: priority-map.md, auto-resolver.md, tasks.md
+- Cross-agent shared memory: NOT wanted — isolation is a feature (Jonny's decision, 2026-04-06)

@@ -16,8 +16,8 @@
 - [x] Exec approvals: full/off
 - [x] Exec tested (health script runs)
 - [x] TUI tested — working ✅ (Jonny verified 18:11 UTC)
-- [ ] Telegram bot — Wednesday meeting with Kate
-- [ ] Kate's Telegram user ID whitelisted
+- [x] Telegram bot — Kate created via BotFather (token: 8601857637:AAF...)
+- [x] Kate's Telegram user ID: 8778805348 (@katetaylor123)
 
 ## PHASE 2 — Identity & Memory
 - [x] SOUL.md — marketing persona, brand voice, T.A.P.E.R. values (<1KB)
@@ -84,8 +84,8 @@
 - [x] Rate data flowing from Jack via /opt/kilmurry-shared/
 
 ## Deferred to Wednesday (Kate Meeting)
-- [ ] Telegram bot (BotFather)
-- [ ] Kate's Telegram user ID whitelisted
+- [x] Telegram bot (BotFather) — DONE 2026-04-07
+- [x] Kate's Telegram user ID whitelisted — DONE 2026-04-07
 - [ ] GA4 property access (Kate adds service account as viewer)
 - [ ] Google Ads account details
 - [ ] Email platform decision

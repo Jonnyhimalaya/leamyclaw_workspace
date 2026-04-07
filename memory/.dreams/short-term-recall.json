@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-07T20:48:16.457Z",
+  "entries": {
+    "memory:memory/2026-03-30.md:57:60": {
+      "key": "memory:memory/2026-03-30.md:57:60",
+      "path": "memory/2026-03-30.md",
+      "startLine": 57,
+      "endLine": 60,
+      "source": "memory",
+      "snippet": "@@ -57,4 @@ (56 before, 169 after) ### Meta Business Suite — Session Expired - No active Meta session — cookie expired. Need Jonny to log in manually to restore - Tried noVNC setup — blocked by no sudo access. Need: `sudo apt install -y x11vnc novnc`",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.85,
+      "maxScore": 0.85,
+      "firstRecalledAt": "2026-04-07T13:27:59.217Z",
+      "lastRecalledAt": "2026-04-07T13:27:59.217Z",
+      "queryHashes": [
+        "86473263a183"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "57,4",
+        "meta",
+        "business",
+        "suite",
+        "expired",
+        "active",
+        "cookie",
+        "need"
+      ]
+    },
+    "memory:memory/2026-04-03.md:5:8": {
+      "key": "memory:memory/2026-04-03.md:5:8",
+      "path": "memory/2026-04-03.md",
+      "startLine": 5,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "@@ -5,4 @@ (4 before, 228 after) - **Exec YOLO mode flagged as high risk** — our config has `security: full, ask: off` across all agents. Combined with the March CVE flood (9+ CVEs including sandbox escapes, auth bypass, RCE), this is the biggest security gap in our setup. Recommended switching to `ask: on-miss` and restricting ...",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "totalScore": 1.62,
+      "maxScore": 0.82,
+      "firstRecalledAt": "2026-04-07T13:27:59.217Z",
+      "lastRecalledAt": "2026-04-07T13:28:04.327Z",
+      "queryHashes": [
+        "86473263a183",
+        "c496e6918865"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "on-miss",
+        "5,4",
+        "exec",
+        "yolo",
+        "mode",
+        "flagged",
+        "high",
+        "risk"
+      ]
+    },
+    "memory:memory/2026-03-30.md:83:86": {
+      "key": "memory:memory/2026-03-30.md:83:86",
+      "path": "memory/2026-03-30.md",
+      "startLine": 83,
+      "endLine": 86,
+      "source": "memory",
+      "snippet": "@@ -83,4 @@ (82 before, 143 after) - 20+ HTML dashboards/visualisations delivered - Mission Control (Next.js) crash-looping (734 PM2 restarts) - Chrome orphan processes from Mar 24 eating RAM - No systemd, no health script, no auto-cleanup — infrastructure gaps",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.68,
+      "maxScore": 0.68,
+      "firstRecalledAt": "2026-04-07T13:27:59.225Z",
+      "lastRecalledAt": "2026-04-07T13:27:59.225Z",
+      "queryHashes": [
+        "602fbf84ba29"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "dashboards/visualisations",
+        "next.js",
+        "crash-looping",
+        "auto-cleanup",
+        "83,4",
+        "html",
+        "dashboards",
+        "visualisations"
+      ]
+    },
+    "memory:memory/2026-03-30.md:143:146": {
+      "key": "memory:memory/2026-03-30.md:143:146",
+      "path": "memory/2026-03-30.md",
+      "startLine": 143,
+      "endLine": 146,
+      "source": "memory",
+      "snippet": "@@ -143,4 @@ (142 before, 83 after) ## 19:20 UTC — Sub-agent completed: Kilmurry Lodge Architecture Schematic - Built Kilmurry Lodge architecture schematic page in Mission Control - Part of the consultancy portfolio dashboard vision",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.84,
+      "maxScore": 0.84,
+      "firstRecalledAt": "2026-04-07T13:28:04.327Z",
+      "lastRecalledAt": "2026-04-07T13:28:04.327Z",
+      "queryHashes": [
+        "c496e6918865"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "sub-agent",
+        "143,4",
+        "utc",
+        "sub",
+        "completed",
+        "kilmurry",
+        "lodge",
+        "architecture"
+      ]
+    },
+    "memory:memory/2026-04-04.md:112:115": {
+      "key": "memory:memory/2026-04-04.md:112:115",
+      "path": "memory/2026-04-04.md",
+      "startLine": 112,
+      "endLine": 115,
+      "source": "memory",
+      "snippet": "@@ -112,4 @@ (111 before, 93 after) ### Kate Marketing Agent Deployment — 17:10-17:36 UTC - **Noticed:** Jonny ready to build Kate's setup for Kilmurry Lodge, meeting Kate Wednesday - **Decision:** Full deployment following universal playbook, Sonnet to save costs, TG bot deferred to Wed - **Did:**",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.83,
+      "maxScore": 0.83,
+      "firstRecalledAt": "2026-04-07T13:28:04.327Z",
+      "lastRecalledAt": "2026-04-07T13:28:04.327Z",
+      "queryHashes": [
+        "c496e6918865"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "10-17",
+        "112,4",
+        "kate",
+        "marketing",
+        "deployment",
+        "utc",
+        "noticed",
+        "jonny"
+      ]
+    },
+    "memory:memory/2026-04-02.md:157:160": {
+      "key": "memory:memory/2026-04-02.md:157:160",
+      "path": "memory/2026-04-02.md",
+      "startLine": 157,
+      "endLine": 160,
+      "source": "memory",
+      "snippet": "@@ -157,4 @@ (156 before, 157 after) ### Kate's OpenClaw Implementation Plan — 18:20 UTC - **Noticed:** Jonny asked about setting up Kate Taylor (Kilmurry's new marketing manager) with her own OpenClaw. Key requirement: Kate must NOT have access to Jack's data, and her system cannot affect Jack's Mission Control. - **Decision:** Rec...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.8,
+      "maxScore": 0.8,
+      "firstRecalledAt": "2026-04-07T13:28:04.327Z",
+      "lastRecalledAt": "2026-04-07T13:28:04.327Z",
+      "queryHashes": [
+        "c496e6918865"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "157,4",
+        "kate's",
+        "openclaw",
+        "implementation",
+        "plan",
+        "utc",
+        "noticed",
+        "jonny"
+      ]
+    },
+    "memory:memory/2026-03-30.md:112:115": {
+      "key": "memory:memory/2026-03-30.md:112:115",
+      "path": "memory/2026-03-30.md",
+      "startLine": 112,
+      "endLine": 115,
+      "source": "memory",
+      "snippet": "@@ -112,4 @@ (111 before, 114 after) - Architecture schematics = standard deliverable per client - Mission Control = portfolio dashboard - Industry templates compound over time (hospitality first via Kilmurry) - Updated MEMORY.md with vision note",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.87,
+      "maxScore": 0.87,
+      "firstRecalledAt": "2026-04-07T13:28:15.503Z",
+      "lastRecalledAt": "2026-04-07T13:28:15.503Z",
+      "queryHashes": [
+        "29ff225c1ac5"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "memory.md",
+        "112,4",
+        "architecture",
+        "schematics",
+        "standard",
+        "deliverable",
+        "per",
+        "client"
+      ]
+    },
+    "memory:memory/2026-03-30.md:74:77": {
+      "key": "memory:memory/2026-03-30.md:74:77",
+      "path": "memory/2026-03-30.md",
+      "startLine": 74,
+      "endLine": 77,
+      "source": "memory",
+      "snippet": "@@ -74,4 @@ (73 before, 152 after) ## Kilmurry Lodge Server Audit (~18:18 UTC) - SSHed into 172.239.98.61 as root → su clawuser - Full architecture review of Jonny's OpenClaw client deployment",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.91,
+      "maxScore": 0.91,
+      "firstRecalledAt": "2026-04-07T13:28:21.913Z",
+      "lastRecalledAt": "2026-04-07T13:28:21.913Z",
+      "queryHashes": [
+        "91e42db32672"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "172.239.98.61",
+        "74,4",
+        "kilmurry",
+        "lodge",
+        "server",
+        "audit",
+        "utc",
+        "sshed"
+      ]
+    },
+    "memory:memory/2026-04-06.md:6:9": {
+      "key": "memory:memory/2026-04-06.md:6:9",
+      "path": "memory/2026-04-06.md",
+      "startLine": 6,
+      "endLine": 9,
+      "source": "memory",
+      "snippet": "@@ -6,4 @@ (5 before, 149 after) - **Critical #2:** Kilmurry Lodge still unpatched (7+ days). CVE-2026-33579 now confirmed actively exploited in the wild. Recommended Jonny contact Kate TODAY, not wait for Wednesday. - **Improvement:** Smart LLM routing tools (ClawRouter, claw-llm-router) could save 40-80% on API costs. Especial...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.88,
+      "maxScore": 0.88,
+      "firstRecalledAt": "2026-04-07T18:18:15.059Z",
+      "lastRecalledAt": "2026-04-07T18:18:15.059Z",
+      "queryHashes": [
+        "75a3cde2b8a0"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "router",
+        "cve-2026-33579",
+        "claw-llm-router",
+        "40-80",
+        "6,4",
+        "critical",
+        "kilmurry",
+        "lodge"
+      ]
+    },
+    "memory:memory/2026-04-04.md:3:6": {
+      "key": "memory:memory/2026-04-04.md:3:6",
+      "path": "memory/2026-04-04.md",
+      "startLine": 3,
+      "endLine": 6,
+      "source": "memory",
+      "snippet": "@@ -3,4 @@ (2 before, 202 after) ## Key Actions 1. **🔴 URGENT: Anthropic billing change enforced TODAY at 3PM ET (8PM Irish).** Claude subscriptions no longer cover third-party tools (OpenClaw). Must switch to API keys or enable \"extra usage\" before cutoff. One-time transition credit available (redeem by April 17). API pricing:...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.85,
+      "maxScore": 0.85,
+      "firstRecalledAt": "2026-04-07T18:18:15.059Z",
+      "lastRecalledAt": "2026-04-07T18:18:15.059Z",
+      "queryHashes": [
+        "75a3cde2b8a0"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "third-party",
+        "one-time",
+        "3,4",
+        "key",
+        "actions",
+        "urgent",
+        "anthropic",
+        "billing"
+      ]
+    },
+    "memory:memory/2026-04-04.md:4:7": {
+      "key": "memory:memory/2026-04-04.md:4:7",
+      "path": "memory/2026-04-04.md",
+      "startLine": 4,
+      "endLine": 7,
+      "source": "memory",
+      "snippet": "@@ -4,4 @@ (3 before, 201 after) 1. **🔴 URGENT: Anthropic billing change enforced TODAY at 3PM ET (8PM Irish).** Claude subscriptions no longer cover third-party tools (OpenClaw). Must switch to API keys or enable \"extra usage\" before cutoff. One-time transition credit available (redeem by April 17). API pricing: Opus 4.6 at $5...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.9,
+      "maxScore": 0.9,
+      "firstRecalledAt": "2026-04-07T20:47:56.412Z",
+      "lastRecalledAt": "2026-04-07T20:47:56.412Z",
+      "queryHashes": [
+        "bb2b1ed0a85a"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "third-party",
+        "one-time",
+        "4.6",
+        "4,4",
+        "urgent",
+        "anthropic",
+        "billing",
+        "change"
+      ]
+    },
+    "memory:memory/2026-04-02.md:18:21": {
+      "key": "memory:memory/2026-04-02.md:18:21",
+      "path": "memory/2026-04-02.md",
+      "startLine": 18,
+      "endLine": 21,
+      "source": "memory",
+      "snippet": "@@ -18,4 @@ (17 before, 296 after) - **Noticed:** Intel sweep flagged 33 security vulnerabilities (incl. sandbox escape) patched in latest release. Our server is v2026.3.28 ✅ - **Decision:** Need to verify Kilmurry Lodge server is also on latest. Can't SSH — password needed from Jonny. - **Did:** Server health OK (mem 21%, disk 38...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.87,
+      "maxScore": 0.87,
+      "firstRecalledAt": "2026-04-07T20:47:56.412Z",
+      "lastRecalledAt": "2026-04-07T20:47:56.412Z",
+      "queryHashes": [
+        "bb2b1ed0a85a"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "v2026.3.28",
+        "18,4",
+        "noticed",
+        "intel",
+        "sweep",
+        "flagged",
+        "security",
+        "vulnerabilities"
+      ]
+    },
+    "memory:memory/2026-04-04.md:111:114": {
+      "key": "memory:memory/2026-04-04.md:111:114",
+      "path": "memory/2026-04-04.md",
+      "startLine": 111,
+      "endLine": 114,
+      "source": "memory",
+      "snippet": "@@ -111,4 @@ (110 before, 94 after) ### Kate Marketing Agent Deployment — 17:10-17:36 UTC - **Noticed:** Jonny ready to build Kate's setup for Kilmurry Lodge, meeting Kate Wednesday - **Decision:** Full deployment following universal playbook, Sonnet to save costs, TG bot deferred to Wed",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.89,
+      "maxScore": 0.89,
+      "firstRecalledAt": "2026-04-07T20:48:16.457Z",
+      "lastRecalledAt": "2026-04-07T20:48:16.457Z",
+      "queryHashes": [
+        "23e1de3ab71f"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "10-17",
+        "111,4",
+        "kate",
+        "marketing",
+        "deployment",
+        "utc",
+        "noticed",
+        "jonny"
+      ]
+    }
+  }
+}
