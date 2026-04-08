@@ -43,6 +43,22 @@
 - [Server Resources](memory/topics/server-resources.md) — RAM/disk tracking, trends
 - [Twitter Research 2026-04-05](memory/topics/twitter-research-2026-04-05.md) — ClawSuite, ClawChief, ByteRover, etc.
 
+## Kilmurry GitHub + Mission Control (2026-04-08)
+- Kilmurry repos now use HTTPS auth with a single fine-grained GitHub token covering:
+  - `Jonnyhimalaya/Kilmurry`
+  - `Jonnyhimalaya/kilmurry-kate`
+- Kate repo/server mapping:
+  - repo: `Jonnyhimalaya/kilmurry-kate`
+  - user: `kateuser`
+  - app path: `/home/kateuser/kilmurry-marketing-mc`
+- Jack repo/server mapping:
+  - repo: `Jonnyhimalaya/Kilmurry`
+  - user: `clawuser`
+  - Mission Control path: `/home/clawuser/mission-control`
+  - workspace path: `/home/clawuser/.openclaw/workspace`
+- Jack’s agent is now safe to edit Mission Control directly as long as it follows build → verify → commit → push discipline.
+- If Kilmurry repo pushes fail in future, check HTTPS token auth and branch divergence before assuming missing repos or bad memory.
+
 ## Agent Team (Quick Ref)
 | ID | Name | Model | Role |
 |----|------|-------|------|
