@@ -7,3 +7,6 @@
 - Gonto EA Skills: Full EA replacement with 6 skills (meeting-prep, action-items, email-drafting, executive-digest, todoist-due-drafts, humanizer)
 - SlowMist: Red line / yellow line command classification — proper security architecture for high-privilege agents
 - OnlyTerp anti-patterns: "Don't give 5 options when 1 is clearly right — just do it"
+
+## 2026-04-08
+- When a bug lives inside a remote app on its own server, the local/server-native agent often has a much better execution path than remote SSH patching. Use the central agent for diagnosis and orchestration, but prefer the server-local agent for repetitive edit-build-restart-debug loops when remote quoting, SCP, or cross-machine patching adds friction.

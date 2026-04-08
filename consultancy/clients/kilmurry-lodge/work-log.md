@@ -274,8 +274,40 @@ Remaining 7% requires Kate (Wednesday meeting):
 | Kate Marketing Control Panel | ✅ Complete | 4 Apr |
 | Kate data pipelines (events, rates) | ✅ Complete | 4 Apr |
 | Kate agent hardening | ✅ Complete | 4 Apr |
-| Kate Telegram bot | ⏳ Wednesday | — |
-| Kate GA4 + Google Ads | ⏳ Wednesday | — |
+| Kate Telegram bot | ✅ Complete | 8 Apr |
+| Kate GA4 + Google Ads | ⏳ In progress | 8 Apr |
+
+### 8 Apr 2026 — Kilmurry Dashboard Security + Meta Integration
+
+#### Mission Control Access Control
+- **Issue:** Jack and Kate shared the same server and same Tailscale, so both dashboards were reachable by direct URL if the port was known.
+- **Fix:** Restricted Jack's Mission Control port 3333 from tailnet-wide access to Jack's two known Tailscale device IPs only. Left Kate's port 3334 accessible across the tailnet.
+- **Result:** Kate should no longer be able to open Jack's dashboard by URL.
+
+#### Jack Meta / Marketing Hub Integration
+- Recovered prior context: objective was to replicate the Leamy Meta integration pattern for Kilmurry.
+- Created/used Jack's Meta app: `2115408052582408`
+- Requested permissions via Graph API Explorer:
+  - `ads_read`
+  - `read_insights`
+  - `pages_read_engagement`
+  - `pages_show_list`
+  - `business_management`
+- Generated short-lived user token, exchanged to long-lived token.
+- Identified active Kilmurry ad account: `act_2038794416484167`
+- Stored Meta config and token on Kilmurry server under `/home/clawuser/.openclaw/workspace/credentials/`
+- Wired Jack's Mission Control marketing integration to pull live Meta data.
+
+#### Meta API / UI Outcome
+- Campaigns and adsets are live.
+- Account-level Meta summary is live using a working slimmed-down query.
+- Recent-window insights queries returned no rows, so account-level `maximum` lifetime stats are used for now.
+
+#### Marketing Hub Crash Fix
+- **Symptom:** `/marketing` crashed with `Cannot read properties of undefined (reading 'toLocaleString')`
+- **Root cause:** frontend formatter helpers and array/object access were not defensive against partial live data.
+- **Execution note:** central agent diagnosed the issue, but server-local Kilmurry bot fixed it faster because local edit/build/restart loops were much cleaner than remote SSH patching.
+- **Result:** build succeeded, PM2 restarted, `/api/marketing` returned valid JSON, `/marketing` rendered cleanly, zero browser console errors.
 
 ---
 
