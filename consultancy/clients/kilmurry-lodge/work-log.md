@@ -309,6 +309,23 @@ Remaining 7% requires Kate (Wednesday meeting):
 - **Execution note:** central agent diagnosed the issue, but server-local Kilmurry bot fixed it faster because local edit/build/restart loops were much cleaner than remote SSH patching.
 - **Result:** build succeeded, PM2 restarted, `/api/marketing` returned valid JSON, `/marketing` rendered cleanly, zero browser console errors.
 
+### 8 Apr 2026 — Kate SEO Data Architecture Spec
+- Kate shared a clear data-strategy note for the marketing control panel.
+- Core architectural decision: build SEO/analytics modules around tool-agnostic business objects, not vendor-specific tabs.
+- Produced technical build spec: `consultancy/clients/kilmurry-lodge/kate-seo-data-architecture-spec.md`
+- Phase 1 free-stack defined:
+  - Google Search Console API
+  - GA4 Data API
+  - Google Business Profile API
+  - PageSpeed Insights API
+- Phase 2 enrichment defined:
+  - Semrush API for competitor rankings, keyword difficulty, backlink intelligence, and historical SEO tracking
+- Recommended build starting point:
+  1. normalized SEO data model
+  2. Search Console ingestion
+  3. PageSpeed ingestion
+  4. SEO / AEO page rebuild around normalized objects
+
 ---
 
 *This log is updated after every consultancy session. All changes are version-controlled on GitHub with full rollback capability.*
