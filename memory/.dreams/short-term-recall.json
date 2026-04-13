@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-13T16:31:35.378Z",
+  "updatedAt": "2026-04-13T16:43:51.986Z",
   "entries": {
     "memory:memory/2026-03-30.md:57:60": {
       "key": "memory:memory/2026-03-30.md:57:60",
@@ -542,6 +542,36 @@
         "mission",
         "control",
         "exposure"
+      ]
+    },
+    "memory:memory/2026-04-07.md:57:60": {
+      "key": "memory:memory/2026-04-07.md:57:60",
+      "path": "memory/2026-04-07.md",
+      "startLine": 57,
+      "endLine": 60,
+      "source": "memory",
+      "snippet": "@@ -57,4 @@ (56 before, 44 after) - **Did:** Built and deployed \"Blocked by Jonny\" panel on main dashboard - Items: GA4 key rotation, Kilmurry SSH password, Meta re-login, credits top-up - Each item shows: impact, what's blocked, next action, due date, owner status - Committed: 5662555 in mission-control repo",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.82,
+      "maxScore": 0.82,
+      "firstRecalledAt": "2026-04-13T16:43:51.986Z",
+      "lastRecalledAt": "2026-04-13T16:43:51.986Z",
+      "queryHashes": [
+        "707095df92dd"
+      ],
+      "recallDays": [
+        "2026-04-13"
+      ],
+      "conceptTags": [
+        "re-login",
+        "top-up",
+        "mission-control",
+        "57,4",
+        "did",
+        "built",
+        "deployed",
+        "blocked"
       ]
     }
   }
