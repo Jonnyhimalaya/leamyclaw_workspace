@@ -72,8 +72,41 @@ If Jack switches Opus → Sonnet for day-to-day build work:
 Jonny can share this directly, or KilmurryBot can surface it.
 The message is simple: "Opus for thinking, Sonnet for building — switch your default."
 
-## Action Required
-- [ ] Jonny mentions to Jack: switch default model to Sonnet in openclaw.json
-- [ ] Jack runs /new regularly between build tasks
-- [ ] Upgrade Kilmurry OpenClaw to v2026.4.5+ (already on our list for CVE patch anyway)
-- [ ] Check if session hygiene note should go into KilmurryBot's AGENTS.md
+## Revised Strategy — Claude Code for Building (2026-04-13)
+
+Jack wants to stay on Opus. That's fine — the real win is a workflow change.
+
+### Key Finding from SSH Inspection
+- Jack **has used Claude Code** before (3 sessions in March, in `~/.claude/projects/-home-clawuser-mission-control/`)
+- Claude Code is **not installed in PATH** — currently only accessible via `npx`
+- Claude Code has **no credentials file** — unclear what auth it was using
+- Jack has **OpenAI Codex OAuth** already authenticated (ChatGPT Plus subscription) — the Codex harness is available
+- Anthropic auth is `mode: token` (API key = billable) NOT subscription OAuth
+
+### The Right Architecture
+```
+KilmurryBot (Opus via API — orchestrates, decides, directs)
+    ↓ spawns
+Claude Code (via Anthropic subscription — builds, writes files, iterates)
+```
+
+Bot stays on Opus but only for:
+- Strategy and planning
+- Short directives ("build this feature", "fix this bug")
+- Reviewing output
+
+Claude Code handles:
+- All file writing and editing
+- All code iteration
+- Build/test loops
+
+### What Needs to Happen
+- [ ] **Install Claude Code properly:** `npm install -g @anthropic-ai/claude-code` (into `~/.npm-global`)
+- [ ] **Auth Claude Code to Anthropic subscription** (not API key) — Jack needs to run `claude` and authenticate with his Anthropic account login (not API key)
+- [ ] **Wire ACP harness in openclaw.json** — enable `acp` section to allow the bot to spawn Claude Code sessions
+- [ ] **Add to KilmurryBot AGENTS.md** — rule: "For any file writing or code building, spawn Claude Code via ACP harness instead of doing it inline"
+- [ ] **Jack does /new now** — kill that 980-msg session
+- [ ] Upgrade Kilmurry OpenClaw to v2026.4.10 (CVE patch + prompt cache fix)
+
+### Same Pattern We Use
+This is exactly the Opus-thinks-Sonnet-clicks pattern from our own setup, just with Claude Code instead of Wrench. Bot spends tokens on decisions, not on writing 200 lines of TypeScript.
