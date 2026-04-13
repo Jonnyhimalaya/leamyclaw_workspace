@@ -6,10 +6,22 @@ Jack is running Claude Opus 4.6 as his primary model while building Mission Cont
 Opus is $15/$75 per MTok. We know from our own experience this is unsustainable for heavy build sessions.
 He stated intention to "route cheaper work later" — that later needs to be now.
 
-## What We Can't Check Directly
-- No SSH access to Kilmurry server (clawuser password never provided)
-- MC API is firewalled to Jack's Tailscale IPs only
-- Can't inspect live session sizes or token counts remotely
+## What We Found (Direct SSH Inspection — 2026-04-13)
+- SSH access confirmed: `clawuser@172.239.98.61`
+- OpenClaw version: **v2026.4.2** (needs upgrade to v2026.4.10)
+- Primary model confirmed as: **`anthropic/claude-opus-4-6`** (not Sonnet as intended)
+- Sessions dir: 43 Codex/ACP session files (these are his TUI/build sessions — no separate TG session files found, TG likely ephemeral)
+
+### Session Bloat — Confirmed Critical
+| Session | Messages | Size | Date range |
+|---------|----------|------|------------|
+| 6fea5e39 | **980 msgs** | **5.2MB** | Apr 5 → Apr 13 (8 days!) |
+| 2b42c6b8 | 494 msgs | 525KB | Apr 3+ |
+| f71af034 | 146 msgs | 477KB | — |
+| a8ba4869 | 125 msgs | 464KB | — |
+| fdfed1da | 97 msgs | 397KB | — |
+
+The **980-message / 5.2MB session running for 8 days straight** is the smoking gun. Every single Opus request in that session is sending ~5MB of context tokens. At Opus pricing that is extremely expensive.
 
 ## What We Can Do
 
