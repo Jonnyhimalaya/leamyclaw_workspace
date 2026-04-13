@@ -60,6 +60,29 @@ Every client server gets:
 - [ ] OpenClaw installed (`npm install -g openclaw`)
 - [ ] Git configured
 
+### Access Preservation Gate (MANDATORY before SSH hardening)
+
+Before changing **any** of the following:
+- `PasswordAuthentication`
+- `PermitRootLogin`
+- SSH port or firewall rules affecting SSH
+- disabling root access or password access
+
+You must first verify at least one recovery-safe path:
+
+1. **Tested key-based SSH login** from the operator machine that will continue managing the server
+2. **Verified provider console access** (for example Linode Lish/web console) is available to us or the client
+3. **Another tested recovery path** explicitly confirmed by the client
+
+Mandatory sequence on fresh client servers:
+1. Log in with the provided access method
+2. Create service user
+3. Install public key for the real operator machine
+4. Test a fresh new SSH session successfully
+5. Only then harden SSH auth settings
+
+**Never harden SSH before step 4 passes.** If the only known working access is password SSH, leave password SSH enabled until the replacement path is proven live.
+
 ## 1.2 OpenClaw Core Setup
 - [ ] `openclaw init` — initialise workspace
 - [ ] Gateway configured on loopback (127.0.0.1) with auth token
@@ -805,6 +828,7 @@ Primary contact: ______
 PHASE 1 — Server Setup
 [ ] VPS provisioned (size: ___)
 [ ] Non-root user created
+[ ] Recovery-safe access path verified before SSH hardening
 [ ] SSH hardened
 [ ] Firewall configured
 [ ] OpenClaw installed

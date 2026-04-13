@@ -1,28 +1,28 @@
-# X/Twitter Intel — 2026-04-07
+# X/Twitter Intel — 2026-04-13
 
 ## Findings
 
-### OpenClaw v2026.4.5 Update Announcement
-- **What:** OpenClaw released version 2026.4.5, adding features like built-in video/music generation, /dreaming mode, improved prompt caching, and structured task progress for better AI agent workflows.
-- **Why it matters:** For an AI consultancy, this enhances efficiency in client projects by enabling more advanced automation and creative outputs, potentially reducing development time and costs.
+### OpenClaw v2026.4.11 Stability Fixes
+- **What:** This update includes stability fixes and better sub-agent reliability for OpenClaw, improving multi-platform chat support on apps like Slack and WhatsApp.
+- **Why it matters:** For an AI consultancy, this enhances agent reliability in client projects, reducing downtime and ensuring smoother integrations, which can lead to more efficient workflows and client satisfaction.
+- **Source:** https://x.com/i/status/2043132528094036332
+
+### New Video and Music Generation Features in v2026.4.5
+- **What:** OpenClaw added built-in video and music generation capabilities, along with a '/dreaming' mode and multilingual UI support for 12+ languages.
+- **Why it matters:** These features allow AI consultancies to offer advanced content creation services without external tools, expanding creative applications in marketing or education while keeping operations self-hosted and cost-effective.
 - **Source:** https://x.com/i/status/2040998570317197607
 
-### New Integrations with Apps like WhatsApp and Notion
-- **What:** Users shared setups integrating OpenClaw with apps such as WhatsApp, Telegram, and Notion for tasks like messaging automation and note management.
-- **Why it matters:** This allows consultancies to offer seamless, multi-tool AI solutions for clients, improving productivity in communication and data organization without custom coding.
-- **Source:** https://x.com/i/status/2041055240703840274
+### OpenClaw Used for Crypto Signals Automation
+- **What:** Community posts highlight OpenClaw being used for crypto signal bots, such as @OpenClawAIX, for real-time market analysis and automation.
+- **Why it matters:** For an AI consultancy, this demonstrates versatile use cases in financial tech, enabling custom bots that could attract clients in trading or analytics sectors by leveraging AI for predictive insights.
+- **Source:** https://x.com/i/status/2041267467562193249
 
-### Tips for Using Local Models to Reduce API Costs
-- **What:** Community members recommended switching to local models (e.g., via Ollama) to avoid high API costs with providers like Claude, while maintaining OpenClaw's functionality for everyday tasks.
-- **Why it matters:** For AI consultancies, this hack promotes cost-effective implementations, helping clients manage expenses in scalable deployments and emphasizing privacy-focused solutions.
-- **Source:** https://x.com/i/status/2041304468818661638
+### Praise from Garry Tan (Y Combinator)
+- **What:** Garry Tan praised OpenClaw as essential for mini-AGIs, noting its popularity in personal automation and community-driven developments.
+- **Why it matters:** Positive endorsements from influential figures validate OpenClaw's ecosystem for AI consultancies, potentially leading to partnerships or credibility in pitching agent-based solutions to startups and businesses.
+- **Source:** https://x.com/i/status/2041267467562193249
 
-### Community Praise for 24/7 Assistance
-- **What:** Users praised OpenClaw for providing reliable 24/7 AI assistance, highlighting its role in handling real-world tasks like email and calendar management.
-- **Why it matters:** Positive feedback validates its reliability for consultancy services, potentially attracting clients seeking dependable AI tools for ongoing operations and building trust in agent-based systems.
-- **Source:** https://x.com/i/status/2041304617926160563
-
-### Comparison to Other Tools and Shift from Anthropic
-- **What:** Discussions noted OpenClaw's similarities to tools like Hermes or OpenCrabs, and mentioned a shift away from Anthropic due to access issues, positioning it as a thriving independent alternative.
-- **Why it matters:** This trend highlights diversification risks in the AI ecosystem, allowing consultancies to advise on resilient, open-source options and adapt strategies amid provider dependencies.
-- **Source:** https://x.com/i/status/2041304872503419263
+### Integration with GBrain and RL Fine-Tuning
+- **What:** OpenClaw integrates with tools like GBrain for enhanced memory recall and supports RL fine-tuning for custom agent improvements.
+- **Why it matters:** This allows AI consultancies to build more intelligent, adaptive systems for clients, improving personalization in applications like education or marketing, and giving a competitive edge in AI development.
+- **Source:** https://x.com/i/status/2042497872114090069

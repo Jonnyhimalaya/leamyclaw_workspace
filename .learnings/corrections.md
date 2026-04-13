@@ -9,3 +9,9 @@
 ## 2026-04-04 — Deployed Nexus from memory instead of following playbook
 - Missed ~50% of optimisations. Added mandatory "Client Deployments" rule to AGENTS.md.
 - **Rule:** Always open universal-openclaw-implementation.md before deploying anything.
+
+## 2026-04-08 — Locked myself out of a fresh client Linode by hardening SSH too early
+- **What happened:** On Aidan's new Linode, I created `clawuser`, enabled UFW/fail2ban, then changed `sshd_config` to disable password auth and root password login before proving a working SSH key path from our machine. Result: remote SSH access was lost.
+- **What I should have done:** Preserve access first. On any fresh client server where the only confirmed access is password SSH, the correct order is: create user, install confirmed public key, test a brand-new login successfully, then and only then harden SSH auth settings.
+- **Permanent rule going forward:** Never modify `sshd_config`, root login mode, or password authentication on any client machine until a second verified access path exists and has been tested live. If the only known access is password SSH, leave it on until key access is proven. No exceptions.
+- **Checklist addition:** Before any SSH hardening, explicitly confirm one of: Linode/Lish console access available, or tested key-based login from our machine, or another verified recovery path.

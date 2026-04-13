@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-07T20:48:16.457Z",
+  "updatedAt": "2026-04-13T15:05:13.249Z",
   "entries": {
     "memory:memory/2026-03-30.md:57:60": {
       "key": "memory:memory/2026-03-30.md:57:60",
@@ -391,6 +391,127 @@
         "utc",
         "noticed",
         "jonny"
+      ]
+    },
+    "memory:memory/2026-04-03.md:78:81": {
+      "key": "memory:memory/2026-04-03.md:78:81",
+      "path": "memory/2026-04-03.md",
+      "startLine": 78,
+      "endLine": 81,
+      "source": "memory",
+      "snippet": "@@ -78,4 @@ (77 before, 155 after) **2. OpenClaw v2026.4.2 update never addressed.** Morning brief flagged we're on v2026.4.1, an update is needed (security patches). No entry exists for actioning or deferring this. Needs either a Jonny decision or a planned update window. **3. Kilmurry Lodge still unpatched.** Flagged in the mo...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.83,
+      "maxScore": 0.83,
+      "firstRecalledAt": "2026-04-10T05:16:11.807Z",
+      "lastRecalledAt": "2026-04-10T05:16:11.807Z",
+      "queryHashes": [
+        "e4ed43cb598e"
+      ],
+      "recallDays": [
+        "2026-04-10"
+      ],
+      "conceptTags": [
+        "v2026.4.2",
+        "v2026.4.1",
+        "78,4",
+        "openclaw",
+        "update",
+        "never",
+        "addressed",
+        "morning"
+      ]
+    },
+    "memory:memory/2026-04-04.md:49:52": {
+      "key": "memory:memory/2026-04-04.md:49:52",
+      "path": "memory/2026-04-04.md",
+      "startLine": 49,
+      "endLine": 52,
+      "source": "memory",
+      "snippet": "@@ -49,4 @@ (48 before, 156 after) **4. Persistent deferred items with no progress.** Kilmurry Lodge SSH (blocked 4+ days), GA4 key rotation (exposed in git), OpenClaw v2026.4.2 update — all carried forward from yesterday with no new status. These aren't being actioned or given explicit timelines. At minimum, a consolidated ping ...",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.85,
+      "maxScore": 0.85,
+      "firstRecalledAt": "2026-04-11T11:59:53.638Z",
+      "lastRecalledAt": "2026-04-11T11:59:53.638Z",
+      "queryHashes": [
+        "b663ebd87908"
+      ],
+      "recallDays": [
+        "2026-04-11"
+      ],
+      "conceptTags": [
+        "v2026.4.2",
+        "49,4",
+        "persistent",
+        "deferred",
+        "items",
+        "progress",
+        "kilmurry",
+        "lodge"
+      ]
+    },
+    "memory:memory/2026-04-07.md:20:23": {
+      "key": "memory:memory/2026-04-07.md:20:23",
+      "path": "memory/2026-04-07.md",
+      "startLine": 20,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "@@ -20,4 @@ (19 before, 81 after) 1. **TG bot created and configured** — @Katetaylor123_bot, token stored securely (redacted from memory) 2. **Kate paired** — TG ID 8778805348, username katetaylor123, approved via `openclaw pairing approve telegram QBCY5BVQ` 3. **Mission Control status reviewed** — 9 pages all 200, live data on c...",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "totalScore": 0.43000000000000005,
+      "maxScore": 0.23,
+      "firstRecalledAt": "2026-04-12T11:05:06.981Z",
+      "lastRecalledAt": "2026-04-13T15:05:13.249Z",
+      "queryHashes": [
+        "0099d483002f"
+      ],
+      "recallDays": [
+        "2026-04-12",
+        "2026-04-13"
+      ],
+      "conceptTags": [
+        "katetaylor123-bot",
+        "20,4",
+        "bot",
+        "created",
+        "configured",
+        "token",
+        "stored",
+        "securely"
+      ]
+    },
+    "memory:memory/2026-04-05.md:97:100": {
+      "key": "memory:memory/2026-04-05.md:97:100",
+      "path": "memory/2026-04-05.md",
+      "startLine": 97,
+      "endLine": 100,
+      "source": "memory",
+      "snippet": "@@ -97,4 @@ (96 before, 22 after) - Exit code 1: Low free RAM warning (573MB free) - Attempted Telegram alert to Jonny — failed (chat ID not resolvable from cron context) - **Action needed:** Jonny should check memory usage; consider restarting any bloated processes",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.2,
+      "maxScore": 0.2,
+      "firstRecalledAt": "2026-04-12T11:05:06.981Z",
+      "lastRecalledAt": "2026-04-12T11:05:06.981Z",
+      "queryHashes": [
+        "0099d483002f"
+      ],
+      "recallDays": [
+        "2026-04-12"
+      ],
+      "conceptTags": [
+        "97,4",
+        "exit",
+        "code",
+        "low",
+        "free",
+        "ram",
+        "warning",
+        "573mb"
       ]
     }
   }

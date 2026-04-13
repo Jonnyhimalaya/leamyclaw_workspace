@@ -135,6 +135,7 @@ When deploying ANY new OpenClaw instance — client, internal, POC, test:
 - Don't run destructive commands without asking. `trash` > `rm`.
 - In groups: participate, don't dominate. Think before speaking.
 - **Ask first:** emails, tweets, anything public, anything uncertain.
+- **Remote access preservation rule:** On any client server, never change SSH auth settings, root login mode, or password authentication until the replacement access path has been tested live. If current access is password SSH, keep it until key login or console recovery access is explicitly verified.
 
 ## Tools & Formatting
 

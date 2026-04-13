@@ -11,13 +11,13 @@
 
 ## 🔴 Active Alerts (2026-04-08)
 - Anthropic now on API billing (expensive path). Cost consciousness is critical.
+- Anthropic harness blocking: OpenClaw prompt-level blocks observed. sitemgr and marketing agents at risk; consider migrating to Gemini 3.1 Pro or GPT-5.4.
 - Telegram RAM alerts from cron context failing (chat ID unresolvable) → fix health scripts
 - RAM elevated (~37-40%, improving since Nexus npm cache cleared) → [server resources](memory/topics/server-resources.md)
 - GA4 key exposed, unrotated → [security items](memory/topics/security-open-items.md) — **BLOCKING Kate's dashboard**
-- ~~Kilmurry unpatched (CVE-2026-33579)~~ **FIXED 2026-04-03** — updated to v2026.4.2 + 27 OS patches
 - ClawHub supply chain risk (12%+ malicious plugins) → [security items](memory/topics/security-open-items.md)
-- **OpenClaw upgrade needed:** main VPS on v2026.4.1, Kilmurry on v2026.4.2 → target v2026.4.5 (run `openclaw doctor --fix` 2-3x first)
-- **Anthropic credit claim deadline: April 17** — one-time credit at console.anthropic.com → Settings → Usage
+- **OpenClaw upgrade needed:** main VPS on v2026.4.1, Kilmurry on v2026.4.2 → target v2026.4.10 (fixes GHSA-7437-7HG8-FRRW and SSRF bypass; unlocks Active Memory and Codex harness).
+- **Anthropic credits claimed** on 2026-04-11. Anthropic remains on API billing, so cost consciousness is still critical.
 
 ## Active Projects
 - Leamy Maths → vault/business/leamy-maths.md
@@ -25,6 +25,10 @@
 - Multi-agent team → vault/technical/multi-agent-team.md
 - Infrastructure & tools → vault/technical/infrastructure.md
 - AI Consultancy → vault/consultancy/overview.md
+  - Recommended deployment pattern: Docker standardisation (`ghcr.io/openclaw/openclaw` via docker-compose) instead of manual npm installs.
+  - Evaluate **Lobu.ai** (open-source multi-tenant OpenClaw fork) as a scaling architecture.
+  - Evaluate Coolmanns memory architecture (v6) for multi-layer decay and GPU semantic search.
+  - Pitch Gemma 4 (12B, ~7GB RAM) for compliance-heavy client deployments (e.g., Kilmurry hotel data).
 - Kilmurry Lodge (Jack) → memory/topics/client-deployments-status.md | port 18789 (clawuser)
 - Kilmurry Lodge (Kate Taylor, marketing) → memory/topics/client-deployments-status.md | port 18792 (kateuser), dashboard port 3334
   - TG bot: @Katetaylor123_bot | Kate's TG ID: 8778805348
@@ -86,6 +90,8 @@
 - Memory Resilience: Always follow Protocol C (checkpoint every ~150 msgs) and D (rescan .reset transcripts on /new)
 - **Primary model:** GPT-5.4 (decided 2026-04-06 by Jonny — Opus API billing too expensive)
 - **Native dreaming** enabled in OpenClaw (memory-core, 3am daily, replaces old autoDream)
+- **Local Model Fallback:** Gemma 4 viable via Ollama (Apache 2.0, good tool use) — recommended for consultancy budget tiers and API failovers.
+- **CLI capabilities:** `openclaw infer` available in v2026.4.7+ for multimodal inference (images/audio/video) — good for marketing workflows.
 - **ClawChief architecture** active: priority-map.md, auto-resolver.md, tasks.md
 - Cross-agent shared memory: NOT wanted — isolation is a feature (Jonny's decision, 2026-04-06)
 - **⚠️ `chattr +i` lesson:** Never immutable-lock files the gateway reads at runtime (exec-approvals.json, openclaw.json). Only lock static files (SOUL.md, AGENTS.md). Immutable flag blocks ALL access including reads.

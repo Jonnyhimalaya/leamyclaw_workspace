@@ -242,15 +242,95 @@
     },
     {
       "date": "2026-04-08",
-      "timestamp": "2026-04-08T00:51:51.058977+00:00",
+      "timestamp": "2026-04-08T20:51:51.117173+00:00",
       "totalSessions": 1,
       "activeSessions": 0,
-      "totalTokens": 102079,
-      "totalCost": 72.566206,
+      "totalTokens": 105852,
+      "totalCost": 77.976593,
       "sessionBreakdown": {
         "agent:main:main": {
-          "tokens": 102079,
-          "cost": 72.566206,
+          "tokens": 105852,
+          "cost": 77.976593,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-09",
+      "timestamp": "2026-04-09T20:51:56.378940+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 111471,
+      "totalCost": 84.817812,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 111471,
+          "cost": 84.817812,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-10",
+      "timestamp": "2026-04-10T20:51:50.900367+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 116766,
+      "totalCost": 92.535805,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 116766,
+          "cost": 92.535805,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T20:51:50.854934+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 121907,
+      "totalCost": 100.031379,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 121907,
+          "cost": 100.031379,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-12",
+      "timestamp": "2026-04-12T20:51:55.578168+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 128651,
+      "totalCost": 108.108578,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 128651,
+          "cost": 108.108578,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-13",
+      "timestamp": "2026-04-13T12:51:51.516666+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 130296,
+      "totalCost": 113.706012,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 130296,
+          "cost": 113.706012,
           "model": "gpt-5.4",
           "channel": "webchat"
         }
@@ -1058,12 +1138,172 @@
           "timestamp": "2026-04-08T00:51:51.058977+00:00",
           "tokens": 102079,
           "cost": 72.566206
+        },
+        {
+          "timestamp": "2026-04-08T04:51:51.062241+00:00",
+          "tokens": 102118,
+          "cost": 73.861841
+        },
+        {
+          "timestamp": "2026-04-08T08:51:55.632135+00:00",
+          "tokens": 102124,
+          "cost": 74.939499
+        },
+        {
+          "timestamp": "2026-04-08T12:51:54.329738+00:00",
+          "tokens": 102940,
+          "cost": 75.73961
+        },
+        {
+          "timestamp": "2026-04-08T16:51:51.066828+00:00",
+          "tokens": 104389,
+          "cost": 76.863089
+        },
+        {
+          "timestamp": "2026-04-08T20:51:51.117173+00:00",
+          "tokens": 105852,
+          "cost": 77.976593
+        },
+        {
+          "timestamp": "2026-04-09T00:51:50.558431+00:00",
+          "tokens": 105942,
+          "cost": 78.82179
+        },
+        {
+          "timestamp": "2026-04-09T04:51:51.833365+00:00",
+          "tokens": 105892,
+          "cost": 79.886571
+        },
+        {
+          "timestamp": "2026-04-09T08:51:51.478691+00:00",
+          "tokens": 106550,
+          "cost": 81.239129
+        },
+        {
+          "timestamp": "2026-04-09T12:51:51.586630+00:00",
+          "tokens": 108410,
+          "cost": 82.432417
+        },
+        {
+          "timestamp": "2026-04-09T16:51:50.573582+00:00",
+          "tokens": 110025,
+          "cost": 83.617479
+        },
+        {
+          "timestamp": "2026-04-09T20:51:56.378940+00:00",
+          "tokens": 111471,
+          "cost": 84.817812
+        },
+        {
+          "timestamp": "2026-04-10T00:51:50.993914+00:00",
+          "tokens": 111818,
+          "cost": 85.994163
+        },
+        {
+          "timestamp": "2026-04-10T04:51:51.706168+00:00",
+          "tokens": 111672,
+          "cost": 87.135268
+        },
+        {
+          "timestamp": "2026-04-10T08:51:51.093793+00:00",
+          "tokens": 112079,
+          "cost": 88.566822
+        },
+        {
+          "timestamp": "2026-04-10T12:51:54.905506+00:00",
+          "tokens": 113954,
+          "cost": 90.067152
+        },
+        {
+          "timestamp": "2026-04-10T16:51:50.813242+00:00",
+          "tokens": 115391,
+          "cost": 91.308279
+        },
+        {
+          "timestamp": "2026-04-10T20:51:50.900367+00:00",
+          "tokens": 116766,
+          "cost": 92.535805
+        },
+        {
+          "timestamp": "2026-04-11T00:51:50.614100+00:00",
+          "tokens": 117031,
+          "cost": 93.705822
+        },
+        {
+          "timestamp": "2026-04-11T04:51:50.895537+00:00",
+          "tokens": 116966,
+          "cost": 94.936442
+        },
+        {
+          "timestamp": "2026-04-11T08:51:50.351263+00:00",
+          "tokens": 117379,
+          "cost": 96.171668
+        },
+        {
+          "timestamp": "2026-04-11T12:51:50.973752+00:00",
+          "tokens": 119260,
+          "cost": 97.478434
+        },
+        {
+          "timestamp": "2026-04-11T16:51:50.515318+00:00",
+          "tokens": 120917,
+          "cost": 98.780647
+        },
+        {
+          "timestamp": "2026-04-11T20:51:50.854934+00:00",
+          "tokens": 121907,
+          "cost": 100.031379
+        },
+        {
+          "timestamp": "2026-04-12T00:51:50.270446+00:00",
+          "tokens": 122061,
+          "cost": 101.252747
+        },
+        {
+          "timestamp": "2026-04-12T04:51:51.135880+00:00",
+          "tokens": 122100,
+          "cost": 102.50596
+        },
+        {
+          "timestamp": "2026-04-12T12:51:51.420728+00:00",
+          "tokens": 123895,
+          "cost": 104.785858
+        },
+        {
+          "timestamp": "2026-04-12T16:51:54.396557+00:00",
+          "tokens": 126966,
+          "cost": 106.723843
+        },
+        {
+          "timestamp": "2026-04-12T20:51:55.578168+00:00",
+          "tokens": 128651,
+          "cost": 108.108578
+        },
+        {
+          "timestamp": "2026-04-13T00:51:53.886995+00:00",
+          "tokens": 129175,
+          "cost": 109.399571
+        },
+        {
+          "timestamp": "2026-04-13T04:51:54.968253+00:00",
+          "tokens": 129087,
+          "cost": 111.008196
+        },
+        {
+          "timestamp": "2026-04-13T08:51:50.897772+00:00",
+          "tokens": 129523,
+          "cost": 112.403374
+        },
+        {
+          "timestamp": "2026-04-13T12:51:51.516666+00:00",
+          "tokens": 130296,
+          "cost": 113.706012
         }
       ],
-      "lastSeen": "2026-04-08T00:51:51.058977+00:00",
+      "lastSeen": "2026-04-13T12:51:51.516666+00:00",
       "lastStatus": "done",
-      "currentTokens": 102079,
-      "currentCost": 72.5662058
+      "currentTokens": 130296,
+      "currentCost": 113.7060119
     }
   }
 }
