@@ -2778,3 +2778,115 @@
 - **Value Proposition:** Could automate some of what we do manually (agent tuning, prompt optimisation). Worth monitoring for when it matures.
 - **Implementation Notes:** Monitor ThirdLayer/AutoAgent. Evaluate when stable. If it can reliably auto-tune agent configurations, it could accelerate our deployment pipeline.
 - **Dependencies:** Research-stage; YC W25 company — may productise soon.
+---
+
+## NEW ENTRIES — April 14, 2026 Bookmark Research Batch
+
+---
+
+### [MEM-023] Include Session Transcripts in QMD Search Paths
+- **Category:** memory
+- **Complexity:** quick-win (< 1 hour)
+- **Use Case Tags:** universal
+- **Status:** catalogued
+- **Source:** @BenjaminBadejo (Apr 11, 182K views)
+- **Description:** Add session transcript paths to QMD's `paths[]` config alongside `memory/` and `vault/`. Every past conversation becomes semantically searchable, not just what the agent manually wrote to memory files.
+- **Value Proposition:** Dramatically increases recall depth. Agent can find context from conversations it never explicitly logged.
+- **Implementation Notes:** Add to `memory.qmd.paths[]` in openclaw.json: `{"name": "sessions", "path": "~/.openclaw/agents/main/sessions", "pattern": "*.jsonl"}`. Run QMD re-index after. Slight latency increase (5-8s per response) is acceptable trade-off.
+- **Action for us:** Implement on main agent. High priority.
+
+---
+
+### [MEM-024] Durable Agent Rule — Codify Before Moving On
+- **Category:** memory / automation
+- **Complexity:** quick-win (< 1 hour)
+- **Use Case Tags:** universal
+- **Status:** catalogued
+- **Source:** @garrytan / YC CEO (Apr 9, 246K views)
+- **Description:** Add to AGENTS.md: "You are not allowed to do one-off work. If I ask you to do something that will need to happen again: (1) do it manually first, (2) show output and ask for approval, (3) if approved, codify into a SKILL.md file, (4) if it should run automatically, add to cron."
+- **Value Proposition:** Prevents knowledge loss. Tasks that recur get systematised automatically rather than relying on the human to remember to ask again.
+- **Implementation Notes:** Paste rule directly into AGENTS.md. Works best paired with a `/skills` directory in workspace.
+- **Action for us:** Already partially in our workflow. Formalise the rule in AGENTS.md.
+
+---
+
+### [MEM-025] Skill Drift Detection
+- **Category:** memory / identity
+- **Complexity:** moderate (1-4 hours)
+- **Use Case Tags:** universal
+- **Status:** catalogued
+- **Source:** @MatthewBerman (Apr 10, 8.8K views)
+- **Description:** As AGENTS.md, SOUL.md, and skills accumulate edits over time, instructions start contradicting each other silently. Tool at journeykits.ai/browse/kits/matt-clawd/skill-drift-detector detects and resolves these conflicts.
+- **Value Proposition:** Prevents agent behaviour degrading gradually as workspace files grow. "Silent killer post-Claude ban."
+- **Action for us:** Run drift check quarterly or after major AGENTS.md rewrites. Add to playbook.
+
+---
+
+### [ARC-028] Open Harness = Own Your Memory
+- **Category:** architecture
+- **Complexity:** ongoing
+- **Use Case Tags:** universal, consultancy-pitch
+- **Status:** catalogued
+- **Source:** @hwchase17 / LangChain founder (Apr 11, 1.8M views, 10K bookmarks)
+- **Description:** Agent harnesses won't be absorbed by models. The real moat is memory. Closed harnesses (Anthropic Managed Agents, OpenAI APIs) = yield control of your agent's memory to a third party. Open harnesses (OpenClaw, Letta) = you own your memory, your data, your agent's accumulated intelligence.
+- **Value Proposition:** This is the core consultancy pitch. Every OpenClaw client we deploy owns their data permanently. They can switch models, switch providers, export everything. No lock-in.
+- **Key Quote:** "If your agent's memory lives behind someone else's API, you don't have a product."
+- **Action for us:** Use this framing in all consultancy pitch materials. Add to sales deck.
+
+---
+
+### [ARC-029] Pluggable Harness Architecture + Strict Mode
+- **Category:** architecture
+- **Complexity:** moderate (1-4 hours)
+- **Use Case Tags:** GPT users, power users
+- **Status:** catalogued
+- **Source:** @steipete / OpenClaw contributor (Apr 12, 358K views)
+- **Description:** Two config options for GPT laziness: (1) `agents.defaults.embeddedPi.executionContract = 'strict-agentic'` — forces agent to keep working instead of stopping at "here's a plan". (2) Native Codex harness via `plugins.entries.codex.enabled = true` + `agents.defaults.model = 'codex/gpt-5.4'` for longer-horizon task completion. Harnesses are now pluggable plugins.
+- **Action for us:** If GPT-5.4 goes lazy on long tasks, apply strict-agentic mode. Test before rolling out to clients.
+
+---
+
+### [MEM-026] Git-Like Version Control for Agent Memory (ByteRover)
+- **Category:** memory
+- **Complexity:** moderate (1-4 hours)
+- **Use Case Tags:** multi-agent, team deployments
+- **Status:** catalogued
+- **Source:** @kevinnguyendn / ByteRover creator (Apr 8, 10.8K views)
+- **Description:** ByteRover adds 15 git-like operations to shared agent context trees: staging, commits, rollbacks, merging, branching. Prevents "last writer wins" overwrites when multiple agents or humans update the same knowledge base. Install: `curl -fsSL https://byterover.dev/install | sh`. GitHub: byterover.dev.
+- **Value Proposition:** Essential for multi-agent setups or client deployments where multiple people use the same agent. Currently our agents have isolated memory (by design) but shared knowledge management is a future need.
+- **Action for us:** Low priority now (isolation is a feature), but evaluate for consultancy clients with team deployments.
+
+---
+
+### [AUT-038] /last30days Skill — AI-Led Research Engine
+- **Category:** automation
+- **Complexity:** quick-win (< 1 hour)
+- **Use Case Tags:** research, competitive analysis, content
+- **Status:** catalogued
+- **Source:** @mvanhorn (Apr 9, 308K views)
+- **Description:** OpenClaw skill that runs AI-agent-led research. Pre-research brain resolves X handles, subreddits, YouTube channels, TikTok hashtags for a topic before running the actual search. Reddit, X, YouTube content free with no API keys. Single-pass X-vs-Y comparisons in 5 mins. GitHub: mvanhorn/last30days-skill.
+- **Value Proposition:** Replaces or supercharges Scout agent for competitive research. Particularly useful for Leamy Maths competitor tracking and consultancy client market research.
+- **Action for us:** Install as a skill on Scout agent. Test with a Leamy Maths competitor query.
+
+---
+
+### [CST-024] Permanent Memory for Claude Code (95% Token Reduction)
+- **Category:** cost
+- **Complexity:** quick-win (< 1 hour)
+- **Use Case Tags:** Claude Code users
+- **Status:** catalogued
+- **Source:** @RoundtableSpace (Apr 12, 553K views, 46K GitHub stars)
+- **Description:** Open-source tool (likely claude-mem) that gives Claude Code permanent memory across sessions. Claims 95% less token consumption per session, never hits context limits, picks up exactly where left off. One command install, free.
+- **Value Proposition:** Massive cost reduction for Jack's Claude Code usage on Kilmurry Mission Control. If the 95% claim holds even partially it's transformative.
+- **Action for us:** Find the exact repo (search GitHub for "claude-mem" or "claude code permanent memory" ~46K stars), install on Kilmurry for Jack. High priority.
+
+---
+
+### [MEM-027] Vertical vs Horizontal Memory Architecture
+- **Category:** memory / architecture
+- **Complexity:** major (4+ hours)
+- **Use Case Tags:** multi-agent, advanced
+- **Status:** catalogued
+- **Source:** @Voxyz_ai (Apr 14)
+- **Description:** Two distinct memory failure modes: Vertical (within-agent forgetting) solved by Dreaming/auto-consolidation. Horizontal (cross-agent silos) solved by a shared knowledge layer like GBrain integrated with Gmail/Calendar data. Without horizontal memory, agents in a multi-agent setup cannot benefit from each other's learning.
+- **Action for us:** Vertical is handled. Horizontal is a known gap (Jonny chose isolation intentionally). GBrain is the leading candidate if we ever want to bridge this. Document trade-off for consultancy clients.

@@ -166,3 +166,28 @@ These authors appear multiple times with high-signal content:
 
 ## Research Queue
 Deep-dive research will be saved per-post in `vault/research/x-bookmarks/deep-dives/`
+
+---
+
+## 📦 Batch 2 — April 14, 2026 Research Session
+
+| # | Author | Date | Summary | URL | Researched |
+|---|--------|------|---------|-----|------------|
+| B1 | @kevinnguyendn | Apr 8 | ByteRover — Git-like version control for agent memory. 15 git operations (stage, commit, rollback, merge, branch) for shared context trees across multi-agent teams | https://x.com/kevinnguyendn/status/2041869899832693191 | ✅ |
+| B2 | @garrytan | Apr 9 | "Durable agent" prompt for AGENTS.md — never do one-off work, always codify into SKILL.md or cron. Do manually first, show output, approve, then automate | https://x.com/garrytan/status/2042034964825551072 | ✅ |
+| B3 | @garrytan | Apr 8 | diarize.io — best YouTube transcription/diarisation tool for use with OpenClaw. Recommended by YC CEO | https://x.com/garrytan/status/2042010645424697497 | ✅ |
+| B4 | @YakuzaDaddy | Apr 9 | Claude→ChatGPT migration tips: `/think high`, enable memory-wiki, add "act first explain after" to SOUL.md. NousResearch reply: prompt GPT to act like Hermes for better performance | https://x.com/YakuzaDaddy/status/2042344866538226173 | ✅ |
+| B5 | @gabriberton | Apr 9 | Vibe coding generates dead code fast — run `ruff` + `vulture` regularly. 680K views. JS equivalent: `knip`. Google DeepMind engineer | https://x.com/gabriberton/status/2042141119837012284 | ✅ |
+| B6 | @garrytan | Apr 9 | GBrain — open source personal knowledge base for OpenClaw using pgvector/Postgres. Semantic search over 13K+ markdown files. GitHub: garrytan/gbrain (MIT) | https://x.com/garrytan/status/2042300939525402875 | ✅ |
+| B7 | @jlehman_ | Apr 9 | lossless-claw — cross-conversation total recall plugin. SQLite-based, prompt caching compaction, /new & /reset integration. "Forgetting is a bug not a feature." GitHub: Martian-Engineering/lossless-claw | https://x.com/jlehman_/status/2042378920130199755 | ✅ |
+| B8 | @socialwithaayan | Apr 9 | ReClip — self-hosted open source video downloader (1000+ sites, MP4/MP3, batch). Clean yt-dlp wrapper. GitHub: averygan/reclip | https://x.com/socialwithaayan/status/2042121897463443936 | ✅ |
+| B9 | @mvanhorn | Apr 9 | /last30days v3 — AI agent-led search engine (20K stars). Pre-research brain resolves handles/subreddits/channels before searching. Reddit/X/YouTube free, no API keys. GitHub: mvanhorn/last30days-skill | https://x.com/mvanhorn/status/2042320564417937562 | ✅ |
+| B10 | @YakuzaDaddy | Apr 10 | Personality migration hack — export Telegram chat JSON, feed to new agent to rebuild personality, then /reset. Works for Claude→ChatGPT model switches | https://x.com/YakuzaDaddy/status/2042635851872768394 | ✅ |
+| B11 | @MatthewBerman | Apr 10 | Skill Drift Detector — tool to detect/fix contradictions and stale instructions accumulating in AGENTS.md/SOUL.md/skills over time. Link: journeykits.ai/browse/kits/matt-clawd/skill-drift-detector | https://x.com/MatthewBerman/status/2042686570957017129 | ✅ |
+| B12 | @obviyus | Apr 11 | OpenClaw now supports Telegram bot-to-bot communication for E2E testing. Enable via /setbot2bot in BotFather. OpenClaw maintainer post | https://x.com/obviyus/status/2042810361351671867 | ✅ |
+| B13 | @hwchase17 | Apr 11 | Harrison Chase (LangChain founder) — "If your agent's memory lives behind someone else's API, you don't have a product." Open harnesses win. Memory = the real moat. 1.8M views | https://x.com/hwchase17/status/2042978500567609738 | ✅ |
+| B14 | @steipete | Apr 12 | Two upcoming OpenClaw fixes for GPT laziness: (1) strict-agentic execution contract, (2) native Codex harness. Harnesses now pluggable. 358K views | https://x.com/steipete/status/2043136615640694797 | ✅ |
+| B15 | @RoundtableSpace | Apr 12 | Permanent memory for Claude Code — 46K stars in 48hrs. 95% less token consumption, never hits context limits, picks up where left off. Free. (claude-mem or similar) | https://x.com/RoundtableSpace/status/2043347156141064476 | ✅ |
+| B16 | @BenjaminBadejo | Apr 11 | Run QMD + Active Memory together. Critical tip: include session transcripts in QMD paths, not just memory folder — every conversation becomes searchable | https://x.com/BenjaminBadejo/status/2043076618093003122 | ✅ |
+| B17 | @garrytan | Apr 13 | "Boil the Ocean" SOUL.md addition — marginal cost of completeness is near zero with AI. Never table things, never offer workarounds when real fix exists. "The standard isn't good enough — it's holy shit that's done." | https://x.com/garrytan/status/2043581361798500602 | ✅ |
+| B18 | @Voxyz_ai | Apr 14 | Vertical vs horizontal memory. Vertical (within-agent) = OpenClaw Dreaming. Horizontal (cross-agent silos) = gbrain integrated with Gmail/Calendar as shared layer | https://x.com/Voxyz_ai/status/2044013799020122389 | ✅ |
