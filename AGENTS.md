@@ -28,7 +28,6 @@ You wake up fresh each session. Files are your continuity.
 | Persona, voice | `SOUL.md` |
 
 ### Core Rules
-- **Search-first:** Call `memory_search` before answering questions about past facts
 - **Learnings-first:** Before non-trivial tasks, scan `.learnings/corrections.md` and `.learnings/ERRORS.md`. Two-strike rule: same mistake twice → promote to permanent rule in AGENTS.md.
 - **Write immediately:** After meaningful tasks, append to today's memory file. Don't wait.
 - **NDD format:** Noticed / Decision / Did for all entries

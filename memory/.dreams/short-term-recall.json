@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-13T16:43:51.986Z",
+  "updatedAt": "2026-04-14T11:05:08.523Z",
   "entries": {
     "memory:memory/2026-03-30.md:57:60": {
       "key": "memory:memory/2026-03-30.md:57:60",
@@ -460,18 +460,19 @@
       "endLine": 23,
       "source": "memory",
       "snippet": "@@ -20,4 @@ (19 before, 81 after) 1. **TG bot created and configured** — @Katetaylor123_bot, token stored securely (redacted from memory) 2. **Kate paired** — TG ID 8778805348, username katetaylor123, approved via `openclaw pairing approve telegram QBCY5BVQ` 3. **Mission Control status reviewed** — 9 pages all 200, live data on c...",
-      "recallCount": 2,
+      "recallCount": 5,
       "dailyCount": 0,
-      "totalScore": 0.43000000000000005,
+      "totalScore": 0.8800000000000001,
       "maxScore": 0.23,
       "firstRecalledAt": "2026-04-12T11:05:06.981Z",
-      "lastRecalledAt": "2026-04-13T15:05:13.249Z",
+      "lastRecalledAt": "2026-04-14T11:05:08.523Z",
       "queryHashes": [
         "0099d483002f"
       ],
       "recallDays": [
         "2026-04-12",
-        "2026-04-13"
+        "2026-04-13",
+        "2026-04-14"
       ],
       "conceptTags": [
         "katetaylor123-bot",
@@ -572,6 +573,36 @@
         "built",
         "deployed",
         "blocked"
+      ]
+    },
+    "memory:memory/2026-04-13.md:74:77": {
+      "key": "memory:memory/2026-04-13.md:74:77",
+      "path": "memory/2026-04-13.md",
+      "startLine": 74,
+      "endLine": 77,
+      "source": "memory",
+      "snippet": "@@ -74,4 @@ (73 before, 1 after) - OpenClaw version on Kilmurry: v2026.4.2 (needs upgrade to v2026.4.10) ## Server Health: ⚠️ SWAP ISSUE at 19:04 — mem 46%, disk 57%, swap 254MB (performance impact). Telegram alert failed — bot needs inbound message to establish chat ID. ## Server Health: ISSUE at 23:04 — mem 46%, disk 57%, swa...",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "totalScore": 0.39,
+      "maxScore": 0.14,
+      "firstRecalledAt": "2026-04-14T03:05:04.775Z",
+      "lastRecalledAt": "2026-04-14T11:05:08.523Z",
+      "queryHashes": [
+        "0099d483002f"
+      ],
+      "recallDays": [
+        "2026-04-14"
+      ],
+      "conceptTags": [
+        "v2026.4.2",
+        "v2026.4.10",
+        "74,4",
+        "openclaw",
+        "version",
+        "kilmurry",
+        "needs",
+        "upgrade"
       ]
     }
   }

@@ -924,7 +924,7 @@ Both Kilmurry and Leamy servers were migrated from tmux to systemd on the same d
 - **QMD memory backend** eliminates external API dependency — recommend for all clients.
 - **Vault architecture is a game-changer.** MEMORY.md went from 13KB → 2KB (86% reduction) with zero information loss. Detail moves to vault/ files, `memory_search` finds it in <50ms. Every client should have this from day 1.
 - **Start QMD with BM25 (`search` mode).** Free, no API needed, works great for small-medium vaults. Only upgrade to hybrid (`query` mode) when vault grows large or client needs semantic matching — and it requires an embedding API key (OpenAI or Gemini).
-- **Search-First protocol in AGENTS.md is mandatory.** Without it, the agent guesses instead of checking its notes. Add "call memory_search before answering past-context questions."
+- **Active Memory plugin replaces manual Search-First protocol (v2026.4.10+).** Enable `plugins.entries.active-memory: {enabled: true}` and the platform handles pre-reply memory recall automatically. Remove manual "call memory_search before answering" rules from AGENTS.md — they cause double-searching and waste tokens. Manual `memory_search` calls are still valid for specific lookups mid-task.
 - **WooCommerce membership quirk:** post_status must be "wcm-active" not "publish." Document platform quirks per client.
 - **Session bloat causes API 529 errors.** Monitor session sizes, alert early.
 - **Target <8KB total workspace files** injected per message (SOUL <1KB, AGENTS <3KB, MEMORY <3KB, TOOLS <1KB). Anything bigger belongs in vault/.

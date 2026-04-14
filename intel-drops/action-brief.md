@@ -1,45 +1,57 @@
-# 🧠 Morning Action Brief — 2026-04-12
+# 🧠 Morning Action Brief — 2026-04-14
 
 ## 🔴 Fix Now
 
-### 1. OpenClaw Upgrade Overdue: v2026.4.1 → v2026.4.11 (Both Servers)
-- **Intel:** v2026.4.11 released April 11 with stability, safer routing, reliable subagents, and messaging fixes. Separately, CVE-2026-32922 fix guide published — CVSS 9.9 privilege escalation via device token rotation (patched in v2026.3.11, so we're covered there). But GHSA-7437-7HG8-FRRW and SSRF bypass fixes are in v2026.4.10 and we're still on v2026.4.1/v2026.4.2.
-- **Our exposure:** Main VPS (v2026.4.1) and Kilmurry (v2026.4.2) are both **10 versions behind**. We're missing the SSRF bypass fix, the GHSA security patch, Active Memory, Codex harness, and all the subagent reliability improvements that directly affect our multi-agent pipeline. This has been flagged since April 8 with zero progress.
-- **Recommended action:** Upgrade main VPS today — `npm i -g openclaw@latest`, restart gateway. Kilmurry upgrade blocked on SSH access (see item 3). Main VPS upgrade is unblocked and should take 5 minutes.
-- **Effort:** Low (15 min for main VPS)
-- **Research:** CVE-2026-32922 affects all versions before v2026.3.11. We're past that. But the GHSA-7437-7HG8-FRRW fix in v2026.4.10 is confirmed security-relevant and we're exposed. 63% of public OpenClaw instances reportedly run without auth — we're not that bad, but being 10 versions behind is indefensible.
+### 1. Upgrade OpenClaw to v2026.4.10 — Both Servers
+- **Intel:** v2026.4.10 dropped ~3 days ago with SSRF hardening (patches GHSA-7437-7HG8-FRRW) and the new Active Memory plugin. Our main VPS is on v2026.4.1, Kilmurry on v2026.4.2. Both are 9 versions behind.
+- **Our exposure:** The SSRF bypass is a known security advisory we flagged weeks ago and haven't patched. Kilmurry is a client-facing server with Kate's marketing data flowing through it. CVE-2026-33579 (privilege escalation via `/pair approve`, CVSS 9.9) is also still unpatched on Kilmurry — active exploitation was discussed on r/sysadmin.
+- **Recommended action:** 
+  1. Main VPS: `npm update -g openclaw` → restart gateway. Test all agents post-upgrade.
+  2. Kilmurry: Still blocked on SSH password from Kate — escalate at Wednesday meeting, or try Tailscale SSH (`ssh clawuser@100.111.174.13`) if configured.
+  3. Post-upgrade: Enable the Active Memory plugin on main — it's exactly what we need for the "stateless agent" context problem across our multi-agent team.
+- **Effort:** Low (main VPS: 15 min). Medium (Kilmurry: blocked on access).
 
-### 2. Main VPS Memory Crisis + OOM Bug in Ecosystem
-- **Intel:** GitHub issue #41778 confirms `openclaw-message` OOM crashes on 4GB servers from v2026.3.7+. Separate issue #45440 shows rapid memory growth on constrained systems. Community fix guide recommends increasing Node.js heap limits and reducing concurrent context buffers.
-- **Our exposure:** Our 8GB main VPS had only **259MB free RAM** as of April 5, with 46MB swap in use. We're running 3 gateways (main ~770MB, Nexus ~740MB, plus SearXNG/Docker/PM2). We're not a 4GB box, but we're operating like one. Any memory regression in the upgrade could tip us into OOM. The Nexus npm cache cleanup (~9.3GB) was flagged but never confirmed done.
-- **Recommended action:** Before upgrading OpenClaw: (1) Confirm Nexus npm cache was cleared — `du -sh /home/nexus/.npm /home/nexus/node_modules/.cache`; (2) Set `NODE_OPTIONS="--max-old-space-size=2048"` in gateway systemd unit files; (3) Consider stopping Nexus gateway when not actively testing (frees ~740MB instantly); (4) After upgrade, monitor with `free -h` for 30 minutes.
-- **Effort:** Medium (30 min setup + monitoring)
-- **Research:** The OOM fix guide recommends: increase Node heap to 2GB (`--max-old-space-size=2048`), reduce `maxContextTokens` in openclaw.json, disable unused plugins to reduce baseline memory. On our 8GB box with 3 gateways, the real fix is either dropping to 2 gateways or upgrading to 16GB RAM.
+### 2. GA4 Key Rotation — Still Unresolved Since April 3rd
+- **Intel:** No new intel on this — that's the problem. It's been 11 days since we flagged the exposed GA4 service account key. It's still in git history, still unrotated, and still blocking Kate's dashboard.
+- **Our exposure:** Kate's marketing dashboard (the one we built for her) can't show GA4 data until this key is rotated and permissions granted for property 4940940. We have a Wednesday meeting coming up — this needs to be on the agenda.
+- **Recommended action:** Add to Wednesday meeting agenda: (1) Jonny rotates key in Google Cloud Console → IAM → Service Accounts, (2) grant new key read access to GA4 property 4940940, (3) update `credentials/ga4-service-account.json`, (4) Kate provides her SSH password for Kilmurry patching.
+- **Effort:** Low (15 min with Jonny's Google Cloud access).
 
 ## 🟡 Improve
 
-### 3. Kilmurry Server: Still a Black Box After 7 Days
-- **Intel:** N/A from today's scan — this is a persistent gap.
-- **Our exposure:** We haven't been able to SSH into Kilmurry (172.239.98.61) since the original flag on April 5. We can't verify: (a) OpenClaw version or patch status, (b) RAM/disk usage with Kate's gateway + Jack's expanding Mission Control, (c) ClawHub plugin audit for supply chain risk (12%+ malicious rate). Kate's Wednesday meeting was supposed to resolve the SSH password — did it? No follow-up logged.
-- **Recommended action:** Jonny to confirm: did Kate provide the SSH password at Wednesday's meeting? If yes, do the audit immediately (version check, `free -h`, disk check, installed plugins list). If no, escalate — we cannot responsibly run a client deployment we can't access.
-- **Effort:** Low (once access is obtained — 20 min audit)
+### 3. Active Memory Plugin — Solve the Multi-Agent Context Problem
+- **Intel:** Today's community intel highlights ongoing complaints about "stateless" context loss when routing tasks between agents. v2026.4.10's new Active Memory plugin introduces a dedicated memory sub-agent that runs before every main reply, automatically pulling in relevant preferences, context, and past details. GitHub issue #50263 also requests persona file injection for `sessions_spawn`.
+- **Our exposure:** We run 6 agents. Jonny explicitly chose agent isolation (no shared memory), but the context loss between sessions is real — especially for the Orchestrator delegating to Wrench/Prism. Active Memory could give each agent better recall within its own sessions without breaking isolation.
+- **Recommended action:**
+  1. After upgrading to v2026.4.10, enable Active Memory on the `main` agent first as a trial.
+  2. Test: Does it reduce the "I don't remember that" problem in long Orchestrator sessions?
+  3. If successful, roll out to `sitemgr` and `marketing` agents.
+  4. Document the setup in `consultancy/playbooks/` — this becomes a selling point for client deployments.
+- **Effort:** Low (config change post-upgrade, ~20 min to enable and test).
 
 ## 🟢 Opportunities
 
-### 4. Lead Gen Automation: Ready-Made Consultancy Pitch Material
-- **Intel:** X users reporting OpenClaw bots handling end-to-end lead generation in solar, roofing, and pool industries — closing deals from $50k to $2M. 183+ startups generating $271k+/month collectively. Garry Tan (YC) endorsing OpenClaw.
-- **Our exposure:** This is pure opportunity. Our consultancy is launching, and we now have third-party proof that OpenClaw drives real revenue in high-ticket B2B/B2C. These aren't hobby projects — they're production sales pipelines.
-- **Recommended action:** (1) Create a "Lead Gen Automation" one-pager for consultancy pitches — reference the solar/roofing case studies, frame our offering as "we build and maintain these systems for Irish SMEs"; (2) Target sectors: local trades (plumbers, electricians, builders), property, professional services. These are Limerick-area businesses Jonny can reach. (3) Price point: setup fee + monthly retainer for maintenance and optimisation.
-- **Effort:** Medium (2-3 hours to draft pitch materials)
-- **Research:** The YC endorsement and 183-startup ecosystem data give credibility. DigitalOcean also published an official 1-Click deploy tutorial — this simplifies our deployment story for clients who want to self-host. We could offer a "managed" tier (we host on our infra) and a "self-hosted" tier (we set up on their DigitalOcean, they pay hosting directly).
+### 4. DigitalOcean 1-Click Deploy — Streamline Client Onboarding
+- **Intel:** DigitalOcean published an official guide for deploying OpenClaw via 1-Click Application (Droplet Marketplace) and App Platform. Three deployment paths documented: manual Droplet, 1-Click, and App Platform.
+- **Our exposure/opportunity:** We're building an AI consultancy targeting SMEs. Our current playbook is manual npm installs with SSH. The DO 1-Click path could cut client deployment time from hours to minutes. Combined with our Docker standardisation recommendation (already in MEMORY.md), this gives us a tiered offering: (1) DO 1-Click for budget clients, (2) Docker-compose on their own VPS for mid-tier, (3) fully managed multi-agent setups for premium.
+- **Recommended action:**
+  1. Spin up a test DO 1-Click deployment ($6/mo, kill after testing).
+  2. Document: What works out of the box? What needs customisation? Can we pre-bake our agent configs?
+  3. Write a consultancy playbook: `consultancy/playbooks/do-1click-deployment.md`
+  4. This becomes the "fast start" tier in our service menu.
+- **Effort:** Medium (2-3 hours to test and document).
+- **Research:** The DO guide covers all three paths. TemperStack has a complementary tutorial. Minimum viable: 2GB Droplet ($12/mo) — 1GB is insufficient with additional services. Swap can bridge temporarily.
 
-### 5. DigitalOcean 1-Click Deploy: Add to Consultancy Playbook
-- **Intel:** DigitalOcean published an official community tutorial covering 1-Click Application Deploy and App Platform setup for OpenClaw.
-- **Our exposure:** Our current deployment playbook recommends Docker via `ghcr.io/openclaw/openclaw`. DigitalOcean 1-Click is a simpler on-ramp for less technical clients and reduces our deployment time.
-- **Recommended action:** Review the DigitalOcean tutorial. If solid, add it as an alternative deployment path in our consultancy playbooks — especially for the "self-hosted" tier where clients manage their own infra. Test a deployment to verify it works cleanly before recommending to clients.
-- **Effort:** Low (1 hour to review + document)
+### 5. OpenClaw MCP Integrations — Client-Specific Automation Templates
+- **Intel:** Community project `openclaw-xhs` uses MCP to let OpenClaw read and track trends on Xiaohongshu. Microsoft exploring similar agent frameworks for M365. The MCP pattern is becoming the standard way to extend OpenClaw into external platforms.
+- **Our exposure/opportunity:** For Kilmurry Lodge, we could build an MCP integration that connects OpenClaw to their booking system (Freetobook/Beds24) to automate rate checks, availability responses, and review monitoring. For Leamy Maths, an MCP for WooCommerce membership management would replace the manual browser automation we're currently doing.
+- **Recommended action:**
+  1. Review the `openclaw-xhs` repo as an MCP template architecture.
+  2. Scope a "Kilmurry Booking MCP" — connect to their booking API, expose availability/pricing/reviews as MCP tools.
+  3. Add to consultancy pitch deck: "Custom MCP integrations" as a premium service tier.
+- **Effort:** High (1-2 days to build a prototype MCP, but high client value).
 
 ## 📋 Summary
 - 5 items flagged (2 critical, 1 improvement, 2 opportunities)
-- Estimated total implementation effort: ~5 hours
-- **Priority recommendation:** Upgrade main VPS OpenClaw to v2026.4.11 today — it's unblocked, low effort, and closes known security gaps. Then resolve the RAM situation before it becomes an outage. The Kilmurry SSH access question needs a direct answer from Jonny — it's been a week.
+- Estimated total implementation effort: ~5-6 hours (excluding Kilmurry access block and MCP prototype)
+- **Priority recommendation:** Upgrade to v2026.4.10 first — it's a 15-minute task on main VPS that closes a known SSRF vulnerability, unlocks Active Memory, and unblocks further improvements. Then prep the Wednesday meeting agenda (GA4 key + Kilmurry SSH access) so both blockers get resolved in one conversation with Jonny.

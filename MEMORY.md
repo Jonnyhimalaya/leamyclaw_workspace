@@ -16,7 +16,6 @@
 - RAM elevated (~37-40%, improving since Nexus npm cache cleared) → [server resources](memory/topics/server-resources.md)
 - GA4 key exposed, unrotated → [security items](memory/topics/security-open-items.md) — **BLOCKING Kate's dashboard**
 - ClawHub supply chain risk (12%+ malicious plugins) → [security items](memory/topics/security-open-items.md)
-- **OpenClaw upgrade needed:** main VPS on v2026.4.1, Kilmurry on v2026.4.2 → target v2026.4.10 (fixes GHSA-7437-7HG8-FRRW and SSRF bypass; unlocks Active Memory and Codex harness).
 - **Anthropic credits claimed** on 2026-04-11. Anthropic remains on API billing, so cost consciousness is still critical.
 
 ## Active Projects
