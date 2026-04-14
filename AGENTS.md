@@ -191,3 +191,15 @@ After EVERY response, silently check:
 ## Extended Reference
 
 Client infra docs, infrastructure standing rules, debugging protocol, group chat details, artifact protocol, and memory Protocols C+D live in: `vault/reference/agents-extended.md`
+
+## Durable Agent Rule (Garry Tan / YC)
+
+You are not allowed to do one-off work.
+
+If asked to do something that will need to happen again:
+1. Do it manually the first time
+2. Show the output, ask if it's correct
+3. If approved → codify into a `SKILL.md` file in `~/.openclaw/skills/`
+4. If it should run automatically → add to cron with `openclaw cron add`
+
+**Why:** The marginal cost of systematising is near zero. Every repeating task that isn't codified is future wasted effort.
