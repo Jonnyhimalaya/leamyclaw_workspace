@@ -1,33 +1,48 @@
-# X/Twitter Intel — 2026-04-14
+# X/Twitter Intel — 2026-04-15
 
 ## Findings
 
-### New Use Cases for OpenClaw
-- **What:** OpenClaw is being used for autonomous tasks like managing emails, calendars, home automation, and browser tasks directly from chat apps such as WhatsApp or Discord.
-- **Why it matters:** For an AI consultancy, this demonstrates scalable automation for client workflows, potentially reducing operational costs and enabling seamless integrations in business environments.
-- **Source:** https://x.com/i/status/2042215169720496506
+### OpenClaw v2026.4.14 Release Announcement
+- **What:** OpenClaw released version 2026.4.14, focusing on reliability improvements like smarter GPT-5.4 routing, fixes for Chrome/CDP, unstuck subagents, and patches for Slack/Telegram/Discord integrations.
+- **Why it matters:** For an AI consultancy, this enhances agent stability and integration reliability, reducing downtime in client projects and enabling smoother multi-agent workflows.
+- **Source:** https://x.com/i/status/2044042546976883063
 
-### Creative Setups and Integrations
-- **What:** Users are setting up OpenClaw on local machines with models like Gemma via Ollama, allowing flexible, cost-effective AI agent operations without cloud dependencies.
-- **Why it matters:** This highlights adaptable deployment options that AI consultancies can leverage for customized, privacy-focused solutions, helping clients avoid vendor lock-in.
-- **Source:** https://x.com/i/status/2043091246932279506
+### AMD Quickstarts Integration
+- **What:** New install scripts for AMD systems on Windows and Linux to simplify OpenClaw setup.
+- **Why it matters:** This streamlines deployment for diverse hardware in AI consultancies, potentially cutting setup time for clients using AMD-based servers and improving accessibility for broader tech stacks.
+- **Source:** https://x.com/i/status/2044181543254388798
 
-### Hacks and Tips for Setup
-- **What:** Community tips include running `openclaw onboard` or `openclaw doctor --repair` for quick installation and troubleshooting with various LLMs.
-- **Why it matters:** These workarounds can streamline consultancy services by speeding up deployments and resolving common issues, improving efficiency in AI project rollouts.
-- **Source:** https://x.com/i/status/2043829303415320983
+### LM Studio Integration for Local Models
+- **What:** Official integration with LM Studio for running local models on Mac, Windows, and Linux via a simple command like `openclaw onboard --auth-choice lmstudio`.
+- **Why it matters:** It allows AI consultancies to leverage cost-effective, privacy-focused local models, helping clients avoid API costs and compliance issues with sensitive data.
+- **Source:** https://x.com/i/status/2043741629492666659
 
-### Integration Announcements
-- **What:** OpenClaw integrates with models from Anthropic, DeepSeek, and Gemma, with mentions of Microsoft exploring similar agent frameworks for M365.
-- **Why it matters:** Such integrations allow consultancies to build hybrid AI systems, enhancing capabilities in areas like enterprise automation and potentially opening new partnership opportunities.
-- **Source:** https://x.com/i/status/2043840361173528901
+### DojoZero for Agent Competitions
+- **What:** DojoZero is a platform where agents like OpenClaw compete in real-time tasks, such as sports prediction games.
+- **Why it matters:** This fosters innovation in agent orchestration for AI consultancies, providing benchmarks and ideas for competitive multi-agent systems that could enhance client services in predictive analytics.
+- **Source:** https://x.com/i/status/2044182549791215819
 
-### Community Praise and Complaints
-- **What:** There's hype around OpenClaw's 5,000+ community skills and open-source nature, but complaints focus on setup friction and model access changes.
-- **Why it matters:** Positive feedback validates its utility for consultancy tools, while complaints highlight areas for improvement, such as user experience, to ensure reliable client deliverables.
-- **Source:** https://x.com/i/status/2042439452514271365
+### Personal Automation Use Cases
+- **What:** Users shared extensive automations, including calendar checks, GitHub repo creation, financial email parsing, grocery shopping via browser, and NAS setup.
+- **Why it matters:** These real-world applications demonstrate scalable automation potential, allowing AI consultancies to advise clients on custom workflows that boost efficiency in everyday business operations.
+- **Source:** https://x.com/i/status/2043438850958352749
 
-### Security Advisories and Notable Accounts
-- **What:** Discussions include OpenClaw's fully local, MIT-licensed setup, with notable accounts like @openclaw sharing updates; no specific security advisories were prominent, but emphasis on independent governance was noted.
-- **Why it matters:** For AI consultancies, this underscores the importance of secure, open-source practices to mitigate risks in client projects, and monitoring accounts like @openclaw provides timely intel on ecosystem developments.
-- **Source:** https://x.com/i/status/2043254913942073541
+### Auto-Updates Breaking Configs Workaround
+- **What:** A tip to use a 'doctor --fix' wishlist for backing up and auto-migrating configs to handle OpenClaw update issues.
+- **Why it matters:** For AI consultancies managing client setups, this prevents configuration disruptions, ensuring reliable updates and minimizing support needs during deployments.
+- **Source:** https://x.com/i/status/2043750782252859566
+
+### Community Praise for Growth and Features
+- **What:** Users praised OpenClaw as the 'fastest-growing OSS ever' for its persistent memory and local model support, calling it a 'game changer'.
+- **Why it matters:** Positive feedback highlights adoption trends, helping AI consultancies position OpenClaw as a reliable tool for clients seeking cutting-edge, community-backed solutions.
+- **Source:** https://x.com/i/status/2044153755843903927
+
+### Security Advisory for CVE-2026-25253
+- **What:** A patched vulnerability (CVE-2026-25253) that could lead to domain takeover when combined with Active Directory misconfigurations.
+- **Why it matters:** AI consultancies must address such risks to protect client data, emphasizing the need for robust security audits and hardening to prevent breaches in agent-based systems.
+- **Source:** https://x.com/i/status/2044174118283817023
+
+### Multiple CVEs and Security Scans
+- **What:** Reports of 138+ CVEs, including sandbox escapes and RCE vulnerabilities, with tools like ClawSafe for scanning exposed instances and malicious plugins.
+- **Why it matters:** This underscores the importance of security in AI deployments, prompting consultancies to recommend regular vulnerability checks and plugin vetting for client safety.
+- **Source:** https://x.com/i/status/2042635294936305929

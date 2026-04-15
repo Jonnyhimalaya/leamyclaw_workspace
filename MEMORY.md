@@ -28,6 +28,9 @@
   - Evaluate **Lobu.ai** (open-source multi-tenant OpenClaw fork) as a scaling architecture.
   - Evaluate Coolmanns memory architecture (v6) for multi-layer decay and GPU semantic search.
   - Pitch Gemma 4 (12B, ~7GB RAM) for compliance-heavy client deployments (e.g., Kilmurry hotel data).
+  - OpenClaw Version: Main VPS and Kilmurry servers running v2026.4.12 (upgraded 2026-04-14). Active Memory plugin enabled natively.
+  - ACP Harness: Deployed Claude Code via ACP harness for Kilmurry (Jack) to route heavy build work off API billing (uses Claude Max team subscription).
+  - New tool: MiroFish (swarm prediction engine) self-hosted via Docker on main VPS for consultancy/Kilmurry scenario planning.
 - Kilmurry Lodge (Jack) → memory/topics/client-deployments-status.md | port 18789 (clawuser)
 - Kilmurry Lodge (Kate Taylor, marketing) → memory/topics/client-deployments-status.md | port 18792 (kateuser), dashboard port 3334
   - TG bot: @Katetaylor123_bot | Kate's TG ID: 8778805348
@@ -89,6 +92,7 @@
 - Memory Resilience: Always follow Protocol C (checkpoint every ~150 msgs) and D (rescan .reset transcripts on /new)
 - **Primary model:** GPT-5.4 (decided 2026-04-06 by Jonny — Opus API billing too expensive)
 - **Native dreaming** enabled in OpenClaw (memory-core, 3am daily, replaces old autoDream)
+- **Active Memory plugin:** Enabled natively as of v2026.4.12 (replaces manual Search-First rule).
 - **Local Model Fallback:** Gemma 4 viable via Ollama (Apache 2.0, good tool use) — recommended for consultancy budget tiers and API failovers.
 - **CLI capabilities:** `openclaw infer` available in v2026.4.7+ for multimodal inference (images/audio/video) — good for marketing workflows.
 - **ClawChief architecture** active: priority-map.md, auto-resolver.md, tasks.md

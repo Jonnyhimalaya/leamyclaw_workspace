@@ -338,15 +338,31 @@
     },
     {
       "date": "2026-04-14",
-      "timestamp": "2026-04-14T08:51:52.199739+00:00",
+      "timestamp": "2026-04-14T20:51:55.548967+00:00",
       "totalSessions": 1,
       "activeSessions": 0,
-      "totalTokens": 132990,
-      "totalCost": 119.928771,
+      "totalTokens": 134808,
+      "totalCost": 123.949206,
       "sessionBreakdown": {
         "agent:main:main": {
-          "tokens": 132990,
-          "cost": 119.928771,
+          "tokens": 134808,
+          "cost": 123.949206,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-15",
+      "timestamp": "2026-04-15T20:51:52.352934+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 140613,
+      "totalCost": 132.049551,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 140613,
+          "cost": 132.049551,
           "model": "gpt-5.4",
           "channel": "webchat"
         }
@@ -1339,12 +1355,57 @@
           "timestamp": "2026-04-14T08:51:52.199739+00:00",
           "tokens": 132990,
           "cost": 119.928771
+        },
+        {
+          "timestamp": "2026-04-14T12:51:54.311015+00:00",
+          "tokens": 133155,
+          "cost": 121.265713
+        },
+        {
+          "timestamp": "2026-04-14T16:51:53.285583+00:00",
+          "tokens": 133940,
+          "cost": 122.600241
+        },
+        {
+          "timestamp": "2026-04-14T20:51:55.548967+00:00",
+          "tokens": 134808,
+          "cost": 123.949206
+        },
+        {
+          "timestamp": "2026-04-15T00:51:55.023580+00:00",
+          "tokens": 136444,
+          "cost": 125.447365
+        },
+        {
+          "timestamp": "2026-04-15T04:51:55.743353+00:00",
+          "tokens": 136967,
+          "cost": 126.816325
+        },
+        {
+          "timestamp": "2026-04-15T08:51:52.323391+00:00",
+          "tokens": 138411,
+          "cost": 128.22472
+        },
+        {
+          "timestamp": "2026-04-15T12:51:52.557779+00:00",
+          "tokens": 139207,
+          "cost": 129.60701
+        },
+        {
+          "timestamp": "2026-04-15T16:51:52.304373+00:00",
+          "tokens": 139799,
+          "cost": 130.642816
+        },
+        {
+          "timestamp": "2026-04-15T20:51:52.352934+00:00",
+          "tokens": 140613,
+          "cost": 132.049551
         }
       ],
-      "lastSeen": "2026-04-14T08:51:52.199739+00:00",
+      "lastSeen": "2026-04-15T20:51:52.352934+00:00",
       "lastStatus": "done",
-      "currentTokens": 132990,
-      "currentCost": 119.9287709
+      "currentTokens": 140613,
+      "currentCost": 132.04955090000004
     }
   }
 }
