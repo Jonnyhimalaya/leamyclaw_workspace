@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-20T16:37:47.064Z",
+  "updatedAt": "2026-04-20T16:45:01.388Z",
   "entries": {
     "memory:memory/2026-03-30.md:57:60": {
       "key": "memory:memory/2026-03-30.md:57:60",
@@ -13173,68 +13173,6 @@
         "brief",
         "summary",
         "the"
-      ]
-    },
-    "memory:memory/2026-04-15.md:73:92": {
-      "key": "memory:memory/2026-04-15.md:73:92",
-      "path": "memory/2026-04-15.md",
-      "startLine": 73,
-      "endLine": 92,
-      "source": "memory",
-      "snippet": "- Candidate: Intel Sources: Community reports on multi-agent context loss → GitHub issues #50263, #62442, #45868; v2026.4.10 changelog: Active Memory, MLX Talk mode, Codex harness, SSRF hardening; DigitalOcean official guide for OpenClaw deployment (3 paths: manual, 1-Click, App Platform); `o - confidence: 0.62 - evidence: memory/2026-04-14.md:12-15 - recalls: 0 - status: staged - Candidate: Wednesday Meeting Prep Items: GA4 key rotation (Jonny needs Google Cloud Console access); Kilmurry SSH password from Kate; Approve OpenClaw upgrade plan for both servers - confidence: 0.62 - evidence: memory/2026-04-14.md:18-20 - recalls: 0 - status: staged - Candidate: OpenClaw Upgrade —",
-      "recallCount": 1,
-      "dailyCount": 0,
-      "groundedCount": 0,
-      "totalScore": 0.71529173181229,
-      "maxScore": 0.71529173181229,
-      "firstRecalledAt": "2026-04-16T16:22:06.596Z",
-      "lastRecalledAt": "2026-04-16T16:22:06.596Z",
-      "queryHashes": [
-        "819f2694720a"
-      ],
-      "recallDays": [
-        "2026-04-16"
-      ],
-      "conceptTags": [
-        "multi-agent",
-        "v2026.4.10",
-        "1-click",
-        "0.62",
-        "memory/2026-04-14.md",
-        "12-15",
-        "18-20",
-        "candidate"
-      ]
-    },
-    "memory:memory/2026-04-15.md:88:107": {
-      "key": "memory:memory/2026-04-15.md:88:107",
-      "path": "memory/2026-04-15.md",
-      "startLine": 88,
-      "endLine": 107,
-      "source": "memory",
-      "snippet": "- Candidate: OpenClaw Upgrade — v2026.4.5 → v2026.4.12 (11:25 UTC): Upgraded main server: v2026.4.5 → v2026.4.12 (`npm install -g openclaw@2026.4.12`); Gateway restarted — now running new binary; Active Memory plugin enabled in `openclaw.json`; Search-First rule removed from AGENTS.md (Active - confidence: 0.62 - evidence: memory/2026-04-14.md:28-31 - recalls: 0 - status: staged - Candidate: OpenClaw Upgrade — v2026.4.5 → v2026.4.12 (11:25 UTC): Cleared upgrade alert from MEMORY.md; Fixed Server Health Check cron job (7 consecutive errors — agent was sending `to: \"jonny\"` instead of numeric ID `7717065960`); Updated consultancy playbook: Search-First → Active Memory - confidence: 0",
-      "recallCount": 1,
-      "dailyCount": 0,
-      "groundedCount": 0,
-      "totalScore": 0.7023867659915655,
-      "maxScore": 0.7023867659915655,
-      "firstRecalledAt": "2026-04-16T16:22:06.596Z",
-      "lastRecalledAt": "2026-04-16T16:22:06.596Z",
-      "queryHashes": [
-        "819f2694720a"
-      ],
-      "recallDays": [
-        "2026-04-16"
-      ],
-      "conceptTags": [
-        "gateway",
-        "v2026.4.5",
-        "v2026.4.12",
-        "2026.4.12",
-        "openclaw.json",
-        "search-first",
-        "agents.md",
-        "0.62"
       ]
     },
     "memory:memory/2026-04-14.md:19:40": {
@@ -31273,15 +31211,16 @@
       "endLine": 144,
       "source": "memory",
       "snippet": "- Server: 172.239.98.61 - User: clawuser - Password: stored securely and redacted from memory - OpenClaw version: v2026.4.2 (needs upgrade to v2026.4.12) - Mission Control: port 3333 (Jack's), port 3334 (Kate's) - Claude Code: installed, authenticated (Claude Max team subscription) ## Kilmurry Upgrade Complete (11:32 UTC) - Gateway restarted successfully with sudo password (stored securely and redacted from memory) - Both main VPS and Kilmurry now on v2026.4.12 - Active Memory enabled on both ## End of Session Notes (11:55 UTC) - All actions from bookmark research batch applied and committed - Jack visit prep doc created for tomorrow (Apr 15) at Kilmurry - everything-claude-code repo ident",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.6119083407689315,
+      "totalScore": 1.185977320436364,
       "maxScore": 0.6119083407689315,
       "firstRecalledAt": "2026-04-20T16:37:47.064Z",
-      "lastRecalledAt": "2026-04-20T16:37:47.064Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
       "queryHashes": [
-        "dd8d8ccfbc37"
+        "dd8d8ccfbc37",
+        "7cd011e2b9be"
       ],
       "recallDays": [
         "2026-04-20"
@@ -31366,15 +31305,16 @@
       "endLine": 183,
       "source": "memory",
       "snippet": "### Kilmurry Lodge Server Security Audit & Remediation — 22:00 UTC - **Noticed:** Jonny finally provided SSH password ([REDACTED]). Server has been flagged for security check since Apr 2. - **Did:** 1. **SSH access confirmed** — root login with password (⚠️ major security issue). clawuser password didn't work — only root. 2. **Version check:** OpenClaw v2026.3.28 — missing patches for 33 known vulnerabilities including sandbox escape 3. **Full security audit written:** `consultancy/clients/kilmurry-lodge/security-audit-2026-04-03.md` 4. **Critical findings:** - Root SSH with password auth ← fixed - OpenClaw v2026.3.28 unpatched ← fixed - Chromium running without sandbo",
-      "recallCount": 1,
+      "recallCount": 2,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.40204696059226985,
-      "maxScore": 0.40204696059226985,
+      "totalScore": 0.8317738562822341,
+      "maxScore": 0.42972689568996425,
       "firstRecalledAt": "2026-04-20T16:37:47.064Z",
-      "lastRecalledAt": "2026-04-20T16:37:47.064Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
       "queryHashes": [
-        "dd8d8ccfbc37"
+        "dd8d8ccfbc37",
+        "7cd011e2b9be"
       ],
       "recallDays": [
         "2026-04-20"
@@ -31388,6 +31328,130 @@
         "audit",
         "remediation",
         "utc"
+      ]
+    },
+    "memory:memory/2026-04-13.md:68:78": {
+      "key": "memory:memory/2026-04-13.md:68:78",
+      "path": "memory/2026-04-13.md",
+      "startLine": 68,
+      "endLine": 78,
+      "source": "memory",
+      "snippet": "- SSH'd to Kilmurry (clawuser@172.239.98.61, pw confirmed) - Installed Claude Code globally: `npm install -g @anthropic-ai/claude-code` → v2.1.104 - Updated `openclaw.json`: added `acp.enabled=true`, `acp.dispatch.enabled=true`, TG `threadBindings.spawnAcpSessions=true` - Updated KilmurryBot `AGENTS.md` with mandatory Claude Code workflow rule - **Cannot restart gateway** (no sudo password for clawuser) — Jack must do this - **Claude Code not yet authed** to Anthropic subscription — Jack must run `claude` and log in - OpenClaw version on Kilmurry: v2026.4.2 (needs upgrade to v2026.4.10) ## Server Health: ⚠️ SWAP ISSUE at 19:04 — mem 46%, disk 57%, swap 254MB (performance impact). Telegram al",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5497083330037184,
+      "maxScore": 0.5497083330037184,
+      "firstRecalledAt": "2026-04-20T16:45:01.388Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
+      "queryHashes": [
+        "7cd011e2b9be"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "gateway",
+        "172.239.98.61",
+        "anthropic-ai/claude-code",
+        "v2.1.104",
+        "openclaw.json",
+        "acp.enabled",
+        "acp.dispatch.enabled",
+        "threadbindings.spawnacpsessions"
+      ]
+    },
+    "memory:memory/archive/2026-04-05.md:49:64": {
+      "key": "memory:memory/archive/2026-04-05.md:49:64",
+      "path": "memory/archive/2026-04-05.md",
+      "startLine": 49,
+      "endLine": 64,
+      "source": "memory",
+      "snippet": "### Key Findings 1. **CVE-2026-33579 (CRITICAL):** Privilege escalation in OpenClaw `/pair approve` — pairing-scope callers can approve admin-scope device requests. Fixed in v2026.3.28+. Kilmurry server still unpatched, blocked on SSH password from Kate. Reddit r/sysadmin thread confirms active exploitation discussion. 2. **Anthropic subscription cutoff (Apr 4):** Third-party tools (including OpenClaw) can no longer use Claude Pro/Max subscriptions. Must use API keys or \"extra usage bundles\" at full API rates. Our API key setup is unaffected, but consultancy pitch and cost modelling need updating. 3. **ClawHub supply chain compromised:** 12%+ of plugins malicious (341-1,467 confirmed, 35k+ d",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.3640816807746887,
+      "maxScore": 0.3640816807746887,
+      "firstRecalledAt": "2026-04-20T16:45:01.388Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
+      "queryHashes": [
+        "7cd011e2b9be"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "cve-2026-33579",
+        "pairing-scope",
+        "admin-scope",
+        "v2026.3.28",
+        "r/sysadmin",
+        "third-party",
+        "pro/max",
+        "341-1"
+      ]
+    },
+    "memory:memory/archive/2026-04-03.md:229:236": {
+      "key": "memory:memory/archive/2026-04-03.md:229:236",
+      "path": "memory/archive/2026-04-03.md",
+      "startLine": 229,
+      "endLine": 236,
+      "source": "memory",
+      "snippet": "**3. Kilmurry disk at 64% post-remediation.** 27 OS updates applied but disk only dropped 2% (66%→64%). If the previous 66% figure was pre-update, updates typically don't free disk — they consume it. Worth monitoring; at current trajectory this will hit 80% within weeks without a cleanup pass (logs, apt cache, old kernels). ### Security Triage (Dormant) — 00:11 UTC Apr 4 - **Noticed:** Advisor flagged SSH password `Castletroy1995!` in memory files as 🔴 SECURITY - **Decision:** Investigated immediately despite dormant hours — security is critical-only exception - **Did:** Password is NOT in any git-tracked file (workspace or config repos). Only exists in local session transcripts (.jsonl/.r",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.358460995554924,
+      "maxScore": 0.358460995554924,
+      "firstRecalledAt": "2026-04-20T16:45:01.388Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
+      "queryHashes": [
+        "7cd011e2b9be"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "post-remediation",
+        "pre-update",
+        "critical-only",
+        "git-tracked",
+        "kilmurry",
+        "disk",
+        "post",
+        "remediation"
+      ]
+    },
+    "memory:memory/archive/2026-04-03.md:220:231": {
+      "key": "memory:memory/archive/2026-04-03.md:220:231",
+      "path": "memory/archive/2026-04-03.md",
+      "startLine": 220,
+      "endLine": 231,
+      "source": "memory",
+      "snippet": "**1. SECURITY: SSH password stored in plaintext in this memory file.** The entry at 22:00 UTC contains `clawuser=[REDACTED]` (and the full root password in narrative text). Memory files are committed to git and may be read by multiple sessions. This is a client credential and should be redacted from this file immediately. Relevant line: \"SSH credentials: root=blocked, clawuser=[REDACTED] (has sudo)\". Needs manual redaction + git history consideration. **2. Open action items with no follow-up owner or date:** - **SSH key auth on Kilmurry** — flagged as \"remaining\" in both 22:10 and 22:25 entries, never resolved. Password auth still active means the server is one brute-force away from comprom",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.3569694310426712,
+      "maxScore": 0.3569694310426712,
+      "firstRecalledAt": "2026-04-20T16:45:01.388Z",
+      "lastRecalledAt": "2026-04-20T16:45:01.388Z",
+      "queryHashes": [
+        "7cd011e2b9be"
+      ],
+      "recallDays": [
+        "2026-04-20"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "brute-force",
+        "security",
+        "ssh",
+        "password",
+        "stored",
+        "plaintext",
+        "the"
       ]
     }
   }
