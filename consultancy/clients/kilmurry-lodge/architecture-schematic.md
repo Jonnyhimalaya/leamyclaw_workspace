@@ -1,7 +1,26 @@
 # Kilmurry Lodge Hotel — OpenClaw Architecture Schematic
 **Audit Date:** 2026-03-30
-**Last Updated:** 2026-03-30 (post-remediation)
+**Last Updated:** 2026-04-20 (post-audit + Codex reroute)
 **Audited by:** Orchestrator (from Leamy Maths server → SSH)
+
+## 2026-04-20 Update Summary
+- **OpenClaw upgraded:** v2026.4.12 → **v2026.4.15** (gateway trust-escalation fix applied, Opus 4.7 default, Gemini TTS available)
+- **Primary model changed:** Anthropic Claude Opus 4.6 → **`openai-codex/gpt-5.4`** (free via Codex OAuth) to fix cron failures post-Anthropic subscription cutoff (Apr 4) and $200 credit expiry (Apr 17)
+- **Fallbacks updated:** `anthropic/claude-opus-4-7` → `anthropic/claude-sonnet-4-6` → `anthropic/claude-opus-4-6`
+- **Interactive Kilmurry bot unchanged** — still uses Claude Max via ACP → Claude Code harness (subscription covers this path)
+- **Custom Dream Cycle cron removed** — superseded by native `memory-core` plugin dreaming
+- **4 crons repointed** to new model: Advisor Check, session-health-check, kilmurry-morning-brief, weekly-rate-intelligence. Advisor Check test run on GPT-5.4 returned `ok`.
+- **AGENTS.md:** Micro-Learning Loop section appended (same as our main workspace pattern). Previous `.learnings/` placeholders will now populate.
+- **Memory hygiene:** 10 daily memory files from Apr 7-14 archived to `memory/archive/`.
+- **Mission Control massively expanded** since March audit — see Section 7 below for current state.
+- **Config backup kept:** `~/.openclaw/openclaw.json.pre-codex-primary-backup` before the change.
+
+## Outstanding / Not Touched (risk-managed)
+- Jack's AGENTS.md is ~3,577 tokens with some duplicate sections (Search-First protocol superseded by Active Memory). **Deliberately NOT trimmed** — same type of cut that caused our previous regression. Review later with explicit approval.
+- Large legacy workspace HTML files (prototype dashboards from Mar 17-28) still in root. Cosmetic clutter only, not in context.
+- OPENCLAW_GATEWAY_TOKEN rotation pending (on Stephen's action list since Apr 13).
+
+---
 
 ---
 
@@ -37,14 +56,16 @@
 
 ### Gateway
 - Port: 18789 (loopback only)
-- Auth: token-based
+- Auth: token-based (⚠️ OPENCLAW_GATEWAY_TOKEN rotation pending since Apr 13)
 - Mode: local (no Tailscale)
 - No remote access configured (no public URL, no Tailscale)
+- Runs from `~/.npm-global/bin/openclaw gateway` — **not systemd** (despite earlier plan, service is currently disabled)
 
-### Model
-- **Primary:** `anthropic/claude-opus-4-6` (same as ours)
-- **Fallback:** `openai-codex/gpt-5.4` configured but unclear if active
+### Model (as of 2026-04-20)
+- **Primary:** `openai-codex/gpt-5.4` (OAuth, free via Jack's Codex subscription)
+- **Fallbacks:** `anthropic/claude-opus-4-7` → `anthropic/claude-sonnet-4-6` → `anthropic/claude-opus-4-6`
 - **Compaction:** safeguard mode
+- **Interactive bot:** routes via ACP → Claude Code harness, uses Claude Max subscription (unaffected by Apr 4 cutoff)
 
 ### Channels
 | Channel | Status | Notes |
@@ -225,3 +246,79 @@ Genuinely good work here:
 ---
 
 *This schematic serves as our reference for the Kilmurry Lodge client file and as a template for future consultancy client onboarding audits.*
+
+---
+
+## 7. Mission Control — Current State (updated 2026-04-20)
+
+March audit captured MC as a basic 3-dashboard prototype. Significant build-out since then.
+
+### Stack
+- **Framework:** Next.js 14.2.35 (App Router), React 18, TypeScript, Tailwind v4
+- **Port:** 3333
+- **Runtime:** PM2 (`pm2 restart mission-control`)
+- **Repo:** `github.com/Jonnyhimalaya/kilmurry-mission-control`
+- **Branching:** `dev` active, `main` stable (locked 13 Apr)
+
+### Route structure (src/app/)
+| Route | Purpose |
+|---|---|
+| `/` | Main dashboard |
+| `/agents` | Agent directory |
+| `/calendar` | Calendar view |
+| `/intel` | Intelligence hub |
+| `/marketing` | Marketing department module |
+| `/revenue` | Revenue department module |
+| `/memory` | Memory browser |
+| `/reports` | Reports viewer |
+| `/tools` | Tools index |
+| `/stephen` | Stephen-specific view |
+| `/kate` | Kate-specific view |
+| `/tasks` | Task list |
+| `/connections` | Integration connections |
+
+### API layer
+- Gateway wrapper at `lib/gateway.ts`
+- `useApi` hook at `lib/useApi.ts`
+- intel endpoints, reports/download endpoints
+
+### Notable features built since March
+- **6 department modules:** Marketing, Revenue, Sales, Facilities, Guest Relations, F&B
+- **Intelligence hub:** Hot Dates Intelligence (185 events, weighted index v2), World Scenarios (Iran 4-week dashboard), Forecasting Intelligence (Alkimii Bridge)
+- **Marketing depth:** Campaign Detail with self-contained tabs, Agent Architecture diagrams, sequence drill-downs, 10 agent configurations, Kate's Actions strip, approval buttons
+- **Morning Brief page** — renders cron output as reviewable dashboard
+- **Prediction Challenge dashboard** — 14 predictions locked 11-19 April, scoring integrity maintained even when predictions revised internally
+- **Hot Dates Review Queue** — human-in-the-loop event filtering with training notes (Faye feeds back)
+- **Sales Kanban** — real pipeline integration
+
+### Workflow rules (locked in)
+- `dev` gets every commit; `main` only stable merges
+- `.next/`, `node_modules/`, `.env*`, `credentials` never committed
+- All features labelled explicitly: **Prototype** / **Candidate** / **Production**
+- `git status` clean before + after every change
+- Standard fix for MC breakage: `rm -rf .next && npm run build && pm2 restart mission-control`
+
+---
+
+## 8. Features Worth Porting to Other Clients
+
+Jack's MC has matured faster than ours in several areas. Port candidates:
+
+| Feature | Why |
+|---|---|
+| **Hot Dates Intelligence** | Event-weighted scoring with learning feedback loop. Direct analogue for any calendar-sensitive business (Leamy Maths exams, retail seasonal peaks, B2B trade shows). |
+| **Prediction Challenge dashboard** | Quantifies forecast accuracy. Locked scoring + revised internal predictions. Great consultancy deliverable. |
+| **Department module architecture** | Clean URL + route structure per team function. Replicable pattern. |
+| **Morning Brief page** | Turns cron agent output into reviewable dashboard. Replaces passive Telegram message with active dashboard review. |
+| **dev/main branching + explicit labels** | More mature than our current MC workflow. Adopt. |
+| **Gateway wrapper + useApi hook** | Clean API abstraction pattern. |
+
+---
+
+## 9. Catalogue Ownership & Update Rules
+
+This file is the **single source of truth** for Jack's OpenClaw + MC architecture.
+- `consultancy/clients/kilmurry-lodge/` is where all client-specific detail lives
+- `consultancy/catalogue/` is where cross-client patterns and optimisations aggregate
+- Do not duplicate this content into `vault/` — vault is for internal ops, not client catalogues
+- Update this file on any material change to Jack's stack
