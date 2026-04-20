@@ -14,8 +14,14 @@
 
 ## 🟡 ClawHub Supply Chain Risk
 - Flagged 2026-04-05: 12%+ of ClawHub plugins malicious (341-1,467 confirmed, 35k+ downloads).
-- 91% bundle malware, 36% prompt injection.
-- **Action:** Audit all installed skills on both servers (our VPS + Kilmurry). Not started.
+- Snyk ToxicSkills report (April 2026): 91% bundle malware, 36% prompt injection.
+- ClawHub added VirusTotal scanning Feb 2026 but **only for new downloads** (existing installs unscanned).
+- **Action:** Run built-in skill safety scanner (`openclaw skill-scan`) on all 4 instances: main, Nexus, Jack (Kilmurry), Kate. 17+ days overdue as of 2026-04-18. Not started.
+
+## 🔴 Pending Server Security Upgrade
+- Gateway trust-escalation fix (PR #67303) released ~April 16 in version after v2026.4.14.
+- Current: both servers at v2026.4.14. Patch closes tool-name collision bypass path.
+- **Action:** Check latest OpenClaw release, upgrade both VPS + Kilmurry servers.
 
 ## ✅ Resolved
 - OpenClaw CVEs (our instance): Patched at v2026.4.1 (2026-04-02)

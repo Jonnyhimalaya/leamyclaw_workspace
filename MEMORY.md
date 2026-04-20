@@ -10,10 +10,11 @@
 - Professional name on site: **Stephen** (NOT Stephan)
 
 ## 🔴 Active Alerts
-- Anthropic on API billing (cost consciousness critical). Credits claimed 2026-04-11.
 - GA4 key exposed in git, unrotated → [security items](memory/topics/security-open-items.md)
 - ClawHub supply chain risk (12%+ malicious plugins) → [security items](memory/topics/security-open-items.md)
-- **OpenClaw v2026.4.14 available** - fixes Kate's Telegram alerts and CDP issues. Both servers on v2026.4.12, upgrade when convenient.
+- **OpenClaw v2026.4.14** — both servers upgraded (main VPS + Kilmurry). Fixes Kate's Telegram alerts and CDP issues.
+  - ⚠️ Gateway trust-escalation fix (PR #67303) is in a later release (~April 16). Both servers need upgrading past v2026.4.14.
+  - Skill safety scanner (`openclaw skill-scan`) still unrun across all 4 instances (main, Nexus, Jack, Kate) — 17+ days overdue as of 2026-04-18.
 - Meta token for KilmurryLodge Facebook page unresolved - real page managed by a different account (not Jack's developer account)
 - Jack's Google Search Console access pending - needs his Google login (same account as GA4)
 
@@ -25,9 +26,12 @@
 - AI Consultancy → vault/consultancy/overview.md
   - Recommended deployment pattern: Docker standardisation (`ghcr.io/openclaw/openclaw` via docker-compose) instead of manual npm installs.
   - Evaluate **Lobu.ai** (open-source multi-tenant OpenClaw fork) as a scaling architecture.
+  - Consultancy deployment checklist should include 4 mandatory security checks: version, skill scan, gateway binding, exec security mode.
+  - Semgrep published OpenClaw Security Engineer's Cheat Sheet — good consultancy reference.
+  - `localModelLean: true` config option: drops heavyweight tools for budget-tier models (Gemma 4 etc.).
+  - Google TTS now bundled natively in Google plugin — opportunity for Kilmurry voice briefings, Leamy audio supplements.
   - Evaluate Coolmanns memory architecture (v6) for multi-layer decay and GPU semantic search.
   - Pitch Gemma 4 (12B, ~7GB RAM) for compliance-heavy client deployments (e.g., Kilmurry hotel data).
-  - OpenClaw Version: Main VPS and Kilmurry servers running v2026.4.12 (upgraded 2026-04-14). Active Memory plugin enabled natively.
   - ACP Harness: Claude Code deployed via ACP harness for Kilmurry (Jack) - routes build work off API billing (uses Claude Max team subscription).
   - MiroFish (swarm prediction engine): moved from main VPS to dedicated Linode London server (172.236.25.67, 16GB RAM, 315GB disk). Docker deployed, gpt-4o model, ports 3000+5001. Auto-restart enabled. Main VPS copy removed (disk freed).
   - MiroFish operational notes: Atlas graph visualisation non-functional on self-hosted (ignore); specify round duration explicitly in prompt; Zep free tier ~300 req/window (enough for sim, tight for report); long-term → upgrade Zep ($25/mo) or switch to MiroFish-Offline (Neo4j local).
@@ -77,15 +81,21 @@
 ## Preferences
 - "Use initiative. Don't ask for this and that. Research, document, strategise."
 - Observations → always add to tasks.md (not leamymaths-todo.md - that's been split)
-- Mission Control exists at localhost:3333 - ENHANCE, don't rebuild
-  - "Blocked by Jonny" panel deployed 2026-04-07 (commit 5662555) - shows GA4 rotation, Kilmurry SSH pw, Meta re-login, credits top-up
+- Mission Control exists at localhost:3333 - ENHANCE, don't rebuild. "Blocked by Jonny" panel active (shows GA4 rotation, Kilmurry SSH pw, Meta re-login, credits top-up)
 - WooCommerce memberships: use the skill, verify wcm-active status
 - Delegate repetitive browser work to sitemgr (Wrench/Sonnet) - Opus thinks, Wrench clicks (bulk membership adds on Opus cost €15)
 - Memory Resilience: Always follow Protocol C (checkpoint every ~150 msgs) and D (rescan .reset transcripts on /new)
 - **Primary model:** GPT-5.4 (decided 2026-04-06 by Jonny - Opus API billing too expensive)
 - **Native dreaming** enabled in OpenClaw (memory-core, 3am daily, replaces old autoDream)
 - **Active Memory plugin:** Enabled natively as of v2026.4.12 (replaces manual Search-First rule).
+- **Anthropic credits:** Claimed 2026-04-11. Still on API billing — Anthropic cost caution remains active.
+- **v2026.4.16 model default:** Shifted to Claude Opus 4.7 — verify client Anthropic deployments aren't hitting unexpected cost spikes.
+- **Hermes Agent:** Competitor to OpenClaw with built-in learning loop — monitor for feature parity.
+- **Codex CLI review pattern:** Community best practice before upgrading OpenClaw — adopt for consultancy.
+- **X API price cut (2026-04-20):** Owned reads drop to $0.001/req — opportunity for Scout cost reduction and Kilmurry social monitoring.
+- **Main VPS swap:** Persistent ~335MB swap across all health checks 2026-04-19 (16hrs, flatlined) — undiagnosed. Possible slow memory leak or oversized process. Run `smem` or `ps aux --sort=-%mem` to investigate.
 - **Local Model Fallback:** Gemma 4 viable via Ollama (Apache 2.0, good tool use) - recommended for consultancy budget tiers and API failovers.
+- **Browser automation:** Do NOT use `noSandbox=true` (security risk). CDP issues fixed in v2026.4.14. Watch sessions — Chrome procs accumulate (12 killed 2026-04-18). Disk holding ~60%.
 - **CLI capabilities:** `openclaw infer` available (v2026.4.7+) for multimodal inference
 - **ClawChief architecture** active: priority-map.md, auto-resolver.md, tasks.md
 - Cross-agent shared memory: NOT wanted - isolation is a feature (Jonny's decision, 2026-04-06)
