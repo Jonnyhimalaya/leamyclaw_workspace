@@ -15,3 +15,7 @@
 - **What I should have done:** Preserve access first. On any fresh client server where the only confirmed access is password SSH, the correct order is: create user, install confirmed public key, test a brand-new login successfully, then and only then harden SSH auth settings.
 - **Permanent rule going forward:** Never modify `sshd_config`, root login mode, or password authentication on any client machine until a second verified access path exists and has been tested live. If the only known access is password SSH, leave it on until key access is proven. No exceptions.
 - **Checklist addition:** Before any SSH hardening, explicitly confirm one of: Linode/Lish console access available, or tested key-based login from our machine, or another verified recovery path.
+
+## 2026-04-20
+- **Client doc placement:** Don't create new files in `vault/consultancy/` — use `consultancy/clients/<name>/` for client-specific docs. `vault/` is for internal ops only. Jonny caught duplication of Kilmurry Jack catalogue that already existed.
+- **Model scope matters:** `agents.defaults.model` affects EVERYTHING (TUI, bot, non-ACP). Changing global default to fix crons also broke Jack's interactive bot. Use per-cron `--model` flag for cron-only reroutes. Don't change global default unless you specifically want all surfaces to change.
