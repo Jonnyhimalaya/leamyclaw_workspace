@@ -10,6 +10,7 @@
 - Professional name on site: **Stephen** (NOT Stephan)
 
 ## 🔴 Active Alerts
+- **GitHub token audit (2026-04-22):** Main VPS + Dano use classic PAT with full `repo` scope (broad). Kilmurry Jack uses fine-grained PAT that UNEXPECTEDLY can read `leamyclaw_workspace` (shouldn't). Kate token unknown. Jonny flagged for future cleanup: per-server fine-grained PATs scoped only to their own repos.
 - GA4 key exposed in git, unrotated → [security items](memory/topics/security-open-items.md)
 - ClawHub supply chain risk (12%+ malicious plugins) → [security items](memory/topics/security-open-items.md)
 - **OpenClaw v2026.4.14** — both servers upgraded (main VPS + Kilmurry). Fixes Kate's Telegram alerts and CDP issues.
@@ -41,8 +42,18 @@
   - Tailscale IP: 100.111.174.13 (Kate + Jack access MC via this)
   - GitHub push unresolved - kateuser + clawuser lack GitHub auth on Kilmurry server → HTTPS fine-grained token needed
   - Kate MC live data (as of 2026-04-15): GA4 → 5,001 sessions, 3,414 users, 13,869 page views, 34% bounce, 3m 29s avg session; Campaigns → €1,005 ad spend, 2,214 paid sessions, CPC €0.31
+  - **NEW Kate MC (rebuilt 2026-04-22):** http://172.239.98.61:3337 | user `kate` / pass `ExcitedKate2026!` | systemd `kate-mc` port 3336, nginx 3337 | repo `Jonnyhimalaya/kilmurry-kate-mission-control` | 6-module architecture matching Kate's spec (Command centre, Content engine, Reputation & reviews, SEO & visibility, Revenue intelligence, AI task log) | GA4 live, old MC plumbing migrated | old MC at port 3334 still running in parallel
 - Wednesday meeting items still open: Meta token (different FB account), Jack's Search Console access, email platform
 - Nexus (BTC company) → memory/topics/client-deployments-status.md | port 18790 (nexus user), dashboard port 3334
+- **Dano (Paul J Danaher, ION Group revenue recognition)** → repos `Jonnyhimalaya/dano-openclaw` + `Jonnyhimalaya/dano-mission-control`
+  - Dano server 172.237.126.222, clawuser pass `ConanViolet2019!!`
+  - MC: http://172.237.126.222:3335 | user `dano` / pass `soutk19Lrc9tpEcz` (TEMP, Dano to rotate)
+  - systemd `dano-mc` port 3334, nginx 3335
+  - Ledger agent has MC awareness + GitHub Push Policy in AGENTS.md/MEMORY.md
+  - Ledger configured with git as 'Ledger' / ledger@dano.local; push verified working
+  - ECL audience = movement drivers for manager + auditors
+  - ION has IFRS 15 SSP compliance gap (private, Phase 2 panel)
+  - 1,000 PS contracts in Kimble → EY audit Jan 2027 (Phase 3 panel)
 - Revision course tracking → revision-course-2026.json
 - Todo list → tasks.md (active) / tasks-completed.md (archive)
 - Competitive analysis → leamymaths-competitive-analysis.md
@@ -100,3 +111,19 @@
 - **ClawChief architecture** active: priority-map.md, auto-resolver.md, tasks.md
 - Cross-agent shared memory: NOT wanted - isolation is a feature (Jonny's decision, 2026-04-06)
 - **⚠️ `chattr +i` lesson:** Never immutable-lock files gateway reads at runtime. Only lock static files (SOUL.md, AGENTS.md).
+
+## Promoted From Short-Term Memory (2026-04-22)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-15.md:4:7 -->
+- - Logged deployment of Claude Code ACP harness for Kilmurry to mitigate high Opus API billing, using Claude Max team subscription. - Logged deployment of MiroFish swarm prediction engine self-hosted on main VPS. - **Archived**: Moved 5 memory files from 2026-04-06 to `memory/archive/`. - **Cleanup**: Checked MEMORY.md file size; it remains within manageable limits, requiring no major truncation. ## Light Sleep <!-- openclaw:dreaming:light:start --> - Candidate: Dream Cycle: **Consolidated into MEMORY.md**:; Added upgrade details to v2026.4.12 for both servers and the use of the Active Memory plugin natively.; Logged deployment of Claude Code ACP harness for Kilmurry to mitigate high Opus API billing, using Claude Max team subscription.; [score=0.842 recalls=0 avg=0.620 source=memory/2026-04-15.md:6-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-15.md:8:9 -->
+- ## Light Sleep <!-- openclaw:dreaming:light:start --> - Candidate: Dream Cycle: **Consolidated into MEMORY.md**:; Added upgrade details to v2026.4.12 for both servers and the use of the Active Memory plugin natively.; Logged deployment of Claude Code ACP harness for Kilmurry to mitigate high Opus API billing, using Claude Max team subscription.; - confidence: 0.62 - evidence: memory/2026-04-15.md:4-7 - recalls: 0 - status: staged - Candidate: Dream Cycle: **Archived**: Moved 5 memory files from 2026-04-06 to `memory/archive/`.; **Cleanup**: Checked MEMORY.md file size; it remains within manageable limits, requiring no major truncation. [score=0.842 recalls=0 avg=0.620 source=memory/2026-04-15.md:11-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-15.md:376:378 -->
+- - Candidate: Possible Lasting Truths: @@ -49,4 @@ (48 before, 156 after) **4. Persistent deferred items with no progress.** Kilmurry Lodge SSH (blocked 4+ days), GA4 key rotation (exposed in git), OpenClaw v2026.4.2 update — all carried forward from yesterday with no new status. These aren't - confidence: 0.62 - evidence: memory/2026-04-15.md:366-368 [score=0.842 recalls=0 avg=0.620 source=memory/2026-04-15.md:28-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-04-16.md:4:4 -->
+- 5 items, 3 critical: [score=0.835 recalls=0 avg=0.620 source=memory/2026-04-16.md:4-4]
+
+## Promoted From Short-Term Memory (2026-04-22)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-15.md:373:373 -->
+- - Candidate: Reflections: No strong patterns surfaced. [score=0.825 recalls=0 avg=0.620 source=memory/2026-04-15.md:23-23]

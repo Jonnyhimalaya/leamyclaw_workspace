@@ -1,49 +1,45 @@
-# 🧠 Morning Action Brief — 2026-04-20
+# 🧠 Morning Action Brief — 2026-04-21
 
 ## 🔴 Fix Now
 
-### 1. Upgrade Both Servers to v2026.4.15 — Security Fix Is 4 Days Overdue
-- **Intel:** v2026.4.15 released April 16. Contains the gateway trust-escalation fix (PR #67303) plus a new tool execution trust anchoring feature that prevents client tools from overriding built-in tool names to steal media permissions.
-- **Our exposure:** Both our main VPS and Kilmurry server are stuck on v2026.4.14. The trust-escalation bypass (originally flagged as CVSS 9.9 — CVE-2026-33579) is unpatched on both. That's 4 client-facing agents (main, Nexus, Jack, Kate) running with a known privilege escalation path. The Kilmurry server is internet-exposed with Tailscale + port forwarding — this is real attack surface.
-- **Recommended action:** Upgrade main VPS today. For Kilmurry, this is still blocked on SSH password from Kate/Jack — escalate at Wednesday meeting if not resolved sooner. Pre-upgrade: set `dreaming.storage.mode: "inline"` in openclaw.json to prevent the new dreaming storage default from breaking daily memory file parsing (see item #2).
-- **Effort:** Low (20 mins per server, plus 5 mins config tweak)
+### 1. Both Servers Still on v2026.4.14 — Gateway Trust-Escalation Vuln Unpatched
+- **Intel:** v2026.4.15 stable (April 16) includes the gateway trust-escalation fix (PR #67303) that closes tool-name collision bypass. v2026.4.19-beta.2 (April 19) fixes nested agent cross-session blocking and Telegram stale callback wedging.
+- **Our exposure:** Main VPS (172.239.114.188) and Kilmurry server (172.239.98.61) are both still on v2026.4.14. The tool-name collision bypass is a privilege escalation path — anyone with agent access could potentially bypass gateway approval. The nested agent blocking bug means our multi-agent team (6 agents on main VPS) can starve each other's sessions. Kate's Telegram bot (@Katetaylor123_bot) is exposed to the stale callback pagination wedge.
+- **Recommended action:** Upgrade main VPS to v2026.4.15 stable today. This is a `npm update` — low risk, it's been stable for 5 days. For Kilmurry, this is blocked on SSH password from Kate (flagged since early April). Escalate at next Wednesday meeting — this is now the third week waiting. Consider: can Jack provide the password instead?
+- **Effort:** Low (main VPS: 15 min). Medium for Kilmurry (blocked on access).
+- **Research:** Community on X confirms the nested agent fix in 4.19-beta.2 is solid for 24/7 multi-session setups. The beta is 2 days old — recommend staying on 4.15 stable for now, move to 4.19 once it graduates.
 
-### 2. Pin Dreaming Storage Mode Before Upgrade
-- **Intel:** v2026.4.15 silently changed the default `dreaming.storage.mode` from `inline` to `separate`. Dream phases now write to `memory/dreaming/{phase}/YYYY-MM-DD.md` instead of the daily memory file. No automatic migration path.
-- **Our exposure:** We have native dreaming enabled (memory-core, 3am daily). Our agents and morning intel pipeline read daily memory files. If dreaming output vanishes from those files after upgrade, the Strategist and Main agents lose dream-consolidated context — the exact thing that makes memory useful overnight. The intel pipeline could silently degrade without anyone noticing.
-- **Recommended action:** Before upgrading, explicitly add `"dreaming": { "storage": { "mode": "inline" } }` to openclaw.json on both servers. This preserves current behaviour. Later, evaluate `separate` mode deliberately — it's arguably cleaner but requires updating any tooling that reads daily memory files.
-- **Effort:** Low (2 mins config change per server, must be done pre-upgrade)
-
-### 3. Run Skill Safety Scanner — Now 19 Days Overdue
-- **Intel:** ClawHub supply chain risk remains active: 12%+ malicious plugins, 91% of flagged skills bundle malware (Snyk ToxicSkills report). `openclaw skill-scan` has been flagged as overdue since April 1st.
-- **Our exposure:** 4 instances (main, Nexus, Jack, Kate) have never been scanned. Kate's instance was deployed from ClawHub skills on April 4th with no vetting. If any installed skill contains prompt injection or data exfiltration, it has had 19 days to operate. Kate's agent handles Kilmurry marketing data including GA4 analytics and ad spend figures.
-- **Recommended action:** Run `openclaw skill-scan` on main VPS today. Run on Kilmurry when SSH access is resolved. Add skill scan to the consultancy deployment checklist as a mandatory step (it already should be there per MEMORY.md but clearly isn't being enforced).
-- **Effort:** Low (5 mins per instance)
-
----
+### 2. Skill Safety Scanner — 20 Days Overdue Across All 4 Instances
+- **Intel:** Snyk ToxicSkills report: 91% of malicious ClawHub skills bundle malware, 36% use prompt injection. 12%+ of ClawHub plugins confirmed malicious. OpenClaw has a built-in scanner (`openclaw skill-scan`) but it's never been run on our instances.
+- **Our exposure:** Four instances (main, Nexus, Jack/Kilmurry, Kate/Kilmurry) have never been scanned. If any skill was installed from ClawHub without manual vetting, we could be running compromised code on infrastructure that handles Nexus BTC operations, Kilmurry hotel data (guest info, financials), and Leamy Maths student data. This is the kind of thing that ends a consultancy's reputation.
+- **Recommended action:** Run `openclaw skill-scan` on main VPS today (main + Nexus instances). For Kilmurry, bundle this with the upgrade once SSH access is resolved. Add `openclaw skill-scan` to the consultancy deployment checklist as a mandatory post-install step.
+- **Effort:** Low (10 min per instance). Zero downtime.
 
 ## 🟡 Improve
 
-### 4. X API Price Cut Goes Live Today — Reconfigure Scout Economics
-- **Intel:** Effective today (April 20), X API "Owned Reads" drop from current pricing to $0.001/request (1,000 reads for $1). Writes increase to $0.015/post. Posts with URLs jump to $0.20/post.
-- **Our exposure:** Scout (Grok) runs daily X scans via x_search. This is pure read traffic — we benefit directly from the price cut. More importantly, the write price increase and $0.20/URL-post cost affect any future social automation we build for Kilmurry or Leamy Maths. If we were planning automated X posting with links (e.g., Kate's marketing agent posting hotel deals), the cost model just changed dramatically — a single URL post costs 200x a plain post.
-- **Recommended action:** (a) Calculate Scout's current monthly X API spend and project savings under new pricing. (b) Flag the $0.20/URL-post cost to Jonny before building any X social posting automation for clients — it makes link-sharing bots economically questionable. (c) Consider increasing Scout's scan frequency or depth now that reads are cheaper. (d) Note: xAI credits were topped up but MEMORY.md says xAI credits are down — verify current balance.
-- **Effort:** Low (30 mins analysis + config review)
-
----
+### 3. Anthropic Cost Trap on v2026.4.15 Upgrade — Opus 4.7 Default Will Spike Bills
+- **Intel:** v2026.4.15 changed the default model to Claude Opus 4.7 across all Anthropic selections. Separately, Anthropic now blocks Pro/Max subscription usage in third-party tools — all API calls are pay-as-you-go only.
+- **Our exposure:** We're already on API billing (good — the subscription ban doesn't bite us directly). But Jack's Kilmurry instance currently uses Opus 4.6 deliberately. When we upgrade Kilmurry to v2026.4.15+, the default shift to Opus 4.7 could silently increase costs if his config uses alias references rather than explicit model pinning. Kate uses Sonnet primary with Gemini fallback (safe). Our own main agent uses GPT-5.4 (safe). But any consultancy client we upgrade is at risk.
+- **Recommended action:** Before upgrading any instance to 4.15+, verify model is pinned explicitly (not using aliases like "opus" or "claude"). Add "pin model version explicitly" to the consultancy upgrade checklist. For Jack specifically: confirm his openclaw.json pins `claude-opus-4-6` not an alias.
+- **Effort:** Low (5 min audit per instance). High impact if missed.
+- **Research:** The OpenRouter migration guide on charlesjones.dev is directly relevant — OpenRouter lets you lock specific model versions and adds automatic failover. Worth including in the consultancy onboarding playbook as the standard API gateway recommendation.
 
 ## 🟢 Opportunities
 
-### 5. Google Gemini TTS — Voice Briefings for Kilmurry & Leamy Maths
-- **Intel:** v2026.4.15 bundles Google Gemini TTS natively in the Google plugin — WAV + PCM phone formats, full voice selection, no extra API keys needed beyond existing Gemini access.
-- **Our exposure/opportunity:** Two immediate use cases: (a) **Kilmurry morning briefings** — Jack could get a spoken summary of yesterday's bookings/marketing metrics via Telegram voice note instead of reading a wall of text at 7am. Hotel managers live on their feet — audio is the right medium. (b) **Leamy Maths audio supplements** — Jonny's course content is video-heavy but there's no audio-only option. A "listen to the key formulas" feature for students commuting to school would differentiate from every other maths grinds site. (c) **Consultancy pitch material** — "Your AI agent can talk to you" is a visceral demo for SME prospects.
-- **Recommended action:** After the v2026.4.15 upgrade, prototype a Kilmurry voice briefing as a proof of concept. It's the simplest win (Jack already gets a text brief → just add TTS). Use this as a case study for consultancy pitches.
-- **Effort:** Medium (2-3 hours for prototype, leveraging existing briefing content)
+### 4. X API Price Cut — Scout Costs Drop, Kilmurry Social Monitoring Unlocked
+- **Intel:** As of April 20, X API owned reads dropped to $0.001/request (1,000 reads for $1). Write costs went up slightly ($0.015/post, $0.20 for posts with URLs). Follow/unfollow/like removed from self-serve tiers.
+- **Our exposure/opportunity:** Scout (Radar/Grok) runs daily X scans for our intel pipeline. At $0.001/read, the cost of monitoring becomes negligible — we could increase scan frequency or depth for near-zero marginal cost. More interesting: Kilmurry has no social media monitoring. At these prices, we could build a social listening pipeline for the hotel (mentions, competitor tracking, review sentiment) for under $5/month. That's a real consultancy deliverable.
+- **Recommended action:** (1) Audit Scout's current X API spend and see if we can increase scan depth. (2) Spec out a Kilmurry social monitoring cron — daily scan for "@KilmurryLodge" mentions, competitor hotels, Limerick tourism keywords. This is a pitch-ready feature for the Wednesday meeting. (3) Note the write cost increase — any automated posting workflows should be reviewed.
+- **Effort:** Low for Scout adjustment (config change). Medium for Kilmurry social monitoring (new cron + skill, ~2 hours to build).
 
----
+### 5. Hermes Agent Is a Real Competitor — Consultancy Needs a Positioning Answer
+- **Intel:** Hermes Agent (Nous Research) just dropped a resilience-focused update with pluggable memory, credential rotation, and anti-detection browsing. Decrypt, KuCoin, and multiple comparison sites published "Hermes vs OpenClaw" pieces this week. Their killer feature: automatic skill generation from experience (after 5+ tool calls, it creates reusable skills). 8,700 GitHub stars, 142+ contributors, growing fast.
+- **Our exposure:** We're building a consultancy on OpenClaw. If a prospect asks "why not Hermes?", we need a crisp answer today, not next month. The comparison articles position it as: OpenClaw = breadth (50+ channels, massive ecosystem), Hermes = depth (self-improving, learning loop). Hermes is Python-based, MIT licensed, supports OpenClaw config migration (!) — meaning clients could switch with minimal friction.
+- **Recommended action:** Write a one-page consultancy positioning doc: "Why OpenClaw over Hermes" — focus on channel coverage (WhatsApp, Telegram, Discord integration that Hermes lacks), production maturity (195K stars vs 8.7K), multi-agent team architecture, and the skill ecosystem size. Acknowledge Hermes's learning loop as genuinely interesting and note it as a feature to watch. Add to `consultancy/research/`.
+- **Effort:** Medium (1 hour to write). Important for sales conversations.
+- **Research:** Per the comparison article (essamamdani.com), Hermes is sequential/synchronous, Python-only, and lacks OpenClaw's channel breadth. Its strength is genuine — auto-generated skills from complex tasks — but it's not production-ready at OpenClaw's scale. OpenClaw's native dreaming + QMD memory is our counter-narrative. There's also a third player, Spacebot (Rust, true concurrency, team-scale) — worth a mention in the doc.
 
 ## 📋 Summary
-- 5 items flagged (3 critical security/ops, 1 improvement, 1 opportunity)
-- Estimated total implementation effort: ~4-5 hours
-- **Priority recommendation:** Items 1+2 together first (upgrade + dreaming pin) — they're a single 25-minute job on the main VPS that closes a CVSS 9.9 vulnerability. Item 3 (skill scan) immediately after. Items 4 and 5 are this-week-when-convenient.
-- **Not flagged today:** The Anthropic OAuth token change, competitive positioning (Hermes/Spacebot comparison), LanceDB S3, local model lean mode, and phone call integration pattern are all noted in the intel but have no immediate action for us — either we're already compliant, or they're future-state consultancy features with no urgency.
+- 5 items flagged (2 critical, 1 improvement, 2 opportunities)
+- Estimated total implementation effort: ~4 hours (excluding Kilmurry SSH blocker)
+- **Priority recommendation:** Upgrade main VPS to v2026.4.15 and run `openclaw skill-scan` today. Both are low-effort, high-impact security items that have been open too long. The Kilmurry SSH password is the single biggest blocker across multiple workstreams — make it the first agenda item Wednesday.
