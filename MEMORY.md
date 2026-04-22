@@ -40,9 +40,18 @@
 - Kilmurry Lodge (Kate Taylor, marketing) → memory/topics/client-deployments-status.md | port 18792 (kateuser), dashboard port 3334
   - TG bot: @Katetaylor123_bot | Kate's TG ID: 8778805348
   - Tailscale IP: 100.111.174.13 (Kate + Jack access MC via this)
-  - GitHub push unresolved - kateuser + clawuser lack GitHub auth on Kilmurry server → HTTPS fine-grained token needed
+  - GitHub push RESOLVED 2026-04-22 — Kilmurry fine-grained PAT now covers all Kate/Jack/Faye repos; kateuser push verified
   - Kate MC live data (as of 2026-04-15): GA4 → 5,001 sessions, 3,414 users, 13,869 page views, 34% bounce, 3m 29s avg session; Campaigns → €1,005 ad spend, 2,214 paid sessions, CPC €0.31
   - **NEW Kate MC (rebuilt 2026-04-22):** http://172.239.98.61:3337 | user `kate` / pass `ExcitedKate2026!` | systemd `kate-mc` port 3336, nginx 3337 | repo `Jonnyhimalaya/kilmurry-kate-mission-control` | 6-module architecture matching Kate's spec (Command centre, Content engine, Reputation & reviews, SEO & visibility, Revenue intelligence, AI task log) | GA4 live, old MC plumbing migrated | old MC at port 3334 still running in parallel
+- **Kilmurry Lodge (Faye Fitzgerald, revenue)** → new sandboxed instance 2026-04-22 | port 18795 (fayeuser), MC port 3338/3339
+  - Model: Claude Opus 4.7 (via API) | OpenClaw v2026.4.21 | Claude Code installed but unauth'd
+  - MC: http://172.239.98.61:3339 | user `faye` / pass `0KiehZuBAbXgJd8U` | systemd `faye-mc` port 3338, nginx 3339 | repo `Jonnyhimalaya/kilmurry-faye-mission-control`
+  - 9-module revenue cockpit: Business Overview, Alerts, Competitor Pricing graph, Unified Calendar (Hot Dates + Kate's content + gaps), Month at a Glance, Packages + Competitor Gap, Upsell Prompts, Avvio Daily+Weekly, Automated Pickup Report
+  - Hot Dates LIVE from `/home/clawuser/shared/hot-dates-2026.json` (185 events)
+  - Competitor Pricing LIVE from `/home/clawuser/shared/weekly-rate-intel-latest.json` (Jack's weekly cron writes both places)
+  - Workspace repo: `Jonnyhimalaya/kilmurry-faye-workspace` (private)
+  - Spec: `consultancy/clients/kilmurry-faye/product-spec-mc.md`
+  - Server token updated 2026-04-22: Kilmurry fine-grained PAT now covers kilmurry-faye-workspace + kilmurry-faye-mission-control + kilmurry-kate-mission-control. fayeuser + kateuser push verified working.
 - Wednesday meeting items still open: Meta token (different FB account), Jack's Search Console access, email platform
 - Nexus (BTC company) → memory/topics/client-deployments-status.md | port 18790 (nexus user), dashboard port 3334
 - **Dano (Paul J Danaher, ION Group revenue recognition)** → repos `Jonnyhimalaya/dano-openclaw` + `Jonnyhimalaya/dano-mission-control`

@@ -466,15 +466,15 @@
     },
     {
       "date": "2026-04-22",
-      "timestamp": "2026-04-22T00:51:53.743292+00:00",
+      "timestamp": "2026-04-22T12:51:54.062507+00:00",
       "totalSessions": 1,
       "activeSessions": 0,
-      "totalTokens": 176009,
-      "totalCost": 186.902834,
+      "totalTokens": 177389,
+      "totalCost": 191.423623,
       "sessionBreakdown": {
         "agent:main:main": {
-          "tokens": 176009,
-          "cost": 186.902834,
+          "tokens": 177389,
+          "cost": 191.423623,
           "model": "gpt-5.4",
           "channel": "webchat"
         }
@@ -1697,12 +1697,17 @@
           "timestamp": "2026-04-22T00:51:53.743292+00:00",
           "tokens": 176009,
           "cost": 186.902834
+        },
+        {
+          "timestamp": "2026-04-22T12:51:54.062507+00:00",
+          "tokens": 177389,
+          "cost": 191.423623
         }
       ],
-      "lastSeen": "2026-04-22T00:51:53.743292+00:00",
+      "lastSeen": "2026-04-22T12:51:54.062507+00:00",
       "lastStatus": "done",
-      "currentTokens": 176009,
-      "currentCost": 186.90283430000025
+      "currentTokens": 177389,
+      "currentCost": 191.42362280000026
     }
   }
 }

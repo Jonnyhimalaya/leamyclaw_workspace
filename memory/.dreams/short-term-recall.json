@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-22T03:03:29.884Z",
+  "updatedAt": "2026-04-22T12:35:00.433Z",
   "entries": {
     "memory:memory/2026-03-30.md:57:60": {
       "key": "memory:memory/2026-03-30.md:57:60",
@@ -45924,6 +45924,162 @@
         "morning",
         "action",
         "brief"
+      ]
+    },
+    "memory:memory/2026-04-20.md:174:192": {
+      "key": "memory:memory/2026-04-20.md:174:192",
+      "path": "memory/2026-04-20.md",
+      "startLine": 174,
+      "endLine": 192,
+      "source": "memory",
+      "snippet": "**Rule logged:** Before creating client-focused catalogues, check `consultancy/clients/<name>/` first. `vault/` is for internal ops, not client docs. ## Jack's Recent Work Review — 17:36 UTC (per Jonny request) Catalogued Jack's MC expansion since March audit: - **6 department modules live:** Marketing, Revenue, Sales, Facilities, Guest Relations, F&B - **Intelligence hub:** Hot Dates Intelligence (185 events, weighted v2), World Scenarios (Iran 4-week), Forecasting Intelligence (Alkimii Bridge) - **Marketing depth:** Campaign Detail tabs, Agent Architecture diagrams, 10 agent configs, Kate's Actions strip - **Morning Brief page** renders cron output - **Prediction Challenge dashboard:** 14",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4392474116279452,
+      "maxScore": 0.4392474116279452,
+      "firstRecalledAt": "2026-04-22T11:56:01.205Z",
+      "lastRecalledAt": "2026-04-22T11:56:01.205Z",
+      "queryHashes": [
+        "f46b7e5142a2"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "client-focused",
+        "consultancy/clients",
+        "4-week",
+        "rule",
+        "logged",
+        "creating",
+        "client",
+        "focused"
+      ]
+    },
+    "memory:memory/2026-04-20.md:446:464": {
+      "key": "memory:memory/2026-04-20.md:446:464",
+      "path": "memory/2026-04-20.md",
+      "startLine": 446,
+      "endLine": 464,
+      "source": "memory",
+      "snippet": "**Rule logged:** Before creating client-focused catalogues, check `consultancy/clients/<name>/` first. `vault/` is for internal ops, not client docs. ## Jack's Recent Work Review — 17:36 UTC (per Jonny request) Catalogued Jack's MC expansion since March audit: - **6 department modules live:** Marketing, Revenue, Sales, Facilities, Guest Relations, F&B - **Intelligence hub:** Hot Dates Intelligence (185 events, weighted v2), World Scenarios (Iran 4-week), Forecasting Intelligence (Alkimii Bridge) - **Marketing depth:** Campaign Detail tabs, Agent Architecture diagrams, 10 agent configs, Kate's Actions strip - **Morning Brief page** renders cron output - **Prediction Challenge dashboard:** 14",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.4392474116279452,
+      "maxScore": 0.4392474116279452,
+      "firstRecalledAt": "2026-04-22T11:56:01.205Z",
+      "lastRecalledAt": "2026-04-22T11:56:01.205Z",
+      "queryHashes": [
+        "f46b7e5142a2"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "client-focused",
+        "consultancy/clients",
+        "4-week",
+        "rule",
+        "logged",
+        "creating",
+        "client",
+        "focused"
+      ]
+    },
+    "memory:memory/2026-04-22.md:18:40": {
+      "key": "memory:memory/2026-04-22.md:18:40",
+      "path": "memory/2026-04-22.md",
+      "startLine": 18,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "- Created MarketingSnapshot + OperationsSnapshot components wiring live data into UI - Created private GitHub repo: Jonnyhimalaya/kilmurry-kate-mission-control (pushed via my PAT — Jack/Kate server token couldn't read new repo yet) - Deployed to Kilmurry 172.239.98.61 via tarball (because server token lacked access) - Installed nginx + apache2-utils on Kilmurry (wasn't present) - Systemd service kate-mc running on port 3336; nginx basic-auth proxy on 3337 - Copied GA4 service-account credential from old MC into new app - URL: http://172.239.98.61:3337 - Login: kate / ExcitedKate2026! ## Dano MC Noticed: Dano needed his own separate deployment. Repo dano-openclaw (workspace) + dano-mission-c",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.7033757233777169,
+      "maxScore": 0.35231180022521197,
+      "firstRecalledAt": "2026-04-22T11:56:01.558Z",
+      "lastRecalledAt": "2026-04-22T11:56:34.072Z",
+      "queryHashes": [
+        "519cad735aa9",
+        "93e1eb799af3"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "jack/kate",
+        "172.239.98.61",
+        "apache2-utils",
+        "kate-mc",
+        "basic-auth",
+        "service-account",
+        "dano-openclaw",
+        "dano-mission-c"
+      ]
+    },
+    "memory:memory/2026-04-20.md:125:136": {
+      "key": "memory:memory/2026-04-20.md:125:136",
+      "path": "memory/2026-04-20.md",
+      "startLine": 125,
+      "endLine": 136,
+      "source": "memory",
+      "snippet": "**Noticed:** 3 crons erroring for 3+ days (Advisor Check, kilmurry-morning-brief, weekly-rate-intelligence). Root cause: Anthropic subscription billing cutoff Apr 4, $200 credit expired Apr 17, no other auth profile had a real key. **Decision:** Jack's interactive Kilmurry bot (ACP → Claude Code) stays on Claude via subscription. Crons move to his existing Codex OAuth. **Did:** - Backed up config → `openclaw.json.pre-codex-primary-backup` - Patched `agents.defaults.model`: primary `anthropic/claude-opus-4-6` → `openai-codex/gpt-5.4`; fallbacks now include Opus 4.7, Sonnet 4.6, Opus 4.6 - `openclaw cron edit --model openai-codex/gpt-5.4` on all 4 crons (advisor, session-health, morning-brief,",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.3576280881948876,
+      "maxScore": 0.3576280881948876,
+      "firstRecalledAt": "2026-04-22T12:35:00.433Z",
+      "lastRecalledAt": "2026-04-22T12:35:00.433Z",
+      "queryHashes": [
+        "7e24362d0c77"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "backup",
+        "gpt",
+        "openai",
+        "kilmurry-morning-brief",
+        "weekly-rate-intelligence",
+        "agents.defaults.model",
+        "anthropic/claude-opus-4-6",
+        "openai-codex/gpt-5.4"
+      ]
+    },
+    "memory:memory/2026-04-20.md:397:408": {
+      "key": "memory:memory/2026-04-20.md:397:408",
+      "path": "memory/2026-04-20.md",
+      "startLine": 397,
+      "endLine": 408,
+      "source": "memory",
+      "snippet": "**Noticed:** 3 crons erroring for 3+ days (Advisor Check, kilmurry-morning-brief, weekly-rate-intelligence). Root cause: Anthropic subscription billing cutoff Apr 4, $200 credit expired Apr 17, no other auth profile had a real key. **Decision:** Jack's interactive Kilmurry bot (ACP → Claude Code) stays on Claude via subscription. Crons move to his existing Codex OAuth. **Did:** - Backed up config → `openclaw.json.pre-codex-primary-backup` - Patched `agents.defaults.model`: primary `anthropic/claude-opus-4-6` → `openai-codex/gpt-5.4`; fallbacks now include Opus 4.7, Sonnet 4.6, Opus 4.6 - `openclaw cron edit --model openai-codex/gpt-5.4` on all 4 crons (advisor, session-health, morning-brief,",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.3576280881948876,
+      "maxScore": 0.3576280881948876,
+      "firstRecalledAt": "2026-04-22T12:35:00.433Z",
+      "lastRecalledAt": "2026-04-22T12:35:00.433Z",
+      "queryHashes": [
+        "7e24362d0c77"
+      ],
+      "recallDays": [
+        "2026-04-22"
+      ],
+      "conceptTags": [
+        "backup",
+        "gpt",
+        "openai",
+        "kilmurry-morning-brief",
+        "weekly-rate-intelligence",
+        "agents.defaults.model",
+        "anthropic/claude-opus-4-6",
+        "openai-codex/gpt-5.4"
       ]
     }
   }

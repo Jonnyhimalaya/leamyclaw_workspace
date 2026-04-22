@@ -1,12 +1,12 @@
-# Tool/Command Errors
-> Things that broke and how they were fixed.
+echo "memory + learnings logged"
 
-## 2026-04-03
-- `geo` CLI: First run failed on Python deps — needed `--break-system-packages` flag
-- Browser login to X/Twitter: Blocked by bot detection — use BookmarkSave extension instead
-- Kilmurry Lodge site: Times out from VPS (blocks non-browser requests or geo-restricted)
-- leamyclaw+1 WP account: Editor role only, cannot access AIOSEO settings or plugins
+## Next.js hydration mismatch — the date pattern (2026-04-22)
+Symptom: "Application error: a client-side exception has occurred" on a Next.js 14 page.
+Root cause: `new Date().toLocaleDateString()` (or any `Math.random`) during render body produced different output server (UTC) vs client (local TZ) → React hydration mismatch → crash.
+Fix: Move time/random values into useEffect; add suppressHydrationWarning on rendered values.
+Rule: NEVER call new Date / Date.now / Math.random in a component's render body if it's part of SSR output.
 
-## 2026-04-07
-- `chattr +i` on exec-approvals.json blocks gateway from reading the file entirely (EPERM on open). Immutable flag prevents ALL file operations, not just writes. Only use on truly static files (SOUL.md, AGENTS.md). Never on config files the gateway reads at runtime.
-- Protocol C failure: did significant Kate TG bot + Whisper setup work across an entire session without checkpointing to memory. When Jonny did /new, all context was lost. Always checkpoint after significant work blocks.
+## API schema collision between report + deep-dive components (2026-04-22)
+Landing report component and deep-page component both fetched /api/X but expected different shapes. Landing did data.rows.map() → crash when API returned the deep-page shape.
+Rule: when splitting a component into a report summary + deep-dive page, give each its own API route (e.g. /api/pickup-velocity vs /api/pickup). Don't overload one route with two consumers.
+Diagnostic pattern that worked: app/error.tsx Error Boundary + /api/client-error POST endpoint that logs the error to a file on the server. Screen shows the real error, server gets a copy.
