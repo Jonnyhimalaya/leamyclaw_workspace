@@ -22,3 +22,25 @@ New rule (also pinned to AGENTS.md Core Rules):
 - Memory of "how it usually works" counts as guessing unless I just verified it for the current target.
 
 Why this matters operationally: in a consultancy, every wrong technical claim erodes trust faster than any correct one builds it. A hedged "I haven't checked yet" is always better than a confident wrong answer.
+
+## 2026-04-25 — Wrong claim that OpenClaw has no decay function
+
+**What I said:** "OpenClaw's native dreaming has index/promote/REM but no decay command exists. Decay scoring upstream doesn't exist."
+
+**What's true:**
+- Decay IS configured and running in `~/.openclaw/openclaw.json`:
+  ```json
+  "temporalDecay": { "enabled": true, "halfLifeDays": 30 }
+  ```
+- Dreaming itself supports `recencyHalfLifeDays` and `maxAgeDays` (per OpenClaw 4.5 release notes)
+- Community wisdom (OnlyTerp): "don't set decay below 30 days" — we're at exactly 30, correct
+- I confused "no CLI decay command" with "no decay capability"
+
+**Why the mistake:** Pattern-matched from `openclaw memory --help` (which only shows index/promote/REM commands) and concluded the capability didn't exist. Should have read `openclaw.json` directly first. This is a classic NO GUESSING violation — pattern-matching across what I expected vs reading actual config.
+
+**Lesson:** When making claims about platform capability, READ THE CONFIG before claiming a feature is missing. CLI surface ≠ feature surface.
+
+**The real gap (after correction):**
+- Native dreaming covers temporal decay + dedup + theme extraction
+- Native dreaming does NOT cover contradiction detection, curated MEMORY.md compaction, or validation loops ("is this memory still true?")
+- Sales/build focus should be on what's GENUINELY missing, not on rebuilding what's already there
