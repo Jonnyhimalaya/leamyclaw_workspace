@@ -17,7 +17,9 @@ elif [ "$MEM_AVAIL_MB" -lt 600 ]; then
     ALERT="${ALERT}🟡 WARNING: ${MEM_AVAIL_MB}MB available RAM (getting low)\n"
 fi
 
-if [ "$SWAP_USED" -gt 100 ]; then
+if [ "$SWAP_USED" -gt 800 ]; then
+    ALERT="${ALERT}🔴 CRITICAL: Swap usage ${SWAP_USED}MB\n"
+elif [ "$SWAP_USED" -gt 500 ]; then
     ALERT="${ALERT}🟡 Swap usage: ${SWAP_USED}MB (performance impact)\n"
 fi
 

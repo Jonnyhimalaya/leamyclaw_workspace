@@ -73,6 +73,7 @@
 - [Server Resources](memory/topics/server-resources.md)
 - [Kilmurry MC Catalogue](memory/topics/kilmurry-mc-catalogue.md)
 - [MiroFish Research](memory/topics/mirofish-research.md)
+- **X Bookmarks Research:** [vault/research/x-bookmarks/](vault/research/x-bookmarks/) — catalogue, master action plan, deep-dives. Three batches so far (Apr 2, Apr 14, Apr 25). ← **Jonny delegated recall responsibility to me (2026-04-25). Check `catalogue.md` and `deep-dives/` when working on consultancy sales copy, client deployment design, agent architecture, pricing tiers, or X content planning.**
 
 ## Kilmurry GitHub + Mission Control
 - HTTPS auth via single fine-grained token covering: `Kilmurry`, `kilmurry-kate`, `kilmurry-mission-control`
@@ -136,3 +137,18 @@
 
 <!-- openclaw-memory-promotion:memory:memory/2026-04-15.md:373:373 -->
 - - Candidate: Reflections: No strong patterns surfaced. [score=0.825 recalls=0 avg=0.620 source=memory/2026-04-15.md:23-23]
+
+## Promoted From Short-Term Memory (2026-04-23)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-18.md:4:4 -->
+- 5 items flagged from today's intel sweep: [score=0.841 recalls=0 avg=0.620 source=memory/2026-04-18.md:4-4]
+
+## Promoted From Short-Term Memory (2026-04-23)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-19.md:28:28 -->
+- **Unresolved security issues — no action taken today:** [score=0.852 recalls=0 avg=0.620 source=memory/2026-04-19.md:28-28]
+
+## Promoted From Short-Term Memory (2026-04-25)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-04-19.md:4:4 -->
+- 5 items flagged (2 critical, 1 improvement, 2 opportunities): [score=0.871 recalls=0 avg=0.620 source=memory/2026-04-19.md:4-4]

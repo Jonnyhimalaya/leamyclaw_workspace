@@ -191,3 +191,20 @@ Deep-dive research will be saved per-post in `vault/research/x-bookmarks/deep-di
 | B16 | @BenjaminBadejo | Apr 11 | Run QMD + Active Memory together. Critical tip: include session transcripts in QMD paths, not just memory folder — every conversation becomes searchable | https://x.com/BenjaminBadejo/status/2043076618093003122 | ✅ |
 | B17 | @garrytan | Apr 13 | "Boil the Ocean" SOUL.md addition — marginal cost of completeness is near zero with AI. Never table things, never offer workarounds when real fix exists. "The standard isn't good enough — it's holy shit that's done." | https://x.com/garrytan/status/2043581361798500602 | ✅ |
 | B18 | @Voxyz_ai | Apr 14 | Vertical vs horizontal memory. Vertical (within-agent) = OpenClaw Dreaming. Horizontal (cross-agent silos) = gbrain integrated with Gmail/Calendar as shared layer | https://x.com/Voxyz_ai/status/2044013799020122389 | ✅ |
+
+---
+
+## 📦 Batch 3 — April 25, 2026 Research Session
+
+| # | Author | Date | Summary | URL | Researched |
+|---|--------|------|---------|-----|------------|
+| C1 | @eng_khairallah1 | Apr 25 | "AI Workflows That Run Your Entire Business on Autopilot" — 5-phase plan (Map→Architect→Build→Connect→Monitor). 60-70% of ops automatable. 3 starter workflows: Email Operations Center, Report Factory, Content Engine. 141k views | https://x.com/eng_khairallah1/status/2047970333865746734 | ✅ |
+| C2 | @steipete | Apr 25 | clawsweeper — 50 parallel Codex instances triaging GitHub issues. Closed ~4,000 in one day. Built in 2 days. **"README is the new dashboard"** — agent updates README live instead of separate web UI. 565k views, 3.6k bookmarks. Repo: openclaw/clawsweeper | https://x.com/steipete/status/2047982647264059734 | ✅ |
+| C3 | UiPath blog | Apr | Standard vs Advanced agents framework. 4 pillars of Advanced: explicit planning, sub-agent delegation, skills + heavy prompts, filesystem-as-memory. **"4 signals test"**: long-horizon w/ handoffs, audit trail, parallelism, context too big — hit 2+ → advanced agent | https://www.uipath.com/blog/ai/technical-tuesday-standard-agents-vs-advanced-agents-whats-different-and-why | ✅ |
+
+**Batch 3 cross-references with prior batches:**
+- C2 (Steipete clawsweeper) → reinforces #14 (Steipete OpenClaw video) and B14 (Steipete on harnesses). Steipete is a recurring high-value source.
+- C3 (UiPath Advanced Agents) → reinforces #61 (polydao "architecture not chatbot"), B13 (Harrison Chase "memory is the moat"), B17 (Garry Tan "Boil the Ocean"). Same architectural argument, now coming from a $7bn enterprise vendor — enterprise air-cover for our positioning.
+- C1 (Khairallah) → generic version of the consultancy product Jonny is already shipping. Useful for hook-stealing, not for new architecture ideas.
+
+**Batch 3 deep-dive:** `vault/research/x-bookmarks/deep-dives/batch-3-2026-04-25.md`

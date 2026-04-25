@@ -276,6 +276,63 @@ curl http://127.0.0.1:<PORT>/health      # Should return {"ok":true}
 - [ ] Client's user ID whitelisted
 - [ ] Test message sent and received
 
+## 1.4 Media & File Handling — Mandatory Verification (added 2026-04-25)
+
+**Why this exists:** Aidan's deployment (April 2026) used `claude-cli` provider (Claude Code OAuth). Text worked. Images and files crashed with "Something went wrong." He'd been silently broken for days before we caught it. Non-technical clients don't report this — they just stop using it.
+
+### The root cause (verify every deployment)
+OpenClaw supports multiple Anthropic auth modes:
+- `claude-cli` (Claude Code subprocess) — **no vision, no images, no files from chat**
+- `anthropic` provider with OAuth bearer token — **full vision + attachments**
+
+The client's experience is radically different. Do not assume. Always test.
+
+### Mandatory post-setup test sequence
+After the channel is connected and first message is received:
+
+**Test 1 — Text**
+```
+Client sends: "hello"
+Expected: agent responds within 30 seconds
+```
+
+**Test 2 — Image**
+```
+Client sends: any photo from their phone camera roll
+Expected: agent describes or acknowledges the image content
+Fail: "Something went wrong" / no response / generic error
+```
+
+**Test 3 — File/document**
+```
+Client sends: any PDF or Word doc
+Expected: agent acknowledges file and offers to process it
+Fail: error / silence / "Something went wrong"
+```
+
+**If Test 2 or 3 fails:**
+1. Check which provider is configured: `openclaw config get agents.defaults.model`
+2. If primary is `claude-cli/*` — the claude-cli subprocess doesn't handle attachments
+3. Switch to `anthropic` provider using the existing OAuth token as bearer:
+   ```bash
+   openclaw models auth login --provider anthropic
+   # Select "Anthropic setup-token" and paste the sk-ant-oat01-... token
+   openclaw models set anthropic/claude-opus-4-7
+   openclaw gateway restart
+   ```
+4. Re-run Tests 2 and 3
+5. If still failing: Anthropic is rejecting the OAuth token for third-party API use (their April 4, 2026 policy). Client needs to add **"extra usage" credit** at claude.ai/settings/usage.
+
+### Checklist
+- [ ] Test 1 (text) passes
+- [ ] Test 2 (image) passes — agent responds with content, not error
+- [ ] Test 3 (file) passes — agent acknowledges and processes
+- [ ] Provider confirmed as `anthropic` (not `claude-cli`) in config
+- [ ] If using OAuth bearer: verified API call succeeds, not just CLI call
+- [ ] If billing-gated: client informed about "extra usage" requirement before handoff
+
+**Do not mark a deployment complete until all three tests pass.**
+
 ---
 
 # PHASE 2 — Identity & Memory (Day 1-2)
@@ -839,6 +896,10 @@ PHASE 1 — Server Setup
 [ ] Exec tested (agent can run 'echo test')
 [ ] Channel connected
 [ ] First message received
+[ ] Media test passed — client sent image, agent described it (NOT an error)
+[ ] File test passed — client sent PDF/doc, agent acknowledged and processed
+[ ] Provider confirmed as `anthropic` (not `claude-cli`) in model config
+[ ] If OAuth: Anthropic extra-usage billing confirmed funded before handoff
 
 PHASE 2 — Identity & Memory
 [ ] SOUL.md written (<1KB, includes anti-echo-chamber)

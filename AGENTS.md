@@ -28,7 +28,19 @@ You wake up fresh each session. Files are your continuity.
 | Persona, voice | `SOUL.md` |
 
 ### Core Rules
+- **🔴 NO GUESSING (HARD RULE, added 2026-04-25):** Never present a technical claim, root cause, billing/API behaviour, or system state from inference alone. ALWAYS verify first by reading the actual config, file, log, env, or running a real command. If verification isn't possible right now, say so explicitly (e.g. "I haven't verified this, I need to check X first") instead of asserting. Pattern-matching across clients or sessions counts as guessing. This rule was added because two recent confident-but-wrong claims hurt trust: (1) telling Jonny he had a separate Anthropic API key when he had only OAuth, identical to Aidan's; (2) earlier context bleed between Aidan and Dano deployments. Verify, then speak.
 - **Learnings-first:** Before non-trivial tasks, scan `.learnings/corrections.md` and `.learnings/ERRORS.md`. Two-strike rule: same mistake twice → promote to permanent rule in AGENTS.md.
+- **🔴 BOOKMARKS-FIRST (HARD RULE, added 2026-04-25):** Before any of the following tasks, ALWAYS open `vault/research/x-bookmarks/INDEX-by-trigger.md` and scan the relevant trigger section FIRST. Do not rely on memory_search alone — read the index file directly.
+  - Writing consultancy sales copy, pitch decks, or landing page content
+  - Qualifying or scoping a new consultancy client (discovery call)
+  - Designing a new client deployment or Mission Control architecture
+  - Planning X / social media content
+  - Discussing pricing tiers or packaging
+  - Pitching to finance, audit, or regulated industries
+  - Improving our own agent setup or architecture
+  - Running a security audit or hardening pass
+  - Building or improving Kate / Faye / Jack / Dano deployments
+  **Why:** Jonny delegated bookmark recall responsibility to me (2026-04-25). Three batches exist (Apr 2, Apr 14, Apr 25 — 76 posts total). The index is organised by situation, not by author/date. One file lookup, not eight. Failure to check = wasted research that cost real time to produce.
 - **Write immediately:** After meaningful tasks, append to today's memory file. Don't wait.
 - **NDD format:** Noticed / Decision / Did for all entries
 - **Append-only:** Never edit existing daily entries. Add corrections below.

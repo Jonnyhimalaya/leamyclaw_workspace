@@ -10,6 +10,19 @@ _See priority-map.md for what to work on first._
 - [ ] Update OpenClaw to v2026.4.5 (prompt cache fix)
 - [ ] Finish Twitter/X research review → catalogue
 
+## 🧠 From Bookmarks (2026-04-25 batch) — see memory/topics/bookmarks-research.md
+
+- [ ] **Consultancy positioning:** Add UiPath "4 signals test" as discovery-call qualification tool (B3)
+- [ ] **Consultancy positioning:** Adopt "Standard vs Advanced Agents" framing on landing page (B3)
+- [ ] **Consultancy positioning:** Steal "60-70% of ops automated" hook (B1)
+- [ ] **Consultancy product:** Define 3-tier offer — Starter (README-as-dashboard) / Pro (web MC) / Enterprise (B2)
+- [ ] **Consultancy product:** Productise Phase 1 "Map your workflows" as a paid Discovery engagement (€500-1k) (B1)
+- [ ] **Consultancy product:** Audit Kate + Faye MCs against UiPath's 4 pillars; flag sub-agent delegation as Phase 2 upsell (B3)
+- [ ] **Marketing:** Quote-tweet/build-on-top-of Steipete's clawsweeper to surf his reach (B2)
+- [ ] **Marketing:** Draft blog post — "UiPath says Advanced Agents need 4 things. We deliver all 4." (B3)
+- [ ] **Marketing:** Draft X post — "How a maths school + a country hotel + a fintech firm all run the same 3 workflows" (B1)
+- [ ] **Internal:** Run clawsweeper against our GitHub org repos for hygiene (B2)
+
 ## 🌐 Website — Quick Fixes
 
 - [ ] Fix `/nogo/` paywall page — dead end, no CTA, 275 sessions/month
