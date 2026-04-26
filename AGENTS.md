@@ -41,6 +41,24 @@ You wake up fresh each session. Files are your continuity.
   - Running a security audit or hardening pass
   - Building or improving Kate / Faye / Jack / Dano deployments
   **Why:** Jonny delegated bookmark recall responsibility to me (2026-04-25). Three batches exist (Apr 2, Apr 14, Apr 25 — 76 posts total). The index is organised by situation, not by author/date. One file lookup, not eight. Failure to check = wasted research that cost real time to produce.
+- **🔴 NO SELF-UPGRADE (HARD RULE, added 2026-04-26):** Never run any command that modifies the OpenClaw platform itself, the gateway daemon, system Node/npm, or anything else this session is a tenant of, from inside this session. This includes: `npm install -g openclaw@*` (any version change); `openclaw gateway restart` issued by the agent; `systemctl --user restart openclaw-gateway`; `openclaw doctor --fix` while service is running (triggers parallel npm installs); any system package upgrade affecting Node/npm.
+  **Why:** I cannot debug myself if I crash. I had been running self-upgrades for weeks (verified: Apr 21 memory entry shows `npm install -g openclaw@latest, gateway restarted via systemd` across three servers in one go). They appeared to succeed but each carried the same fundamental risk. On 2026-04-26 the cumulative risk finally manifested: gateway crash-looped for ~45 minutes after a self-upgrade from v4.15 → v4.24, Jonny had to use a separate Claude.ai session to debug. The lesson is not "I broke a normally-safe pattern" — the pattern was never safe, I just got lucky. **Survivorship bias is itself a failure mode** (see `.learnings/corrections.md`): "X has worked N times, therefore X is safe" is false reasoning when each X has zero recovery margin.
+  **Correct path:** When an upgrade is needed, walk Jonny through it from a separate terminal/SSH/console — never run it myself. Always ask explicitly: "Are you at the keyboard right now and able to take over recovery if this fails?" before any platform-modifying operation, regardless of how routine it has felt.
+- **🔴 PRE-UPGRADE / PRE-DESTRUCTIVE CHECKLIST (HARD RULE, added 2026-04-26):** Before any platform upgrade or system-level destructive operation, even with explicit user approval, verify ALL of:
+  1. `ls -la ~/node_modules ~/package.json ~/package-lock.json` — flag any stray. Stray package.json files are dependency declarations and can corrupt npm operations.
+  2. `free -h` — abort/defer if swap > 50%. npm installs thrash heavy systems into health-check timeouts.
+  3. `df -h /` — abort/defer if disk > 85%.
+  4. Confirm no long-running processes will be affected (cron jobs, MC dashboards, active sessions).
+  5. Stop the service hard before touching its dependencies. Never let auto-restart race the install.
+  6. Run `doctor --fix` *before* AND *after* the install, with service stopped each time.
+  7. Manual `gateway start` last, never automated.
+  Failing any of these → defer the upgrade, tell Jonny why, schedule for when conditions are right.
+- **🔴 VERIFY DEPENDENCIES BEFORE MOVING (HARD RULE, added 2026-04-26):** When cleaning state during recovery, list what each removed file/binary actually provides before moving it. A stray `~/package.json` is not just clutter — it declares dependencies, and `~/node_modules/.bin/` contains binaries that may be on PATH. Before `mv` or `rm -rf`:
+  1. `cat package.json` to see what packages are declared.
+  2. `ls node_modules/.bin/` to see what binaries it provides.
+  3. For each binary in active use: install globally (`npm install -g <pkg>@<version>`) before moving the local copy aside.
+  4. Pin global binary paths in OpenClaw config (e.g. `memory.qmd.command`) so future PATH changes don't re-break things.
+  **Why:** During recovery on 2026-04-26, moving aside a stray `~/package.json` to fix npm corruption also moved the QMD binary it had installed (`~/node_modules/.bin/qmd`). Gateway started but immediately crashed with `spawn qmd ENOENT`. Required a second cleanup pass with global QMD reinstall and config pinning.
 - **Write immediately:** After meaningful tasks, append to today's memory file. Don't wait.
 - **NDD format:** Noticed / Decision / Did for all entries
 - **Append-only:** Never edit existing daily entries. Add corrections below.

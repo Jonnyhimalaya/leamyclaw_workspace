@@ -70,3 +70,29 @@ This means even if `~/.npm-global/bin` is dropped from PATH (or service env chan
 
 ### Quote worth remembering
 Claude (during cleanup): *"Don't run it with sudo reflexively; on this VM you've been mixing root and jonny users... we don't want to install a global binary owned by root that jonny can't update later."* — this is the discipline I lacked.
+
+## 2026-04-26 (later) — Bonjour plugin crash loop, config-only fix
+
+### What happened
+After the v4.24 upgrade earlier today, the bonjour mDNS plugin entered a crash loop: 15 `CIAO ANNOUNCEMENT CANCELLED` unhandled-promise-rejection crashes between 17:55 and 18:04 UTC, gateway restarting every ~37 seconds via systemd. The 10-minute "silence" Jonny experienced spanned this crash loop.
+
+### Verified facts
+- All 15 crashes had identical error: `[openclaw] Unhandled promise rejection: CIAO ANNOUNCEMENT CANCELLED`
+- Source: `bonjour: restarting advertiser (service stuck in announcing)` from the `@homebridge/ciao` library used by the bonjour plugin
+- Crash loop self-resolved at 18:04:44 (gateway has been stable 1h 23min since)
+- Bonjour was loading with bundled defaults (no entry in `~/.openclaw/openclaw.json`)
+- Pre-existing zombie gateway process (PID 1401517, 2GB RSS) was visible briefly; now cleaned up by systemd
+- Memory pressure: peak swap 88% earlier today, now 282MB / 495MB swap. Connected: bonjour/CIAO timeouts more likely under heavy paging.
+
+### Fix applied
+Added `plugins.entries.bonjour.enabled: false` to `~/.openclaw/openclaw.json`. Will take effect on next gateway restart. Crash loop is currently inactive so no immediate restart needed — defensive fix only.
+
+### Tier-2 operation per the new rule
+This was the first test of "tier 2" config edits: stop, edit, verify JSON, do NOT auto-restart unless emergency. The discipline held: backup created (`openclaw.json.bak.bonjour-fix-20260426-192804`), JSON validity checked, change is defensive not active.
+
+### What's not solved
+- Bonjour crash *cause* is upstream — `@homebridge/ciao` library, possibly triggered by memory pressure or network conditions. Worth filing an issue with OpenClaw if it recurs after re-enabling.
+- The host RAM/swap pressure that contributes to plugin timeouts is still present (4GB box, MC dashboard + multiple openclaw processes + searxng). Long-term fix is more RAM or fewer co-resident services.
+
+### What it tells us about the rule structure
+The original Rule X (`NO SELF-UPGRADE`) was correct but too binary. Disabling one plugin via config edit is materially different from `npm install -g openclaw@latest`. The tiered version (tier 1 = file/memory edits, tier 2 = config + plugin disables, tier 3 = npm/binary changes) maps better to actual risk and Jonny's AFK-Telegram reality.
