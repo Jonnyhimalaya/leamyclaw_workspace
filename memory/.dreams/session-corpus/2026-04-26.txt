@@ -1,0 +1,3 @@
+[main/sessions/82704204-4ab3-489b-accc-d3c68bdb0538.jsonl#L5] User: [cron:46b00249-c654-43be-9690-286fd72a0358 Track Session Costs] Run: python3 /home/jonny/.openclaw/workspace/scripts/track-session-costs.py — This tracks session token usage and costs to session-costs.json. If it succeeds, reply with just HEARTBEAT_OK. If it fails, report t
+[main/sessions/82704204-4ab3-489b-accc-d3c68bdb0538.jsonl#L9] User: [cron:46b00249-c654-43be-9690-286fd72a0358 Track Session Costs] Run: python3 /home/jonny/.openclaw/workspace/scripts/track-session-costs.py — This tracks session token usage and costs to session-costs.json. If it succeeds, reply with just HEARTBEAT_OK. If it fails, report t
+[main/sessions/82704204-4ab3-489b-accc-d3c68bdb0538.jsonl#L12] Assistant: HEARTBEAT_OK

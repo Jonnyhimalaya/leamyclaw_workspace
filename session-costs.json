@@ -514,15 +514,31 @@
     },
     {
       "date": "2026-04-25",
-      "timestamp": "2026-04-25T16:51:54.986454+00:00",
+      "timestamp": "2026-04-25T20:51:54.260254+00:00",
       "totalSessions": 1,
       "activeSessions": 0,
-      "totalTokens": 42869,
-      "totalCost": 213.38704,
+      "totalTokens": 43616,
+      "totalCost": 213.608814,
       "sessionBreakdown": {
         "agent:main:main": {
-          "tokens": 42869,
-          "cost": 213.38704,
+          "tokens": 43616,
+          "cost": 213.608814,
+          "model": "gpt-5.4",
+          "channel": "webchat"
+        }
+      }
+    },
+    {
+      "date": "2026-04-26",
+      "timestamp": "2026-04-26T17:35:51.614440+00:00",
+      "totalSessions": 1,
+      "activeSessions": 0,
+      "totalTokens": 48298,
+      "totalCost": 213.999086,
+      "sessionBreakdown": {
+        "agent:main:main": {
+          "tokens": 48298,
+          "cost": 213.999086,
           "model": "gpt-5.4",
           "channel": "webchat"
         }
@@ -1825,12 +1841,42 @@
           "timestamp": "2026-04-25T16:51:54.986454+00:00",
           "tokens": 42869,
           "cost": 213.38704
+        },
+        {
+          "timestamp": "2026-04-25T20:51:54.260254+00:00",
+          "tokens": 43616,
+          "cost": 213.608814
+        },
+        {
+          "timestamp": "2026-04-26T00:51:54.727574+00:00",
+          "tokens": 45095,
+          "cost": 213.68815
+        },
+        {
+          "timestamp": "2026-04-26T04:51:55.372883+00:00",
+          "tokens": 45811,
+          "cost": 213.832226
+        },
+        {
+          "timestamp": "2026-04-26T08:51:55.093319+00:00",
+          "tokens": 47032,
+          "cost": 213.902228
+        },
+        {
+          "timestamp": "2026-04-26T12:51:54.117910+00:00",
+          "tokens": 47818,
+          "cost": 213.957569
+        },
+        {
+          "timestamp": "2026-04-26T17:35:51.614440+00:00",
+          "tokens": 48298,
+          "cost": 213.999086
         }
       ],
-      "lastSeen": "2026-04-25T16:51:54.986454+00:00",
+      "lastSeen": "2026-04-26T17:35:51.614440+00:00",
       "lastStatus": "done",
-      "currentTokens": 42869,
-      "currentCost": 213.3870398000003
+      "currentTokens": 48298,
+      "currentCost": 213.99908580000033
     }
   }
 }

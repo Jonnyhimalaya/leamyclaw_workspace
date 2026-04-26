@@ -1,48 +1,64 @@
-# 🧠 Morning Action Brief — 2026-04-25
+# 🧠 Morning Action Brief — 2026-04-26
 
 ## 🔴 Fix Now
 
-### 1. Upgrade Both Servers: v2026.4.14 → v2026.4.23 (9 releases behind)
-- **Intel:** v2026.4.23 released April 24. No breaking changes reported. Community feedback positive. Includes gateway trust-escalation fix (PR #67303) we've been waiting for since April 16, plus security "fail-closed" defaults for agent config edits, WhatsApp onboarding fix, and duplicate reply suppression.
-- **Our exposure:** Both main VPS and Kilmurry server are at v2026.4.14 — sitting on a known tool-name collision bypass vulnerability for 9 days. The WhatsApp fix matters for Kate's onboarding flows. The duplicate reply fix may be silently affecting user experience across all client instances. The new "fail-closed" security defaults for agent config edits could block custom configs — need to verify after upgrade.
-- **Recommended action:** `openclaw update` on both servers. Test Kate's WhatsApp channel and Faye's instance post-upgrade. Check that agent config edits still work (new fail-closed default). Also upgrade Dano's server (172.237.126.222) — he's on an unknown version.
-- **Effort:** Low (30 min total — 3 servers × 10 min each)
+### 1. All Client Servers Are 10+ Versions Behind — OOM Bug, Security Patches Missing
+- **Intel:** v2026.4.20 fixed a critical session-stacking → OOM crash bug. v2026.4.16+ patched the gateway trust-escalation vulnerability (PR #67303, tool-name collision bypass). Current stable is 4.20, bleeding edge is 4.24-beta.
+- **Our exposure:** Both our main VPS and Kilmurry server were last confirmed at **v2026.4.14** (per security-open-items.md). That means:
+  - Kilmurry (running 3 instances: Jack, Kate, Faye) is vulnerable to session stacking → OOM. With multiple agents on one box, this is a **when-not-if** crash scenario.
+  - Gateway trust-escalation vulnerability is **unpatched** on both servers. An attacker with tool access could bypass trust boundaries.
+  - Dano server (172.237.126.222) version unknown — may also be behind.
+- **Recommended action:** Upgrade all 4 servers to v2026.4.20 (stable) this week. Use the community's pre-upgrade pattern: have each agent read the release notes, run impact analysis, backup config, then upgrade. A Reddit user built this into a reusable skill — we should do the same for consultancy.
+- **Effort:** Medium (1-2 hours per server, 4 servers = half day). Kilmurry is the priority — most instances, most risk.
 
-### 2. Skill Safety Scanner — 20+ Days Overdue Across All Instances
-- **Intel:** ClawHub supply chain risk remains real (12%+ malicious plugins, 91% bundle malware per Snyk ToxicSkills). Three scanner tools now available: built-in `openclaw skill-scan`, Bitdefender AI Skills Checker (free, cloud-based), and clawvet (6-pass open-source scanner on GitHub). Bitdefender's tool specifically detects hidden backdoors, data exfiltration, prompt injection, and obfuscation.
-- **Our exposure:** Four instances completely unscanned: main VPS, Nexus, Jack (Kilmurry), Kate. Faye's new instance (deployed April 22) also unscanned. Any ClawHub-sourced skill on any instance could be exfiltrating data, injecting prompts, or opening backdoors. This has been flagged since April 5 with zero progress.
-- **Recommended action:** Run `openclaw skill-scan` on all 5 instances immediately. For ongoing protection, add Bitdefender AI Skills Checker to the consultancy pre-install checklist. Consider adding clawvet to CI/CD for any skill repos.
-- **Effort:** Low-Medium (1 hour — scan all instances, review results, remove anything flagged)
+### 2. Skill Safety Scanner — Now 25+ Days Overdue Across All Instances
+- **Intel:** Snyk ToxicSkills report: 91% of malicious ClawHub plugins bundle malware, 36% contain prompt injection. ClawHub's VirusTotal scanning only covers new downloads, not existing installs.
+- **Our exposure:** `openclaw skill-scan` has never been run on any of our 4 instances (main, Nexus, Jack, Kate). Faye's instance was added since the original flag. That's 5 unscanned instances now. We've been installing skills from ClawHub without verification.
+- **Recommended action:** Run `openclaw skill-scan` on all 5 instances. Block: this requires SSH access to Kilmurry (password still pending from Kate/Jack). For main VPS and Dano, can be done immediately.
+- **Effort:** Low per instance (5 min each), but **blocked on Kilmurry SSH access** which has been unresolved since early April.
 
 ## 🟡 Improve
 
-### 3. Security Debt Is Compounding — Needs a Dedicated Cleanup Session
-- **Intel:** Today's sweep surfaced no new security issues — but that's because the old ones are still festering.
-- **Our exposure:** Three items have been open for weeks with no progress:
-  - **GA4 service account key** — exposed in git since ~April 3 (22 days). Key unrotated in Google Cloud. Blocks Kate's GA4 dashboard. Every day this sits, a leaked credential is live in the wild.
-  - **GitHub classic PATs** — main VPS + Dano using broad `repo` scope tokens. Kilmurry Jack's fine-grained PAT can unexpectedly read `leamyclaw_workspace`. Flagged April 22, no action.
-  - **Meta token** — Kilmurry Facebook page managed by a different account than Jack's developer account. Unresolved since the Wednesday meeting discussion.
-- **Recommended action:** Block 2 hours this weekend for a security sprint: (1) Rotate GA4 key in Google Cloud Console, update credentials file, (2) Replace classic PATs with per-server fine-grained PATs, (3) Get the correct Meta account from Jack/Kate. These are all Jonny-blocked — he needs to do them or delegate access.
-- **Effort:** Medium (2 hours, but requires Jonny's direct involvement)
+### 3. Token Cost Audit — Faye and Jack Burning Opus Tokens at Premium Rates
+- **Intel:** Each OpenClaw session loads ~15k tokens of tool schemas into context. Community reports 50k+ tokens within 3 messages. Users auditing with `/context detail` are cutting costs 2-3x. DeepSeek V4 Pro launched this week at **1/6th the cost of Opus 4.7** with near-equivalent benchmark performance (VentureBeat confirmed). V4 Flash is even cheaper and is now OpenClaw's onboarding default.
+- **Our exposure:** 
+  - **Faye** runs Claude Opus 4.7 via API — the most expensive model available. Her revenue cockpit generates regular agent interactions. At 15k overhead per session + Opus pricing, this is likely our highest cost centre per query.
+  - **Jack** runs Claude Opus 4.6 — same tier.
+  - **Kate** runs Sonnet with Gemini fallback — more reasonable but still worth auditing.
+  - Jonny already flagged Opus API billing as a concern (switched Main to GPT-5.4 to save money).
+- **Recommended action:**
+  1. Run `/context detail` on each client instance to get actual token breakdowns.
+  2. Evaluate DeepSeek V4 Pro ($1.74/M tokens) as a drop-in for Faye and Jack's routine work. Keep Opus for complex reasoning tasks only via model routing.
+  3. Trim workspace files — remove unused tool schemas, consolidate skills, use `localModelLean: true` where applicable.
+  4. For consultancy: build a "cost tier" recommendation (V4 Flash for budget, V4 Pro for mid-tier, Opus/GPT-5.4 for premium).
+- **Effort:** Low-Medium. Audit is 30 min per instance. Model switch is a config change but needs testing per agent.
+- **Research:** DeepSeek V4 Pro benchmarks within 88 Elo of top-tier on standard reasoning tasks. For hotel operations and revenue analysis (Faye/Jack's use cases), it should be more than sufficient. The MIT licence means no vendor lock-in risk.
 
 ## 🟢 Opportunities
 
-### 4. OpenRouter Image Gen Now Works — Simplify Client Deployments
-- **Intel:** v2026.4.23 enables `image_generate` with just an `OPENROUTER_API_KEY`. No separate OpenAI key needed. Plus: agents can now pass quality, format, background, and compression hints.
-- **Our exposure:** Current client deployments (Kilmurry, Dano) each need separate API keys for different capabilities. This creates credential sprawl and onboarding friction. For new consultancy clients, every additional API key is a setup step that can go wrong.
-- **Recommended action:** Update the consultancy deployment playbook: for new clients, recommend OpenRouter as the single API key for both LLM and image generation. Test `image_generate` via OpenRouter on our main instance first. Document which models are available and quality settings. This is a real selling point: "One API key, full AI capabilities."
-- **Effort:** Low (1 hour to test and update playbook)
-- **Research:** OpenRouter already supports multiple image models. The key advantage is billing consolidation — clients get one invoice, one key, one rate limit to manage.
+### 4. Google Meet AI Plugin — Immediate Kilmurry Application
+- **Intel:** v2026.4.24-beta ships native Google Meet participation. The agent joins as a full participant using personal Google auth, can take notes, extract action items, export transcripts, and use tools mid-meeting. Community excitement is high — this is being called the standout feature of 2026.
+- **Our exposure/opportunity:** Kilmurry Lodge runs regular operational meetings (vendors, staff, revenue reviews). Jack's agent could attend and produce structured meeting notes → action items → feed into Mission Control. This is also a **killer consultancy demo** — "your AI attends your meetings and updates your dashboard."
+- **Recommended action:** 
+  1. Once Kilmurry is upgraded to 4.24-stable, pilot Google Meet attendance for one of Jack's regular meetings.
+  2. Document the workflow as a consultancy case study: "AI Meeting Assistant for Hospitality."
+  3. For Leamy Maths: less applicable (Jonny works solo), but could be useful for parent consultation calls if those ever scale.
+- **Effort:** Low to pilot (config + Google auth). Medium to productionise (prompt tuning, MC integration for meeting notes).
 
-### 5. Bitdefender + clawvet — Add to Consultancy Security Checklist
-- **Intel:** Two new skill security scanning tools have emerged: Bitdefender AI Skills Checker (free, cloud-based, AI-powered detection) and clawvet (open-source, 6-pass scanner with CI/CD integration). Both address the ClawHub supply chain risk that Snyk flagged.
-- **Our exposure:** Our consultancy deployment checklist currently has 4 mandatory security checks (version, skill scan, gateway binding, exec security mode). The "skill scan" step has no defined tooling — it's just a line item. These tools make it concrete and repeatable.
-- **Recommended action:** Add to consultancy security checklist: (1) Pre-install: run Bitdefender AI Skills Checker on any ClawHub skill before deploying to client, (2) Post-install: run `openclaw skill-scan` as part of deployment verification, (3) For clients with CI/CD: add clawvet to their pipeline. Write this up as a consultancy reference doc.
-- **Effort:** Low (30 min to update checklist and write reference doc)
+### 5. NVIDIA Enterprise Credibility + Consultancy Pricing Lever
+- **Intel:** NVIDIA Developer Blog published an official guide for OpenClaw + NemoClaw on DGX Spark. This is a Fortune 500 company endorsing the platform for enterprise/regulated use. Separately, DeepSeek V4's MIT licence + near-SOTA benchmarks means we can now offer a credible "no API cost" tier using local deployment.
+- **Our exposure/opportunity:** Our consultancy pitch currently lacks enterprise-grade references. The NVIDIA blog post is free credibility. Combined with DeepSeek V4 (open-source, local-deployable), we can now offer three distinct pricing tiers:
+  - **Budget:** DeepSeek V4 Flash local / Qwen3.5 local (€0/month API cost)
+  - **Standard:** DeepSeek V4 Pro API ($1.74/M tokens) or Kimi K2.6 ($0.60/M)
+  - **Premium:** Claude Opus / GPT-5.4 (for clients who need best-in-class reasoning)
+- **Recommended action:** 
+  1. Add the NVIDIA blog link to consultancy pitch materials.
+  2. Build a one-page "Deployment Tiers" sheet with the three-tier pricing model.
+  3. Reference in any proposal for regulated/compliance-heavy clients (Dano's ION Group work is a natural fit).
+- **Effort:** Low (2-3 hours to update pitch materials).
 
 ## 📋 Summary
 - 5 items flagged (2 critical, 1 improvement, 2 opportunities)
-- Estimated total implementation effort: ~5 hours
-- **Priority recommendation:** Do items 1 and 2 today — they're both low effort and close genuine security gaps. The server upgrade (item 1) takes 30 minutes and fixes a vulnerability that's been open for 9 days. The skill scan (item 2) takes an hour and addresses a risk that's been ignored for 20+ days. Item 3 needs Jonny's direct involvement — schedule it for this weekend. Items 4-5 can wait until Monday but are worth doing before the next client deployment.
-
-**Nothing was manufactured here.** The version gap and unscanned skills are real, documented, overdue risks. The security debt is accumulating. The opportunities are genuine simplifications. Saturday morning is a good time to close these gaps before the work week.
+- Estimated total implementation effort: ~8-10 hours
+- **Priority recommendation:** Server upgrades first (item #1). Every day on v2026.4.14 is a day with a known OOM vulnerability running on a server with 3 client instances. The skill scan (#2) rides the same SSH access blocker — solving Kilmurry access unlocks both. The cost audit (#3) is quick wins that could save significant money given Opus pricing. Google Meet (#4) and consultancy materials (#5) are Sunday-pace work.
+- **Recurring blocker:** Kilmurry SSH access has been unresolved for 3+ weeks. This blocks upgrades, skill scans, and feature rollouts for 3 client instances. Escalate at next Jack/Kate meeting.
